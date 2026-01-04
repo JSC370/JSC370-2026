@@ -16,7 +16,7 @@
 ### Weekly Course Schedule
 
 | Week | Dates | Topics / Weekly Activities | Due (Weds labs 11:59pm; Fri HW 11:59pm) |
-|-------|-------|-------|-----|
+|-------|---------|---------|--------|
 | **Week 1** | January 5 (lecture) <br> January 7 (lab) | Introduction to Data Science tools: Python, Quarto, VS Code | **Lab 1** |
 | **Week 2** | January 12 (lecture) <br> January 14 (lab) | Version Control & Reproducible Research, Git/GitHub | **Lab 2** |
 | **Week 3** | January 19 (lecture) <br> January 21 (lab) | Exploratory Data Analysis | **Lab 3** |
