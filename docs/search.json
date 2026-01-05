@@ -11,7 +11,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#my-background",
     "title": "JSC 370: Data Science II",
     "section": "My Background",
-    "text": "My Background\n\nIn late 2021 moved from Los Angeles where I was an Assistant/Associate Professor of Biostatistics at University of Southern California\nFrom Canada: McGill (BSc), Ottawa/Carleton Institute of Math (MSc), Harvard (PhD), UChicago (postdoc)\nHere I’m an Associate Professor with tenure in the Department of Statistical Science (51%) and the School of the Environment (49%)\nI am the Data Science Concentration Lead for the MScAC\nI am on the executive committee for the U of T Data Science Institute"
+    "text": "My Background\n\nIn late 2021 moved from Los Angeles where I was an Assistant/Associate Professor of Biostatistics at University of Southern California\nFrom Canada: McGill (BSc), Ottawa/Carleton Institute of Math (MSc), Harvard (PhD), UChicago (postdoc)\nHere I’m an Associate Professor with tenure in the Department of Statistical Science (51%) and the School of the Environment (49%)\nData Science Concentration Lead for the MScAC\nExecutive committee for the U of T Data Science Institute"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#my-teaching",
@@ -102,7 +102,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#the-data-behind-the-plot",
     "title": "JSC 370: Data Science II",
     "section": "The data behind the plot",
-    "text": "The data behind the plot\n\n\n\nQuantity\nValue (millions)\n\n\n\n\nJobs created\n170\n\n\nJobs displaced\n92\n\n\nNet change\n78"
+    "text": "The data behind the plot\n\n\n\nQuantity\nValue (millions)\n\n\n\n\nJobs created\n170\n\n\nJobs displaced\n92\n\n\nNet change\n78\n\n\n\n{: .rowlines}"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#visualization-of-these-data",
@@ -130,7 +130,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#data-science-resources-python",
     "title": "JSC 370: Data Science II",
     "section": "Data Science Resources: Python",
-    "text": "Data Science Resources: Python\n\nPython for Data Analysis (3e) — Wes McKinney\n\nFocus: pandas + NumPy + Jupyter for data wrangling, cleaning, and analysis\n\nGood for: practical workflows and “how to do it in pandas”\n\nPython Data Science Handbook — Jake VanderPlas\n\nFocus: core stack NumPy, pandas, Matplotlib, plus intro ML tooling\n\nBonus: full text is online and backed by notebooks:\n\nGitHub notebooks repo"
+    "text": "Data Science Resources: Python\n\nPython for Data Analysis (3e) — Wes McKinney\n\nFocus: pandas + NumPy + Jupyter for data wrangling, cleaning, and analysis\n\nGood for: practical workflows and “how to do it in pandas”\n\nPython Data Science Handbook — Jake VanderPlas\n\nFocus: core stack NumPy, pandas, Matplotlib, plus intro ML tooling\n\nBonus: full text is online and backed by notebooks GitHub notebooks repo**"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#python-and-vs-code",

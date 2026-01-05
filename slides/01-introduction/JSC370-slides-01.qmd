@@ -26,8 +26,8 @@ Labs: **Wednesdays 1–3pm**, HS 108
 - In late 2021 moved from Los Angeles where I was an Assistant/Associate Professor of Biostatistics at University of Southern California
 - From Canada: McGill (BSc), Ottawa/Carleton Institute of Math (MSc), Harvard (PhD), UChicago (postdoc)
 - Here I'm an Associate Professor with tenure in the Department of Statistical Science (51%) and the School of the Environment (49%)
-- I am the Data Science Concentration Lead for the MScAC
-- I am on the executive committee for the U of T Data Science Institute
+- Data Science Concentration Lead for the MScAC
+- Executive committee for the U of T Data Science Institute
 
 ---
 
@@ -49,7 +49,7 @@ Labs: **Wednesdays 1–3pm**, HS 108
 - Machine learning/Deep learning for spatiotemporal data
 
 ::: {.fragment}
-![](img/research_fig.png){fig-align="center" width="80%"}
+![](img/research_fig.png){fig-align="center" width="60%"}
 :::
 
 ---
@@ -169,6 +169,7 @@ Fastest-growing roles (percentage terms) include:
 | Jobs created | 170 |
 | Jobs displaced | 92 |
 | Net change | 78 |
+{: .rowlines}
 
 ---
 
@@ -224,8 +225,7 @@ We will focus on **transferable** skills and modern workflows:
 
 - **[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)** — Jake VanderPlas  
   - Focus: core stack **NumPy, pandas, Matplotlib**, plus intro ML tooling  
-  - Bonus: full text is online and backed by notebooks:  
-    - **[GitHub notebooks repo](https://github.com/jakevdp/PythonDataScienceHandbook/)**
+  - Bonus: full text is online and backed by notebooks [GitHub notebooks repo](https://github.com/jakevdp/PythonDataScienceHandbook/)**
 
 ---
 
@@ -235,7 +235,7 @@ We will focus on **transferable** skills and modern workflows:
 - **VS Code**: a lightweight, extensible editor with strong Python + notebook support
 
 ::: {.fragment}
-![](img/VS-code-screen.png){fig-align="center" width="60%"}
+![](img/VS-code-screen.png){fig-align="center" width="50%"}
 :::
 
 ---
@@ -280,9 +280,8 @@ We will focus on **transferable** skills and modern workflows:
 ## How does Quarto work?
 
 ::: {.fragment}
-![](img/quarto-flow.png){fig-align="center" width="50%"}
+![](img/quarto-flow.png){fig-align="center" width="40%"}
 :::
-
 - You write a single source file (`.qmd`) that mixes **text**, **code**, and **output options** (YAML + chunk options).
 - Quarto executes code (e.g., Python via Jupyter) and captures **tables, figures, and printed output**.
 - It renders the document through **Pandoc** into a chosen format (HTML report, reveal.js slides, PDF, Word, etc.).
