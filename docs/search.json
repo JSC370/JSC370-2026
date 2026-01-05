@@ -67,7 +67,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#why-communication-matters-in-data-science",
     "title": "JSC 370: Data Science II",
     "section": "Why communication matters in Data Science",
-    "text": "Why communication matters in Data Science\n\nOpaque models without uncertainty estimation or discussion of limitations\nBiased or unrepresentative data may lead to biased predictions\nConfounding \\(\\ne\\) causation (EDA can sometimes mislead)\nOverfitting and weak validation"
+    "text": "Why communication matters in Data Science\n\nOpaque models without uncertainty estimation or discussion of limitations\nBiased or unrepresentative data may lead to biased predictions\nConfounding \\(\\ne\\) causation (EDA can sometimes mislead)\nOverfitting and weak validation\nCommentary on Data Science: Towards Data Science"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#top-job-titles",
@@ -102,7 +102,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#the-data-behind-the-plot",
     "title": "JSC 370: Data Science II",
     "section": "The data behind the plot",
-    "text": "The data behind the plot\n\n\n\nQuantity\nValue (millions)\n\n\n\n\nJobs created\n170\n\n\nJobs displaced\n92\n\n\nNet change\n78\n\n\n\n{: .rowlines}"
+    "text": "The data behind the plot\n\n\n\nQuantity\nValue (millions)\n\n\n\n\nJobs created\n170\n\n\nJobs displaced\n92\n\n\nNet change\n78"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#visualization-of-these-data",

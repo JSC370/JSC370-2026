@@ -114,8 +114,10 @@ Source: https://xkcd.com/605/
 - Biased or unrepresentative data may lead to biased predictions
 - Confounding $\ne$ causation (EDA can sometimes mislead)
 - Overfitting and weak validation 
+- Commentary on Data Science: [Towards Data Science](https://towardsdatascience.com/tag/editors-pick/)
 
 ---
+
 
 
 ## Top Job Titles
@@ -169,7 +171,7 @@ Fastest-growing roles (percentage terms) include:
 | Jobs created | 170 |
 | Jobs displaced | 92 |
 | Net change | 78 |
-{: .rowlines}
+
 
 ---
 
@@ -280,7 +282,7 @@ We will focus on **transferable** skills and modern workflows:
 ## How does Quarto work?
 
 ::: {.fragment}
-![](img/quarto-flow.png){fig-align="center" width="40%"}
+![](img/quarto-flow.png){fig-align="center" width="50%"}
 :::
 - You write a single source file (`.qmd`) that mixes **text**, **code**, and **output options** (YAML + chunk options).
 - Quarto executes code (e.g., Python via Jupyter) and captures **tables, figures, and printed output**.
