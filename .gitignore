@@ -84,3 +84,6 @@ coverage.xml
 .DS_Store
 **/.DS_Store
 Thumbs.db
+
+/.quarto/
+**/*.quarto_ipynb
