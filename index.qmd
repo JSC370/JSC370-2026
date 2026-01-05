@@ -16,8 +16,8 @@ subtitle: "Winter 2026 · University of Toronto"
 
 ### Weekly Course Schedule
 
-| Week | Dates | Topics / Weekly Activities | Due: Labs Wed 11:59pm,  <br> HW Fri 11:59pm |
-|-------|--------------|---------|------------------|
+| Week | Dates | Topics / Weekly Activities | Due (end of day): <br> Labs Wed,  HW Sun|
+|-----|-----------|-----------------|---------|
 | **Week 1** | January 5 (lecture) <br> January 7 (lab) | Introduction to Data Science tools: Python, Quarto, VS Code | **Lab 1** |
 | **Week 2** | January 12 (lecture) <br> January 14 (lab) | Version Control & Reproducible Research, Git/GitHub | **Lab 2** |
 | **Week 3** | January 19 (lecture) <br> January 21 (lab) | Exploratory Data Analysis | **Lab 3** |
@@ -28,21 +28,21 @@ subtitle: "Winter 2026 · University of Toronto"
 | **Week 8** | February 23 (lecture) <br> February 25 (lab) | Text mining, LLMs | **Lab 8** |
 | **Week 9** | March 2 (lecture) <br> March 4 (lab) | High performance computing; cloud computing | **HW3**, **Lab 9** |
 | **Week 10** | March 9 (lecture) <br> March 11 (lab) | ML 2 (trees, random forests, boosting) | **Midterm**, **Lab 10** |
-| **Week 11** | March 16 (lecture) <br> March 18 (lab) | Interactive visualization & effective data communication I | **Lab 11** |
-| **Week 12** | March 23 (lecture) <br> March 25 (lab) | Interactive visualization & effective data communication II | **HW4**, **Lab 12** |
+| **Week 11** | March 16 (lecture) <br> March 18 (lab) | Interactive visualization & effective data communication | **Lab 11** |
+| **Week 12** | March 23 (lecture) <br> March 25 (lab) | Building Website and Interactive Apps | **HW4**, **Lab 12** |
 | **Week 13** | March 30 (lecture) <br> April 1 (lab) | Wrap-Up  | **HW5** |
-| **Week 15** | April 27 |  | **Final Project** |
+| **Week 15** | April 26 |  | **Final Project** |
 
 ### Grading Breakdown
 
 | Task  | % of Grade |
 |---|---|
-|Labs, including attendance and guest speaker reflections|15|
+|Labs (including attendance and guest speaker reflections)|15|
 |Homework (5)|25|
 |Midterm report|25|
 |Final project|35|
 
-### Readings
+### Readings (Not Required)
 
 * [Python for Data Analysis (3e)](https://wesmckinney.com/book/), 2023. Wes McKinney.
 * [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/), Jake VanderPlas.
@@ -51,9 +51,8 @@ subtitle: "Winter 2026 · University of Toronto"
 * [An Introduction to Statistical Learning](https://www.statlearning.com/), 2023 James, Witten, Hastie, Tibshirani, Taylor
 
 
-# Resources
-
-## Helpers and Templates
+## Resources
+### Helpers and Templates
 
 - [Quarto (download/install)](https://quarto.org/docs/download/index.html)
 - [Quarto in VS Code](https://quarto.org/docs/tools/vscode/index.html)
@@ -66,7 +65,7 @@ subtitle: "Winter 2026 · University of Toronto"
 - [Markdown Guide](https://www.markdownguide.org/)
 - [Markdown tutorial](https://www.markdowntutorial.com/)
 
-## Guides
+### Guides
 
 - [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
 - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
@@ -79,7 +78,7 @@ subtitle: "Winter 2026 · University of Toronto"
 - [pre-commit](https://pre-commit.com/)
 - [pytest: Getting Started](https://docs.pytest.org/en/stable/getting-started.html)
 
-## Tools
+### Tools
 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Python](https://www.python.org/)

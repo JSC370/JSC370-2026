@@ -1,24 +1,10 @@
 [
   {
-    "objectID": "index.html#helpers-and-templates",
-    "href": "index.html#helpers-and-templates",
+    "objectID": "index.html#resources",
+    "href": "index.html#resources",
     "title": "JSC370: Data Science II",
-    "section": "Helpers and Templates",
-    "text": "Helpers and Templates\n\nQuarto (download/install)\nQuarto in VS Code\nQuarto VS Code extension\nJupyter extension for VS Code\nCookiecutter Data Science\nJupytext (pair notebooks with .py/.md)\nQuarto: Markdown Basics\nQuarto: Gallery (examples)\nMarkdown Guide\nMarkdown tutorial"
-  },
-  {
-    "objectID": "index.html#guides",
-    "href": "index.html#guides",
-    "title": "JSC370: Data Science II",
-    "section": "Guides",
-    "text": "Guides\n\nPEP 8 – Style Guide for Python Code\nGoogle Python Style Guide\npandas: 10 minutes to pandas\nNumPy user guide\nMatplotlib tutorials\nseaborn documentation\nVega-Altair documentation\nscikit-learn: Getting Started\npre-commit\npytest: Getting Started"
-  },
-  {
-    "objectID": "index.html#tools",
-    "href": "index.html#tools",
-    "title": "JSC370: Data Science II",
-    "section": "Tools",
-    "text": "Tools\n\nVisual Studio Code\nPython\nCore libraries:\n\npandas\nNumPy\nscikit-learn\n\nData access & wrangling:\n\nRequests\nBeautiful Soup\nDuckDB Python API\nSQLAlchemy\n\nPublishing / reproducibility:\n\nQuarto\nPandoc\nGit\nGitHub\nGitHub Classroom\nGitHub Pages"
+    "section": "Resources",
+    "text": "Resources\n\nHelpers and Templates\n\nQuarto (download/install)\nQuarto in VS Code\nQuarto VS Code extension\nJupyter extension for VS Code\nCookiecutter Data Science\nJupytext (pair notebooks with .py/.md)\nQuarto: Markdown Basics\nQuarto: Gallery (examples)\nMarkdown Guide\nMarkdown tutorial\n\n\n\nGuides\n\nPEP 8 – Style Guide for Python Code\nGoogle Python Style Guide\npandas: 10 minutes to pandas\nNumPy user guide\nMatplotlib tutorials\nseaborn documentation\nVega-Altair documentation\nscikit-learn: Getting Started\npre-commit\npytest: Getting Started\n\n\n\nTools\n\nVisual Studio Code\nPython\nCore libraries:\n\npandas\nNumPy\nscikit-learn\n\nData access & wrangling:\n\nRequests\nBeautiful Soup\nDuckDB Python API\nSQLAlchemy\n\nPublishing / reproducibility:\n\nQuarto\nPandoc\nGit\nGitHub\nGitHub Classroom\nGitHub Pages"
   },
   {
     "objectID": "index.html#data",
