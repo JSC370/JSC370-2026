@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -123,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#what-you-will-submit" id="toc-what-you-will-submit" class="nav-link" data-scroll-target="#what-you-will-submit">What you will submit</a></li>
+  <li><a href="#what-you-will-submit-to-markus" id="toc-what-you-will-submit-to-markus" class="nav-link" data-scroll-target="#what-you-will-submit-to-markus">What you will submit to MarkUs</a></li>
   <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start">0. Before you start</a></li>
   <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">1. Quarto</a></li>
   <li><a href="#confirm-python-is-installed" id="toc-confirm-python-is-installed" class="nav-link" data-scroll-target="#confirm-python-is-installed">2. Confirm Python is installed</a></li>
@@ -164,13 +129,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Install/confirm <strong>VS Code</strong>, <strong>Python</strong>, and <strong>Quarto</strong></li>
 <li>Confirm Quarto can run Python chunks (via Jupyter)</li>
 <li>Render a Quarto document locally</li>
-<li>(Next week) Commit and push your work to GitHub Classroom.</li>
+<li>Upload your .qmd to MarkUs</li>
 </ul>
 </section>
-<section id="what-you-will-submit" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-will-submit">What you will submit</h2>
+<section id="what-you-will-submit-to-markus" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-will-submit-to-markus">What you will submit to MarkUs</h2>
 <ul>
-<li>This completed <code>.qmd</code> file. Download the <a href="https://github.com/JSC370/JSC370-2026/blob/main/labs/JSC370-lab-01.qmd">Lab .qmd on GitHub</a></li>
+<li>This completed <code>.qmd</code> file. Download the <a href="https://github.com/JSC370/JSC370-2026/blob/main/labs/JSC370-lab-01.qmd">lab .qmd on GitHub</a></li>
 <li>The rendered HTML output (<code>JSC370-lab-01.html</code>)</li>
 </ul>
 </section>
@@ -207,13 +172,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="confirm-python-is-installed" class="level2">
 <h2 class="anchored" data-anchor-id="confirm-python-is-installed">2. Confirm Python is installed</h2>
 <p>You can try this in terminal:</p>
-<div id="7cd16d53" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python3 <span class="op">--</span>version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Python 3.13.0</code></pre>
-</div>
-</div>
-<p>(If python3 doesn’t work, try python –version.) Paste the output, but the chunk above should do it for you if installed correctly.</p>
+<pre class="{bash}"><code>#| echo: true
+python3 --version</code></pre>
+<p>(If python3 doesn’t work, try python –version in terminal.) Paste the output, but the chunk above should do it for you if installed correctly.</p>
 </section>
 <section id="install-core-packages-in-terminal" class="level2">
 <h2 class="anchored" data-anchor-id="install-core-packages-in-terminal">3. Install core packages in terminal</h2>
@@ -260,7 +221,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZnJvbSBwbG90bmluZSBpbXBv
 <p>This should create an HTML file in the same folder, e.g.&nbsp;JSC370-lab-01.html.</p>
 <p>Confirm it exists:</p>
 <pre class="{bash}"><code>ls -l JSC370-lab-01.html</code></pre>
-<p>Open the HTML in your browser to confirm it looks correct.</p>
+<p>Print out the output and make sure it is in this lab. Also open the HTML in your browser to confirm it looks correct.</p>
 
 
 <script type="pyodide-data">

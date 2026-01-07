@@ -249,21 +249,21 @@
     "href": "labs/JSC370-lab-01.html",
     "title": "Lab 1 — Setup: VS Code with Python and Quarto",
     "section": "",
-    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\n(Next week) Commit and push your work to GitHub Classroom."
+    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\nUpload your .qmd to MarkUs"
   },
   {
     "objectID": "labs/JSC370-lab-01.html#overview",
     "href": "labs/JSC370-lab-01.html#overview",
     "title": "Lab 1 — Setup: VS Code with Python and Quarto",
     "section": "",
-    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\n(Next week) Commit and push your work to GitHub Classroom."
+    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\nUpload your .qmd to MarkUs"
   },
   {
-    "objectID": "labs/JSC370-lab-01.html#what-you-will-submit",
-    "href": "labs/JSC370-lab-01.html#what-you-will-submit",
+    "objectID": "labs/JSC370-lab-01.html#what-you-will-submit-to-markus",
+    "href": "labs/JSC370-lab-01.html#what-you-will-submit-to-markus",
     "title": "Lab 1 — Setup: VS Code with Python and Quarto",
-    "section": "What you will submit",
-    "text": "What you will submit\n\nThis completed .qmd file. Download the Lab .qmd on GitHub\nThe rendered HTML output (JSC370-lab-01.html)"
+    "section": "What you will submit to MarkUs",
+    "text": "What you will submit to MarkUs\n\nThis completed .qmd file. Download the lab .qmd on GitHub\nThe rendered HTML output (JSC370-lab-01.html)"
   },
   {
     "objectID": "labs/JSC370-lab-01.html#before-you-start",
@@ -284,7 +284,7 @@
     "href": "labs/JSC370-lab-01.html#confirm-python-is-installed",
     "title": "Lab 1 — Setup: VS Code with Python and Quarto",
     "section": "2. Confirm Python is installed",
-    "text": "2. Confirm Python is installed\nYou can try this in terminal:\n\n!python3 --version\n\nPython 3.13.0\n\n\n(If python3 doesn’t work, try python –version.) Paste the output, but the chunk above should do it for you if installed correctly."
+    "text": "2. Confirm Python is installed\nYou can try this in terminal:\n#| echo: true\npython3 --version\n(If python3 doesn’t work, try python –version in terminal.) Paste the output, but the chunk above should do it for you if installed correctly."
   },
   {
     "objectID": "labs/JSC370-lab-01.html#install-core-packages-in-terminal",
@@ -312,7 +312,7 @@
     "href": "labs/JSC370-lab-01.html#render-.qmd-to-.html",
     "title": "Lab 1 — Setup: VS Code with Python and Quarto",
     "section": "6. Render ‘.qmd’ to ‘.html’",
-    "text": "6. Render ‘.qmd’ to ‘.html’\nIn the terminal, make sure you are in the folder containing this file, then run:\nquarto render JSC370-lab-01.qmd\nThis should create an HTML file in the same folder, e.g. JSC370-lab-01.html.\nConfirm it exists:\nls -l JSC370-lab-01.html\nOpen the HTML in your browser to confirm it looks correct."
+    "text": "6. Render ‘.qmd’ to ‘.html’\nIn the terminal, make sure you are in the folder containing this file, then run:\nquarto render JSC370-lab-01.qmd\nThis should create an HTML file in the same folder, e.g. JSC370-lab-01.html.\nConfirm it exists:\nls -l JSC370-lab-01.html\nPrint out the output and make sure it is in this lab. Also open the HTML in your browser to confirm it looks correct."
   },
   {
     "objectID": "index.html#resources",

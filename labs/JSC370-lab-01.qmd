@@ -19,12 +19,12 @@ In this lab you will:
 - Install/confirm **VS Code**, **Python**, and **Quarto**
 - Confirm Quarto can run Python chunks (via Jupyter)
 - Render a Quarto document locally
-- (Next week) Commit and push your work to GitHub Classroom.
+- Upload your .qmd to MarkUs
 
 
-## What you will submit
+## What you will submit to MarkUs
 
-- This completed `.qmd` file. Download the [Lab .qmd on GitHub](https://github.com/JSC370/JSC370-2026/blob/main/labs/JSC370-lab-01.qmd)
+- This completed `.qmd` file. Download the [lab .qmd on GitHub](https://github.com/JSC370/JSC370-2026/blob/main/labs/JSC370-lab-01.qmd)
 - The rendered HTML output (`JSC370-lab-01.html`)
 
 
@@ -71,12 +71,12 @@ To stop preview: press Ctrl+C in the terminal running the preview.
 
 You can try this in terminal:
 
-```{python}
+```{bash}
 #| echo: true
-!python3 --version
+python3 --version
 ```
 
-(If python3 doesn’t work, try python --version.) Paste the output, but the chunk above should do it for you if installed correctly.
+(If python3 doesn’t work, try python --version in terminal.) Paste the output, but the chunk above should do it for you if installed correctly.
 
 
 ## 3. Install core packages in terminal
@@ -150,4 +150,4 @@ Confirm it exists:
 ls -l JSC370-lab-01.html
 ```
 
-Open the HTML in your browser to confirm it looks correct.
+Print out the output and make sure it is in this lab. Also open the HTML in your browser to confirm it looks correct.
