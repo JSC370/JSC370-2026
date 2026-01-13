@@ -1,18 +1,15 @@
 ---
 title: "JSC 370: Data Science II"
 subtitle: "Week 2: Reproducible Research and Version Control"
-date: "January 12, 2026"
 format:
   revealjs:
-    incremental: true
-    slide-number: true
-    chalkboard: false
     relative-resources: true
+    slide-number: true
+    incremental: false
 jupyter: python3
-execute:
-  echo: true
-  warning: false
 ---
+
+
 
 ## Repeatability vs  Reproducibility vs Replicability
 

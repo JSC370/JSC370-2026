@@ -109,7 +109,7 @@
     "href": "slides/01-introduction/JSC370-slides-01.html#visualization-of-these-data",
     "title": "JSC 370: Data Science II",
     "section": "Visualization of these data",
-    "text": "Visualization of these data"
+    "text": "Visualization of these data\n#| echo: true\n#| code-fold: true\n#| code-summary: \"Show code\"\n#| fig-width: 6\n#| fig-height: 3\nimport matplotlib.pyplot as plt\nlabels = [\"Jobs created\", \"Jobs displaced\", \"Net change\"]\nvals = [170, 92, 78]  # WEF article summary\nplt.figure()\nplt.bar(labels, vals)\nplt.ylabel(\"Millions of jobs\")\nplt.title(\"Projected global job changes by 2030 (WEF)\")\nplt.tight_layout()\nplt.show()"
   },
   {
     "objectID": "slides/01-introduction/JSC370-slides-01.html#what-is-this-course",

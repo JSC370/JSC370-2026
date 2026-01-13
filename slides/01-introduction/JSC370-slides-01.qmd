@@ -1,12 +1,11 @@
 ---
 title: "JSC 370: Data Science II"
 subtitle: "Week 1: Introduction"
-date: "January 5, 2026"
 format:
-  live-revealjs:
-    incremental: true
+  revealjs:
+    relative-resources: true
     slide-number: true
-    chalkboard: false
+    incremental: false
 jupyter: python3
 ---
 
