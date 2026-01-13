@@ -202,10 +202,10 @@
 <section id="repeatability-vs-reproducibility-vs-replicability" class="slide level2">
 <h2>Repeatability vs Reproducibility vs Replicability</h2>
 <ul>
-<li><p>These terms are often used interchangeably, but they are different.</p></li>
-<li><p>Repeatability: Generating the exact same results when using the same data by the same person.</p></li>
-<li><p>Reproducibility: Generating the exact same results when using the same data by a different person or group. If we can’t reproduce a study, how can we replicate it?</p></li>
-<li><p>Replicability: Repeating a study by independently performing another study on new data.</p></li>
+<li class="fragment"><p>These terms are often used interchangeably, but they are different.</p></li>
+<li class="fragment"><p>Repeatability: Generating the exact same results when using the same data by the same person.</p></li>
+<li class="fragment"><p>Reproducibility: Generating the exact same results when using the same data by a different person or group. If we can’t reproduce a study, how can we replicate it?</p></li>
+<li class="fragment"><p>Replicability: Repeating a study by independently performing another study on new data.</p></li>
 </ul>
 </section>
 <section id="repeatability-vs-reproducibility-vs-replicability-1" class="slide level2">
@@ -216,9 +216,9 @@
 <h2>Reproducibility</h2>
 <p>A different analyst/researcher re-performs the analysis with the</p>
 <ul>
-<li><em>same code</em> and</li>
-<li><em>same data</em> and</li>
-<li>obtains the <em>same result</em></li>
+<li class="fragment"><em>same code</em> and</li>
+<li class="fragment"><em>same data</em> and</li>
+<li class="fragment">obtains the <em>same result</em></li>
 </ul>
 <div class="fragment">
 <p>⚠️ If your results are not repeatable then they will not be reproducible!</p>
@@ -236,11 +236,11 @@
 <h2>Reproducibility</h2>
 <p>Barriers to doing reproducible work:</p>
 <ul>
-<li>Poor documentation</li>
-<li>Manual steps</li>
-<li>Non-transferable tools</li>
-<li>Incorrect training</li>
-<li>Time</li>
+<li class="fragment">Poor documentation</li>
+<li class="fragment">Manual steps</li>
+<li class="fragment">Non-transferable tools</li>
+<li class="fragment">Incorrect training</li>
+<li class="fragment">Time</li>
 </ul>
 </section>
 <section id="reproducible-workflow" class="slide level2">
@@ -255,82 +255,82 @@
 <section id="reproducible-research-1" class="slide level2">
 <h2>Reproducible Research</h2>
 <ul>
-<li>In computational sciences and data analysis, what is reproducibility?</li>
-<li><strong>Definition:</strong> The data and code used to make a finding are available and presented so that an independent researcher can (relatively) straightforwardly recreate the result.</li>
+<li class="fragment">In computational sciences and data analysis, what is reproducibility?</li>
+<li class="fragment"><strong>Definition:</strong> The data and code used to make a finding are available and presented so that an independent researcher can (relatively) straightforwardly recreate the result.</li>
 </ul>
 </section>
 <section id="reproducible-research-2" class="slide level2">
 <h2>Reproducible Research</h2>
 <p>This still seldom happens. Two examples from Tim Vines <a href="https://dataseer.ai">DataSeer.ai</a>:</p>
 <ul>
-<li>Data availability declines rapidly with article age (reported ~17% lower odds per year in one analysis).</li>
-<li>Reanalyses using the program <em>STRUCTURE</em> found a substantial fraction of published results could not be reproduced (reported ~30% in one study).</li>
+<li class="fragment">Data availability declines rapidly with article age (reported ~17% lower odds per year in one analysis).</li>
+<li class="fragment">Reanalyses using the program <em>STRUCTURE</em> found a substantial fraction of published results could not be reproduced (reported ~30% in one study).</li>
 </ul>
 </section>
 <section id="reproducible-research-3" class="slide level2">
 <h2>Reproducible Research</h2>
 <ul>
-<li><p>Scientific articles often include detailed methods, but they are typically insufficient to reproduce a computational analysis.</p></li>
-<li><p>Roger Peng and Stephanie Hicks wrote: “Reproducibility is typically thwarted by a lack of availability of the original data and computer code.”</p></li>
-<li><p>Scientists owe it to themselves and their community to keep an explicit record of <strong>all</strong> steps in a computational analysis.</p></li>
+<li class="fragment"><p>Scientific articles often include detailed methods, but they are typically insufficient to reproduce a computational analysis.</p></li>
+<li class="fragment"><p>Roger Peng and Stephanie Hicks wrote: “Reproducibility is typically thwarted by a lack of availability of the original data and computer code.”</p></li>
+<li class="fragment"><p>Scientists owe it to themselves and their community to keep an explicit record of <strong>all</strong> steps in a computational analysis.</p></li>
 </ul>
 </section>
 <section id="reproducible-research-dos" class="slide level2">
 <h2>Reproducible Research Do’s</h2>
 <ul>
-<li>Start with a good question: make it focused and something you care about.</li>
-<li>Teach your computer to do the work from beginning to end (automation &gt; manual steps).</li>
-<li>Use version control.</li>
-<li>Track your software environment (toolchain + package versions).</li>
-<li>Set a random seed for any random generation/sampling (e.g., train/test splits).</li>
-<li>Think about the entire pipeline (raw data -&gt; cleaning -&gt; analysis -&gt; output).</li>
+<li class="fragment">Start with a good question: make it focused and something you care about.</li>
+<li class="fragment">Teach your computer to do the work from beginning to end (automation &gt; manual steps).</li>
+<li class="fragment">Use version control.</li>
+<li class="fragment">Track your software environment (toolchain + package versions).</li>
+<li class="fragment">Set a random seed for any random generation/sampling (e.g., train/test splits).</li>
+<li class="fragment">Think about the entire pipeline (raw data -&gt; cleaning -&gt; analysis -&gt; output).</li>
 </ul>
 </section>
 <section id="reproducible-research-donts" class="slide level2">
 <h2>Reproducible Research Don’ts</h2>
 <p>Do <strong>not</strong> do things by hand. This includes:</p>
 <ul>
-<li>Editing spreadsheets to “clean” them (e.g., removing outliers, ad hoc QA/QC)</li>
-<li>Manually editing tables or figures</li>
-<li>Downloading data by clicking around in a web browser</li>
-<li>Splitting data and moving it around manually</li>
+<li class="fragment">Editing spreadsheets to “clean” them (e.g., removing outliers, ad hoc QA/QC)</li>
+<li class="fragment">Manually editing tables or figures</li>
+<li class="fragment">Downloading data by clicking around in a web browser</li>
+<li class="fragment">Splitting data and moving it around manually</li>
 </ul>
 <p>If something truly must be done by hand, <strong>document it explicitly</strong>.</p>
 </section>
 <section id="reproducible-research-donts-1" class="slide level2">
 <h2>Reproducible Research Don’ts</h2>
 <ul>
-<li>Avoid point-and-click or highly interactive tools when possible.
+<li class="fragment">Avoid point-and-click or highly interactive tools when possible.
 <ul>
-<li>They often leave no trace of the steps.</li>
-<li>If you must use them, write down the exact sequence of actions.</li>
+<li class="fragment">They often leave no trace of the steps.</li>
+<li class="fragment">If you must use them, write down the exact sequence of actions.</li>
 </ul></li>
-<li>Save the <strong>data and code</strong> that generated the output, rather than the output alone.</li>
+<li class="fragment">Save the <strong>data and code</strong> that generated the output, rather than the output alone.</li>
 </ul>
 </section>
 <section id="reproducibility-challenges" class="slide level2">
 <h2>Reproducibility Challenges</h2>
 <ul>
-<li><strong>Data size</strong>
+<li class="fragment"><strong>Data size</strong>
 <ul>
-<li>Build tools into your code to manage large datasets (chunking, efficient formats, parallelism).</li>
-<li>Store data in smaller chunks and write code that pulls and combines files automatically.</li>
-<li>Write metadata and use tools that support data organization.</li>
+<li class="fragment">Build tools into your code to manage large datasets (chunking, efficient formats, parallelism).</li>
+<li class="fragment">Store data in smaller chunks and write code that pulls and combines files automatically.</li>
+<li class="fragment">Write metadata and use tools that support data organization.</li>
 </ul></li>
 </ul>
 </section>
 <section id="reproducibility-challenges-1" class="slide level2">
 <h2>Reproducibility Challenges</h2>
 <ul>
-<li><strong>Data complexity</strong>
+<li class="fragment"><strong>Data complexity</strong>
 <ul>
-<li>Use smaller “toy” subsets to regularly check reproducibility.</li>
-<li>Be explicit about training/validation/test sets.</li>
-<li>Use diagnostic visualizations.</li>
+<li class="fragment">Use smaller “toy” subsets to regularly check reproducibility.</li>
+<li class="fragment">Be explicit about training/validation/test sets.</li>
+<li class="fragment">Use diagnostic visualizations.</li>
 </ul></li>
-<li><strong>Workflow complexity</strong>
+<li class="fragment"><strong>Workflow complexity</strong>
 <ul>
-<li>Use README files (and keep them updated).</li>
+<li class="fragment">Use README files (and keep them updated).</li>
 </ul></li>
 </ul>
 </section>
@@ -348,22 +348,22 @@
 <h2>Why do we care?</h2>
 <p>Have you ever…</p>
 <ul>
-<li>Made a change to code, realized it was a mistake, and wanted to revert?</li>
-<li>Lost work (or only had an old backup)?</li>
-<li>Needed to maintain multiple versions (e.g., “final_final_v3”)?</li>
-<li>Wanted to compare two versions of your code to see exactly what changed?</li>
-<li>Needed to prove that a particular change broke (or fixed) something?</li>
-<li>Wanted to review the history of a file to understand <em>why</em> it looks like it does?</li>
+<li class="fragment">Made a change to code, realized it was a mistake, and wanted to revert?</li>
+<li class="fragment">Lost work (or only had an old backup)?</li>
+<li class="fragment">Needed to maintain multiple versions (e.g., “final_final_v3”)?</li>
+<li class="fragment">Wanted to compare two versions of your code to see exactly what changed?</li>
+<li class="fragment">Needed to prove that a particular change broke (or fixed) something?</li>
+<li class="fragment">Wanted to review the history of a file to understand <em>why</em> it looks like it does?</li>
 </ul>
 </section>
 <section id="why-do-we-care-contd" class="slide level2">
 <h2>Why do we care? (cont’d)</h2>
 <p>In these cases (and many others), a version control system should make your life easier.</p>
 <ul>
-<li>Wanted to submit a change to someone else’s code (without emailing files around)?</li>
-<li>Wanted to share code and collaborate without overwriting each other?</li>
-<li>Wanted to see <em>who did what, when, and where</em> (accountability and provenance)?</li>
-<li>Wanted to experiment with a feature without disrupting working code?</li>
+<li class="fragment">Wanted to submit a change to someone else’s code (without emailing files around)?</li>
+<li class="fragment">Wanted to share code and collaborate without overwriting each other?</li>
+<li class="fragment">Wanted to see <em>who did what, when, and where</em> (accountability and provenance)?</li>
+<li class="fragment">Wanted to experiment with a feature without disrupting working code?</li>
 </ul>
 <p>— <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">Version Control (Atlassian)</a></p>
 </section>
@@ -393,26 +393,26 @@
 <section id="why-git" class="slide level2">
 <h2>Why Git?</h2>
 <ul>
-<li><p>Distributed architecture: you have the full history locally (you can work offline).</p></li>
-<li><p>Efficient branching and merging: easy to switch between branches, supporting experimentation and collaboration.</p></li>
-<li><p>In this course (and likely beyond), we’ll use <a href="https://git-scm.com">Git</a> + <a href="https://github.com/">GitHub</a>.</p></li>
-<li><p>Git is the dominant version control system in practice (Stack Overflow reports very high adoption).</p>
+<li class="fragment"><p>Distributed architecture: you have the full history locally (you can work offline).</p></li>
+<li class="fragment"><p>Efficient branching and merging: easy to switch between branches, supporting experimentation and collaboration.</p></li>
+<li class="fragment"><p>In this course (and likely beyond), we’ll use <a href="https://git-scm.com">Git</a> + <a href="https://github.com/">GitHub</a>.</p></li>
+<li class="fragment"><p>Git is the dominant version control system in practice (Stack Overflow reports very high adoption).</p>
 <ul>
-<li>See: <a href="https://stackoverflow.blog/2023/01/09/beyond-git-the-other-version-control-systems-developers-use/">Stack Overflow discussion of survey results</a></li>
+<li class="fragment">See: <a href="https://stackoverflow.blog/2023/01/09/beyond-git-the-other-version-control-systems-developers-use/">Stack Overflow discussion of survey results</a></li>
 </ul></li>
-<li><p>A great reference: <a href="https://git-scm.com/book/en/v2">Pro Git (free online)</a></p></li>
-<li><p>More on the name: <a href="https://en.wikipedia.org/wiki/Git#Naming">Git naming (Wikipedia)</a></p></li>
+<li class="fragment"><p>A great reference: <a href="https://git-scm.com/book/en/v2">Pro Git (free online)</a></p></li>
+<li class="fragment"><p>More on the name: <a href="https://en.wikipedia.org/wiki/Git#Naming">Git naming (Wikipedia)</a></p></li>
 </ul>
 </section>
 <section id="how-can-i-use-git" class="slide level2">
 <h2>How can I use Git?</h2>
 <p>A few common ways to include Git in your workflow:</p>
 <ul>
-<li>Command line (most universal)</li>
-<li>VS Code Source Control panel (very common for Python work)</li>
-<li>GitHub Desktop (beginner-friendly)</li>
-<li>GitKraken (feature-rich GUI)</li>
-<li>GitHub web interface (quick edits + reviews)</li>
+<li class="fragment">Command line (most universal)</li>
+<li class="fragment">VS Code Source Control panel (very common for Python work)</li>
+<li class="fragment">GitHub Desktop (beginner-friendly)</li>
+<li class="fragment">GitKraken (feature-rich GUI)</li>
+<li class="fragment">GitHub web interface (quick edits + reviews)</li>
 </ul>
 <p>More alternatives: <a href="https://git-scm.com/download/gui">Git GUI clients</a></p>
 </section>
@@ -423,11 +423,11 @@
 <section id="key-terms-youll-hear-a-lot" class="slide level2">
 <h2>Key terms you’ll hear a lot</h2>
 <ul>
-<li><strong>Repository (repo):</strong> the project + its version history</li>
-<li><strong>Commit:</strong> a saved snapshot with a message (and an author + timestamp)</li>
-<li><strong>Branch:</strong> an independent line of development (safe experimentation)</li>
-<li><strong>Merge / Pull request:</strong> integrating changes back together</li>
-<li><strong>Remote:</strong> a copy of the repo hosted elsewhere (e.g., GitHub)</li>
+<li class="fragment"><strong>Repository (repo):</strong> the project + its version history</li>
+<li class="fragment"><strong>Commit:</strong> a saved snapshot with a message (and an author + timestamp)</li>
+<li class="fragment"><strong>Branch:</strong> an independent line of development (safe experimentation)</li>
+<li class="fragment"><strong>Merge / Pull request:</strong> integrating changes back together</li>
+<li class="fragment"><strong>Remote:</strong> a copy of the repo hosted elsewhere (e.g., GitHub)</li>
 </ul>
 </section>
 <section id="git-workflow" class="slide level2">
@@ -437,10 +437,10 @@
 <section id="setting-up-the-workflow" class="slide level2">
 <h2>Setting up the workflow</h2>
 <ul>
-<li>Go to GitHub and sign in.</li>
-<li>Create a repository (name it, choose public/private as appropriate, add a README).</li>
-<li>Clone it (copy it onto your local machine).</li>
-<li>Make sure Git knows who you are (<code>git config</code>) and that authentication works (HTTPS token or SSH key).</li>
+<li class="fragment">Go to GitHub and sign in.</li>
+<li class="fragment">Create a repository (name it, choose public/private as appropriate, add a README).</li>
+<li class="fragment">Clone it (copy it onto your local machine).</li>
+<li class="fragment">Make sure Git knows who you are (<code>git config</code>) and that authentication works (HTTPS token or SSH key).</li>
 </ul>
 <p>Note: We assume Git is installed: <a href="https://git-scm.com" class="uri">https://git-scm.com</a></p>
 </section>
@@ -451,34 +451,34 @@
 <section id="workflow-for-an-existing-repo" class="slide level2">
 <h2>Workflow for an existing repo</h2>
 <ol type="1">
-<li><p><strong>Start by syncing</strong> (if you collaborate):</p>
+<li class="fragment"><p><strong>Start by syncing</strong> (if you collaborate):</p>
 <ul>
-<li><code>git pull</code></li>
+<li class="fragment"><code>git pull</code></li>
 </ul></li>
-<li><p><strong>Make changes</strong> in your editor.</p></li>
-<li><p><strong>Inspect what changed</strong>:</p>
+<li class="fragment"><p><strong>Make changes</strong> in your editor.</p></li>
+<li class="fragment"><p><strong>Inspect what changed</strong>:</p>
 <ul>
-<li><code>git status</code><br>
+<li class="fragment"><code>git status</code><br>
 </li>
-<li><code>git diff</code></li>
+<li class="fragment"><code>git diff</code></li>
 </ul></li>
-<li><p><strong>Stage changes</strong> (choose what will go into the next commit):</p>
+<li class="fragment"><p><strong>Stage changes</strong> (choose what will go into the next commit):</p>
 <ul>
-<li><code>git add &lt;file&gt;</code> (or <code>git add .</code>)</li>
+<li class="fragment"><code>git add &lt;file&gt;</code> (or <code>git add .</code>)</li>
 </ul></li>
-<li><p><strong>Commit</strong> with a clear message:</p>
+<li class="fragment"><p><strong>Commit</strong> with a clear message:</p>
 <ul>
-<li><code>git commit -m "Explain *why* you changed it"</code></li>
+<li class="fragment"><code>git commit -m "Explain *why* you changed it"</code></li>
 </ul></li>
-<li><p><strong>Push</strong> your commits to GitHub: <code>git push</code></p></li>
+<li class="fragment"><p><strong>Push</strong> your commits to GitHub: <code>git push</code></p></li>
 </ol>
 </section>
 <section id="workflow-for-an-existing-repo-cont" class="slide level2">
 <h2>Workflow for an existing repo (con’t)</h2>
 <p><strong>Undo helpers (common):</strong></p>
 <ul>
-<li>Unstage a file: <code>git restore --staged &lt;file&gt;</code></li>
-<li>Discard local edits to a file: <code>git restore &lt;file&gt;</code><br>
+<li class="fragment">Unstage a file: <code>git restore --staged &lt;file&gt;</code></li>
+<li class="fragment">Discard local edits to a file: <code>git restore &lt;file&gt;</code><br>
 (Older syntax you may see online: <code>git checkout -- &lt;file&gt;</code>)</li>
 </ul>
 </section>
@@ -496,15 +496,15 @@
 <h2>Hands-on 1: Remote repo</h2>
 <p>Goal: create a GitHub repo and make your first commit.</p>
 <ol type="1">
-<li>Create a new repository on GitHub (e.g., JSC370). Include a README.md.</li>
-<li>On your computer, choose where you want the project folder to live. Change to that directory.</li>
-<li>Clone the repository (copy the HTTPS/SSH URL from GitHub). Then in terminal git clone https://github.com/<you>/<repo>.git</repo></you></li>
-<li>Edit README.md (VS Code is fine).</li>
-<li>Stage + commit + push:
+<li class="fragment">Create a new repository on GitHub (e.g., JSC370). Include a README.md.</li>
+<li class="fragment">On your computer, choose where you want the project folder to live. Change to that directory.</li>
+<li class="fragment">Clone the repository (copy the HTTPS/SSH URL from GitHub). Then in terminal git clone https://github.com/<you>/<repo>.git</repo></you></li>
+<li class="fragment">Edit README.md (VS Code is fine).</li>
+<li class="fragment">Stage + commit + push:
 <ul>
-<li>git add README.md</li>
-<li>git commit -m “Edit README”</li>
-<li>git push</li>
+<li class="fragment">git add README.md</li>
+<li class="fragment">git commit -m “Edit README”</li>
+<li class="fragment">git push</li>
 </ul></li>
 </ol>
 </section>
@@ -581,10 +581,10 @@
 <p>A typical flow is: <strong>branch (or fork + branch) → pull request → merge → resolve conflicts (if needed)</strong></p>
 <p>These concepts make collaboration (mostly) painless:</p>
 <ul>
-<li><strong>Branches:</strong> work in parallel without breaking <code>main</code></li>
-<li><strong>Forks:</strong> work on a copy of a repo when you don’t have write access</li>
-<li><strong>Pull Requests:</strong> propose + review changes before merging</li>
-<li><strong>Merge conflicts:</strong> what happens when Git can’t auto-combine edits</li>
+<li class="fragment"><strong>Branches:</strong> work in parallel without breaking <code>main</code></li>
+<li class="fragment"><strong>Forks:</strong> work on a copy of a repo when you don’t have write access</li>
+<li class="fragment"><strong>Pull Requests:</strong> propose + review changes before merging</li>
+<li class="fragment"><strong>Merge conflicts:</strong> what happens when Git can’t auto-combine edits</li>
 </ul>
 </section>
 <section id="branch-vs-fork" class="slide level2">
@@ -593,27 +593,27 @@
 <strong>Fork</strong> = your own copy of the <em>entire repository</em> under your account</p>
 <p>Rule of thumb:</p>
 <ul>
-<li>Working in a shared class/team repo → <strong>branch</strong></li>
-<li>Contributing to a repo you can’t write to → <strong>fork</strong></li>
+<li class="fragment">Working in a shared class/team repo → <strong>branch</strong></li>
+<li class="fragment">Contributing to a repo you can’t write to → <strong>fork</strong></li>
 </ul>
 </section>
 <section id="branch" class="slide level2">
 <h2>Branch</h2>
 <ul>
-<li>Repo: <code>course-repo</code></li>
-<li>You create: <code>student/meredith-lab2</code></li>
-<li>You push to the same repo</li>
-<li>PR: <code>student/meredith-lab2 → main</code></li>
+<li class="fragment">Repo: <code>course-repo</code></li>
+<li class="fragment">You create: <code>student/meredith-lab2</code></li>
+<li class="fragment">You push to the same repo</li>
+<li class="fragment">PR: <code>student/meredith-lab2 → main</code></li>
 </ul>
 <p>Best for: teams/classes with shared access</p>
 </section>
 <section id="fork" class="slide level2">
 <h2>Fork</h2>
 <ul>
-<li>Upstream repo: <code>org/course-repo</code></li>
-<li>Your fork: <code>yourname/course-repo</code></li>
-<li>You work in your fork (often on a branch)</li>
-<li>PR: <code>yourname:branch → org:main</code></li>
+<li class="fragment">Upstream repo: <code>org/course-repo</code></li>
+<li class="fragment">Your fork: <code>yourname/course-repo</code></li>
+<li class="fragment">You work in your fork (often on a branch)</li>
+<li class="fragment">PR: <code>yourname:branch → org:main</code></li>
 </ul>
 <p>Best for: open-source external projects with no write access</p>
 </section>
@@ -621,15 +621,15 @@
 <h2>Branches: what problem do they solve?</h2>
 <p>Without branches:</p>
 <ul>
-<li>Everyone edits <code>main</code></li>
-<li>Work collides</li>
-<li>It’s hard to experiment safely</li>
+<li class="fragment">Everyone edits <code>main</code></li>
+<li class="fragment">Work collides</li>
+<li class="fragment">It’s hard to experiment safely</li>
 </ul>
 <p>With branches:</p>
 <ul>
-<li><code>main</code> stays stable</li>
-<li>Each feature/bugfix happens on its own branch</li>
-<li>Changes are merged back only when ready</li>
+<li class="fragment"><code>main</code> stays stable</li>
+<li class="fragment">Each feature/bugfix happens on its own branch</li>
+<li class="fragment">Changes are merged back only when ready</li>
 </ul>
 <p>Branches are easy in Git: creating/switching is fast.</p>
 </section>
@@ -637,9 +637,9 @@
 <h2>Branch naming conventions</h2>
 <p>Industry-style examples: feature, bugfix, hotfix, release, documentation</p>
 <ul>
-<li><code>feature/lab1</code></li>
-<li><code>bugfix/path-images</code></li>
-<li><code>docs/update-syllabus</code></li>
+<li class="fragment"><code>feature/lab1</code></li>
+<li class="fragment"><code>bugfix/path-images</code></li>
+<li class="fragment"><code>docs/update-syllabus</code></li>
 </ul>
 <p>Tip: use short, descriptive names. Avoid <code>temp</code> and <code>final2</code>. Here are some additional <a href="https://medium.com/@abhay.pixolo/naming-conventions-for-git-branches-a-cheatsheet-8549feca2534">conventions</a></p>
 </section>
@@ -649,9 +649,9 @@
 <p>Example: <code>student/meredith-lab2</code></p>
 <p>Why this works:</p>
 <ul>
-<li>communicates <strong>who</strong> owns the branch</li>
-<li>communicates <strong>what</strong> it’s for (e.g.&nbsp;lab number)</li>
-<li>avoids confusion with repo folders (the <code>/</code> is just naming)</li>
+<li class="fragment">communicates <strong>who</strong> owns the branch</li>
+<li class="fragment">communicates <strong>what</strong> it’s for (e.g.&nbsp;lab number)</li>
+<li class="fragment">avoids confusion with repo folders (the <code>/</code> is just naming)</li>
 </ul>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -670,10 +670,10 @@
 <section id="common-branch-workflow" class="slide level2">
 <h2>Common branch workflow</h2>
 <ol type="1">
-<li>Start from an up-to-date <code>main</code></li>
-<li>Create a new branch</li>
-<li>Make changes and commit on the branch</li>
-<li>Push the branch to GitHub</li>
+<li class="fragment">Start from an up-to-date <code>main</code></li>
+<li class="fragment">Create a new branch</li>
+<li class="fragment">Make changes and commit on the branch</li>
+<li class="fragment">Push the branch to GitHub</li>
 </ol>
 </section>
 <section id="branch-workflow" class="slide level2">
@@ -693,9 +693,9 @@
 <p><code>git switch</code> is the Git command to <strong>move between branches</strong><br>
 (older ways often use <code>git checkout</code> for this).</p>
 <ul>
-<li><p><code>git switch main</code><br>
+<li class="fragment"><p><code>git switch main</code><br>
 “Move my working directory to the <code>main</code> branch.”</p></li>
-<li><p><code>git switch -c student/meredith-lab2</code><br>
+<li class="fragment"><p><code>git switch -c student/meredith-lab2</code><br>
 <code>-c</code> means <strong>create</strong> a new branch <em>and switch to it immediately</em>.</p></li>
 </ul>
 <p>So this is equivalent to two steps:</p>
@@ -707,29 +707,29 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">git</span> switch main</span>
 <span id="cb13-2"><a></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Ensures your branch starts from the latest main</li>
-<li>Reduces merge conflicts later</li>
-<li>Makes your Pull Request easier to review</li>
+<li class="fragment">Ensures your branch starts from the latest main</li>
+<li class="fragment">Reduces merge conflicts later</li>
+<li class="fragment">Makes your Pull Request easier to review</li>
 </ul>
 </section>
 <section id="how-these-concepts-connect" class="slide level2">
 <h2>How these concepts connect</h2>
 <ul>
-<li><strong>Branch:</strong> where you do your work safely</li>
-<li><strong>Commit:</strong> save a snapshot with a message</li>
-<li><strong>Push:</strong> publish your branch to GitHub</li>
-<li><strong>Pull Request:</strong> ask to merge your branch into <code>main</code></li>
-<li><strong>Merge:</strong> integrate the branch work into <code>main</code></li>
-<li><strong>Conflict:</strong> Git needs you to decide how to combine edits</li>
+<li class="fragment"><strong>Branch:</strong> where you do your work safely</li>
+<li class="fragment"><strong>Commit:</strong> save a snapshot with a message</li>
+<li class="fragment"><strong>Push:</strong> publish your branch to GitHub</li>
+<li class="fragment"><strong>Pull Request:</strong> ask to merge your branch into <code>main</code></li>
+<li class="fragment"><strong>Merge:</strong> integrate the branch work into <code>main</code></li>
+<li class="fragment"><strong>Conflict:</strong> Git needs you to decide how to combine edits</li>
 </ul>
 </section>
 <section id="pull-requests-what-are-they" class="slide level2">
 <h2>Pull Requests: what are they?</h2>
 <p>A Pull Request (PR) is:</p>
 <ul>
-<li>a <strong>proposal</strong> to merge one branch into another (often → <code>main</code>)</li>
-<li>a <strong>review space</strong> (comments, approvals, requested changes)</li>
-<li>a <strong>record</strong> of what changed and why (discussion + diff + commits)</li>
+<li class="fragment">a <strong>proposal</strong> to merge one branch into another (often → <code>main</code>)</li>
+<li class="fragment">a <strong>review space</strong> (comments, approvals, requested changes)</li>
+<li class="fragment">a <strong>record</strong> of what changed and why (discussion + diff + commits)</li>
 </ul>
 <p>PRs are the standard way to collaborate on GitHub.</p>
 </section>
@@ -737,21 +737,21 @@
 <h2>Why use Pull Requests?</h2>
 <p>PRs help you:</p>
 <ul>
-<li>catch bugs early (someone else reads your diff)</li>
-<li>enforce project standards (formatting, tests, style)</li>
-<li>document decisions (“why did we do this?”)</li>
-<li>reduce “surprise merges” into <code>main</code></li>
+<li class="fragment">catch bugs early (someone else reads your diff)</li>
+<li class="fragment">enforce project standards (formatting, tests, style)</li>
+<li class="fragment">document decisions (“why did we do this?”)</li>
+<li class="fragment">reduce “surprise merges” into <code>main</code></li>
 </ul>
 </section>
 <section id="what-makes-a-good-pull-request" class="slide level2">
 <h2>What makes a good Pull Request?</h2>
 <ul>
-<li>Small enough to review (avoid mega-PRs)</li>
-<li>Clear title + description</li>
-<li>Explains intent: <strong>what</strong> changed and <strong>why</strong></li>
-<li>Screenshots/output examples when relevant</li>
-<li>Links to an issue (if you use issues)</li>
-<li>Includes only relevant files (no accidental large data, secrets, etc.)</li>
+<li class="fragment">Small enough to review (avoid mega-PRs)</li>
+<li class="fragment">Clear title + description</li>
+<li class="fragment">Explains intent: <strong>what</strong> changed and <strong>why</strong></li>
+<li class="fragment">Screenshots/output examples when relevant</li>
+<li class="fragment">Links to an issue (if you use issues)</li>
+<li class="fragment">Includes only relevant files (no accidental large data, secrets, etc.)</li>
 </ul>
 </section>
 <section id="example-pull-request-terminal-commands" class="slide level2">
@@ -792,8 +792,8 @@
 <h2>Merging: what does it mean?</h2>
 <p>Merging integrates two lines of work by combining their histories:</p>
 <ul>
-<li><strong>Fast-forward merge:</strong> <code>main</code> simply moves forward (no divergence)</li>
-<li><strong>3-way merge:</strong> Git creates a new <em>merge commit</em> that joins two lines of work</li>
+<li class="fragment"><strong>Fast-forward merge:</strong> <code>main</code> simply moves forward (no divergence)</li>
+<li class="fragment"><strong>3-way merge:</strong> Git creates a new <em>merge commit</em> that joins two lines of work</li>
 </ul>
 <p>Either way, the goal is the same: integrate branch work into <code>main</code>.</p>
 </section>
@@ -801,30 +801,30 @@
 <h2>Merge conflicts: what are they?</h2>
 <p>A merge conflict happens when:</p>
 <ul>
-<li>two branches edited the <strong>same lines</strong> in the same file, <strong>and</strong></li>
-<li>Git can’t determine how to combine them safely</li>
+<li class="fragment">two branches edited the <strong>same lines</strong> in the same file, <strong>and</strong></li>
+<li class="fragment">Git can’t determine how to combine them safely</li>
 </ul>
 <p>Important:</p>
 <ul>
-<li>Conflicts are normal in collaboration</li>
-<li>They’re not “errors” so much as “decisions Git asks humans to make”</li>
+<li class="fragment">Conflicts are normal in collaboration</li>
+<li class="fragment">They’re not “errors” so much as “decisions Git asks humans to make”</li>
 </ul>
 </section>
 <section id="when-do-conflicts-happen-most" class="slide level2">
 <h2>When do conflicts happen most?</h2>
 <ul>
-<li>Long-lived branches (you drift far from <code>main</code>)</li>
-<li>Many people editing the same file</li>
-<li>Moving/renaming files while someone else edits them</li>
+<li class="fragment">Long-lived branches (you drift far from <code>main</code>)</li>
+<li class="fragment">Many people editing the same file</li>
+<li class="fragment">Moving/renaming files while someone else edits them</li>
 </ul>
 </section>
 <section id="preventing-conflicts-best-practices" class="slide level2">
 <h2>Preventing conflicts (best practices)</h2>
 <ul>
-<li>Pull often (or merge <code>main</code> into your branch regularly)</li>
-<li>Keep PRs small and merge them sooner</li>
-<li>Avoid huge “format everything” commits mixed with logic changes</li>
-<li>Communicate: “I’m editing <code>slides/week2.qmd</code> today”</li>
+<li class="fragment">Pull often (or merge <code>main</code> into your branch regularly)</li>
+<li class="fragment">Keep PRs small and merge them sooner</li>
+<li class="fragment">Avoid huge “format everything” commits mixed with logic changes</li>
+<li class="fragment">Communicate: “I’m editing <code>slides/week2.qmd</code> today”</li>
 </ul>
 </section>
 <section id="what-a-conflict-looks-like" class="slide level2">
@@ -839,18 +839,18 @@
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <ul>
-<li>Git everyday commands: man giteveryday in terminal</li>
-<li>GitHub’s cheat sheets: https://github.github.com/training-kit/￼</li>
-<li>Pro Git (free online): https://git-scm.com/book￼</li>
-<li>Git exercises: https://gitexercises.fracz.com/￼</li>
-<li>GitHub Guides (YouTube): https://www.youtube.com/user/GitHubGuides￼</li>
+<li class="fragment">Git everyday commands: man giteveryday in terminal</li>
+<li class="fragment">GitHub’s cheat sheets: https://github.github.com/training-kit/￼</li>
+<li class="fragment">Pro Git (free online): https://git-scm.com/book￼</li>
+<li class="fragment">Git exercises: https://gitexercises.fracz.com/￼</li>
+<li class="fragment">GitHub Guides (YouTube): https://www.youtube.com/user/GitHubGuides￼</li>
 </ul>
 </section>
 <section id="other-tools-to-explore" class="slide level2">
 <h2>Other tools to explore</h2>
 <ul>
-<li>Jira￼: issue/task tracking + workflow management</li>
-<li>Git + Jira integrations exist via many clients</li>
+<li class="fragment">Jira￼: issue/task tracking + workflow management</li>
+<li class="fragment">Git + Jira integrations exist via many clients</li>
 </ul>
 </section>
 <section class="slide level2">
