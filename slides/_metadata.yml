@@ -1,0 +1,11 @@
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    incremental: false
+    relative-resources: true
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
