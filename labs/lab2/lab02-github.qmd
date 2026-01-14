@@ -22,6 +22,8 @@ In this lab, you are expected to learn/put in practice the following skills:
 - Git workflow clone/commit/push
 - Using pull requests (PR)
 
+##### Download lab `.qmd` [here](https://github.com/JSC370/JSC370-2026/blob/main/labs/lab2/lab02-github.qmd)
+
 ---
 
 # Part 1: Create JSC370 personal repo
