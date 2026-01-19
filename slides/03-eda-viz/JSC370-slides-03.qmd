@@ -789,7 +789,6 @@ y_pos = np.quantile(y, 0.999)
 
 ---
 
-
 ## `plotnine`
 
 ```{python}
