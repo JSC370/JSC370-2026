@@ -803,5 +803,418 @@
     "title": "JSC 370: Data Science II",
     "section": "Other tools to explore",
     "text": "Other tools to explore\n\nJira￼: issue/task tracking + workflow management\nGit + Jira integrations exist via many clients"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#goals",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#goals",
+    "title": "JSC 370: Data Science II",
+    "section": "Goals",
+    "text": "Goals\n\nLoad in large datasets stored locally and remotely (GitHub), check memory issues\nUnderstand what EDA is (and is not)\nBuild a repeatable EDA workflow\nMake plots that reveal structure, not just decoration\nAvoid common visualization pitfalls"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#what-is-exploratory-data-analysis",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#what-is-exploratory-data-analysis",
+    "title": "JSC 370: Data Science II",
+    "section": "What is Exploratory Data Analysis?",
+    "text": "What is Exploratory Data Analysis?\n\nEDA = iterative exploration and building modeling intuition\nFocus on data distributions, missingness, relationships, anomalies\nCreate: summary stats, exploratory plots\nOutput: questions, hypotheses, and next steps"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-data-analysis",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-data-analysis",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\n\nEDA is the process of summarizing data\nIt should be the first step in your analysis pipeline, and it serves to:\n\n✅ check data (import issues, outliers, missing values, data errors)\n🧹 clean data (fix implausible values, remove missing if necessary, rename, etc.)\n\\(\\Sigma\\) summary statistics of key variables (univariate and bivariate)\n📊 basic plots and graphs"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#eda-checklist",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#eda-checklist",
+    "title": "JSC 370: Data Science II",
+    "section": "EDA Checklist",
+    "text": "EDA Checklist\nEDA Checklist:\n\n\nFormulate a question\n\n\nRead in the data\n\n\nCheck the dimensions and headers and footers of the data\n\n\nCheck the variable types in the data\n\n\nTake a closer look at some/all of the variables\n\n\nValidate with an external source\n\n\nConduct some summary statistics to answer the initial question\n\n\nMake exploratory graphs"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#case-study",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#case-study",
+    "title": "JSC 370: Data Science II",
+    "section": "Case Study",
+    "text": "Case Study\nWe are going to use a dataset created from the National Center for Environmental Information NOAA/NCEI. The data are hourly measurements from weather stations across the continental U.S."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#formulate-a-question",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#formulate-a-question",
+    "title": "JSC 370: Data Science II",
+    "section": "Formulate a Question",
+    "text": "Formulate a Question\nIt is a good idea to first have a question such as:\n\nwhat weather stations reported the hottest and coldest daily temperatures?\nwhat day of the month was on average the hottest?\nis there covariation between temperature and humidity in my dataset?"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#read-in-the-data",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#read-in-the-data",
+    "title": "JSC 370: Data Science II",
+    "section": "Read in the data",
+    "text": "Read in the data\nThere are several ways to read in data (some depend on the type of data you have):\n\npandas.read_csv() for delimited files\npandas.read_parquet() for parquet\npandas.read_feather() for feather\npandas.read_excel() for .xls and .xlsx\npyarrow.dataset / dask for larger-than-memory workflows"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#read-in-the-data-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#read-in-the-data-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Read in the data",
+    "text": "Read in the data\nWe’ll use Python packages pandas, numpy, matplotlib, seaborn, plotnine\n\nimport pandas as pd\nimport numpy as np\n\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nfrom plotnine import ggplot, aes, geom_point, labs"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#example-read-in-local-file",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#example-read-in-local-file",
+    "title": "JSC 370: Data Science II",
+    "section": "Example: read in local file",
+    "text": "Example: read in local file\nIf your data are a gzipped delimited file (e.g., met_all.gz), pandas can read it directly.\n\n\nmet = pd.read_csv(\"met_all.gz\", compression=\"gzip\")\nmet.head(4)\n\n\n\n\n\n\n\n\nUSAFID\nWBAN\nyear\nmonth\nday\nhour\nmin\nlat\nlon\nelev\n...\nvis.dist.qc\nvis.var\nvis.var.qc\ntemp\ntemp.qc\ndew.point\ndew.point.qc\natm.press\natm.press.qc\nrh\n\n\n\n\n0\n690150\n93121\n2019\n8\n1\n0\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n37.2\n5\n10.6\n5\n1009.9\n5\n19.881266\n\n\n1\n690150\n93121\n2019\n8\n1\n1\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n35.6\n5\n10.6\n5\n1010.3\n5\n21.760980\n\n\n2\n690150\n93121\n2019\n8\n1\n2\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n34.4\n5\n7.2\n5\n1010.6\n5\n18.482122\n\n\n3\n690150\n93121\n2019\n8\n1\n3\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n33.3\n5\n5.0\n5\n1011.6\n5\n16.888622\n\n\n\n\n4 rows × 30 columns"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#example-read-in-github-file",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#example-read-in-github-file",
+    "title": "JSC 370: Data Science II",
+    "section": "Example: read in github file",
+    "text": "Example: read in github file\nIf your data are a gzipped delimited file but stored on github, use\n\nurl = \"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz\"\nmet = pd.read_csv(url, compression=\"gzip\")    \nmet.head(4)\n\n\n\n\n\n\n\n\nUSAFID\nWBAN\nyear\nmonth\nday\nhour\nmin\nlat\nlon\nelev\n...\nvis.dist.qc\nvis.var\nvis.var.qc\ntemp\ntemp.qc\ndew.point\ndew.point.qc\natm.press\natm.press.qc\nrh\n\n\n\n\n0\n690150\n93121\n2019\n8\n1\n0\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n37.2\n5\n10.6\n5\n1009.9\n5\n19.881266\n\n\n1\n690150\n93121\n2019\n8\n1\n1\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n35.6\n5\n10.6\n5\n1010.3\n5\n21.760980\n\n\n2\n690150\n93121\n2019\n8\n1\n2\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n34.4\n5\n7.2\n5\n1010.6\n5\n18.482122\n\n\n3\n690150\n93121\n2019\n8\n1\n3\n56\n34.3\n-116.166\n696\n...\n5\nN\n5\n33.3\n5\n5.0\n5\n1011.6\n5\n16.888622\n\n\n\n\n4 rows × 30 columns"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#data-science-pipeline",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#data-science-pipeline",
+    "title": "JSC 370: Data Science II",
+    "section": "Data Science Pipeline",
+    "text": "Data Science Pipeline\n\nWe will work on the blue words today"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#what-counts-as-very-large-data-on-a-laptop",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#what-counts-as-very-large-data-on-a-laptop",
+    "title": "JSC 370: Data Science II",
+    "section": "What counts as “very large” data on a laptop?",
+    "text": "What counts as “very large” data on a laptop?\nOn laptops, “very large” usually means it stresses RAM and slows basic operations.\nA dataset can be “very large” even with only a few million rows if it has:\n\nmany columns\nlots of strings (object dtype)\nexpensive operations (joins, groupbys, sorting)"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#practical-rule-of-thumb",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#practical-rule-of-thumb",
+    "title": "JSC 370: Data Science II",
+    "section": "Practical rule-of-thumb",
+    "text": "Practical rule-of-thumb\nThink in terms of memory, not just rows × columns.\n\nComfortable: under ~1 GB in RAM\nLarge: ~1–5 GB (needs care: dtypes, filtering early)\nVery large: &gt; ~5 GB or doesn’t fit in RAM → you need a different approach/tool"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#measure-size-in-pandas",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#measure-size-in-pandas",
+    "title": "JSC 370: Data Science II",
+    "section": "Measure size in pandas",
+    "text": "Measure size in pandas\n\nCalculate the total memory used by the DataFrame (convert bytes -&gt; GB)\n\n\nmet.memory_usage(deep=True).sum() / 1024**3\n\nnp.float64(1.401238577440381)"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#measure-size-in-pandas-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#measure-size-in-pandas-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Measure size in pandas",
+    "text": "Measure size in pandas\n\nFind the biggest memory columns (this time in MB)\n\n\n(met.memory_usage(deep=True).sort_values(ascending=False) / 1024**2).head(10)\n\ndew.point.qc         113.360548\ntemp.qc              113.360548\nvis.var              113.360548\nwind.type.code       113.360548\nsky.cond             113.360548\nceiling.ht.method    113.360548\nvis.dist.qc          103.298048\nvis.var.qc           102.860548\nwind.sp.qc            99.797945\nwind.dir.qc           85.994595\ndtype: float64"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#why-strings-make-data-big",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#why-strings-make-data-big",
+    "title": "JSC 370: Data Science II",
+    "section": "Why strings make data “big”",
+    "text": "Why strings make data “big”\n\nIn pandas, object columns (strings) are often the memory hog.\ndtypes tells is what kind of variables we have in a dataset.\n\n\nmet.dtypes\n\nUSAFID                 int64\nWBAN                   int64\nyear                   int64\nmonth                  int64\nday                    int64\nhour                   int64\nmin                    int64\nlat                  float64\nlon                  float64\nelev                   int64\nwind.dir             float64\nwind.dir.qc           object\nwind.type.code        object\nwind.sp              float64\nwind.sp.qc            object\nceiling.ht           float64\nceiling.ht.qc          int64\nceiling.ht.method     object\nsky.cond              object\nvis.dist             float64\nvis.dist.qc           object\nvis.var               object\nvis.var.qc            object\ntemp                 float64\ntemp.qc               object\ndew.point            float64\ndew.point.qc          object\natm.press            float64\natm.press.qc           int64\nrh                   float64\ndtype: object"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#big-data-can-be-read-in-more-cautiously",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#big-data-can-be-read-in-more-cautiously",
+    "title": "JSC 370: Data Science II",
+    "section": "Big data can be read in more cautiously",
+    "text": "Big data can be read in more cautiously\n\nIf the file is really big (ours is borderline), we could read only the columns we need. This is where having a question in mind is useful. For ours, we probably just want station location (lat, lon), year, month, day, hour, temperature and humidity.\n\n\nurl = \"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz\"\nusecols = [\"USAFID\",\"lat\",\"lon\", \"year\", \"month\",\"day\",\"hour\",\"temp\", \"rh\"]\nmet_small = pd.read_csv(\n    url,\n    compression=\"gzip\",\n    usecols=usecols\n)\nmet_small.head(4)\n\n\n\n\n\n\n\n\nUSAFID\nyear\nmonth\nday\nhour\nlat\nlon\ntemp\nrh\n\n\n\n\n0\n690150\n2019\n8\n1\n0\n34.3\n-116.166\n37.2\n19.881266\n\n\n1\n690150\n2019\n8\n1\n1\n34.3\n-116.166\n35.6\n21.760980\n\n\n2\n690150\n2019\n8\n1\n2\n34.3\n-116.166\n34.4\n18.482122\n\n\n3\n690150\n2019\n8\n1\n3\n34.3\n-116.166\n33.3\n16.888622"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#big-data-can-be-read-in-more-cautiously-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#big-data-can-be-read-in-more-cautiously-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Big data can be read in more cautiously",
+    "text": "Big data can be read in more cautiously\nChunking in pandas means reading in a file in pieces so you don’t load the whole dataset into RAM at once.\n\nurl = \"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz\"\nchunks = pd.read_csv(url, compression=\"gzip\", chunksize=200_000)\nn = 0\ntemp_sum = 0.0\nfor ch in chunks:\n    temp_sum += ch[\"temp\"].sum(skipna=True)\n    n += ch[\"temp\"].notna().sum()\ntemp_sum / n\n\nnp.float64(23.590542469664527)\n\n\nThis computes the overall mean temperature without ever storing the full dataset:\n\ntemp_sum accumulates the sum of temps across chunks.\nn accumulates how many non-missing temps you saw.\ntemp_sum / n is the mean.\n\nWe’re basically doing: \\(\\bar{x} = \\frac{\\sum x_i}{\\#\\{x_i \\text{ not missing}\\}}\\)"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the data",
+    "text": "Check the data\nOnce we have loaded the data we should check the dimensions of the dataset. In pandas, the we use met.shape.\n\nprint(\"shape:\", met.shape)\nprint(\"n_rows:\", met.shape[0])\nprint(\"n_cols:\", met.shape[1])\n\nshape: (2377343, 30)\nn_rows: 2377343\nn_cols: 30"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the data",
+    "text": "Check the data\nWe can get the types of data (integer, float, character) from met.info\n\nmet.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2377343 entries, 0 to 2377342\nData columns (total 30 columns):\n #   Column             Dtype  \n---  ------             -----  \n 0   USAFID             int64  \n 1   WBAN               int64  \n 2   year               int64  \n 3   month              int64  \n 4   day                int64  \n 5   hour               int64  \n 6   min                int64  \n 7   lat                float64\n 8   lon                float64\n 9   elev               int64  \n 10  wind.dir           float64\n 11  wind.dir.qc        object \n 12  wind.type.code     object \n 13  wind.sp            float64\n 14  wind.sp.qc         object \n 15  ceiling.ht         float64\n 16  ceiling.ht.qc      int64  \n 17  ceiling.ht.method  object \n 18  sky.cond           object \n 19  vis.dist           float64\n 20  vis.dist.qc        object \n 21  vis.var            object \n 22  vis.var.qc         object \n 23  temp               float64\n 24  temp.qc            object \n 25  dew.point          float64\n 26  dew.point.qc       object \n 27  atm.press          float64\n 28  atm.press.qc       int64  \n 29  rh                 float64\ndtypes: float64(10), int64(10), object(10)\nmemory usage: 544.1+ MB"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-summary",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-summary",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the data: Summary",
+    "text": "Check the data: Summary\n\nWe see that there are 2,377,343 records of hourly temperature in August 2019 from all of the weather stations in the US. The data set has 30 variables.\nWe know that we are supposed to have hourly measurements of weather data for the month of August 2019 for the entire US. We should check that we have all of these components. Let us check:\n\n\nthe year, month, hours\nthe range of locations (latitude and longitude)\ntemperature\nrelative humidity"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-more-closely",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-more-closely",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the data more closely",
+    "text": "Check the data more closely\nWe can get a quick summary from met.describe.\n\nmet.describe()\n\n\n\n\n\n\n\n\nUSAFID\nWBAN\nyear\nmonth\nday\nhour\nmin\nlat\nlon\nelev\nwind.dir\nwind.sp\nceiling.ht\nceiling.ht.qc\nvis.dist\ntemp\ndew.point\natm.press\natm.press.qc\nrh\n\n\n\n\ncount\n2.377343e+06\n2.377343e+06\n2377343.0\n2377343.0\n2.377343e+06\n2.377343e+06\n2.377343e+06\n2.377343e+06\n2.377343e+06\n2.377343e+06\n1.592053e+06\n2.297650e+06\n2.256068e+06\n2.377343e+06\n2.296387e+06\n2.317254e+06\n2.311055e+06\n711069.000000\n2.377343e+06\n2.310917e+06\n\n\nmean\n7.230995e+05\n2.953885e+04\n2019.0\n8.0\n1.599589e+01\n1.134106e+01\n3.956097e+01\n3.794132e+01\n-9.214509e+01\n4.158152e+02\n1.850082e+02\n2.459166e+00\n1.616648e+04\n5.027185e+00\n1.492117e+04\n2.359054e+01\n1.702084e+01\n1014.164390\n7.728208e+00\n7.164138e+01\n\n\nstd\n2.156678e+03\n3.336921e+04\n0.0\n0.0\n8.917096e+00\n6.860069e+00\n1.724761e+01\n5.171552e+00\n1.195324e+01\n5.737842e+02\n9.230697e+01\n2.147395e+00\n9.282465e+03\n1.249445e+00\n3.879577e+03\n6.059275e+00\n6.206226e+00\n4.059265\n2.018170e+00\n2.275361e+01\n\n\nmin\n6.901500e+05\n1.160000e+02\n2019.0\n8.0\n1.000000e+00\n0.000000e+00\n0.000000e+00\n2.455000e+01\n-1.242900e+02\n-1.300000e+01\n3.000000e+00\n0.000000e+00\n0.000000e+00\n1.000000e+00\n0.000000e+00\n-4.000000e+01\n-3.720000e+01\n960.500000\n1.000000e+00\n8.334298e-01\n\n\n25%\n7.209280e+05\n3.706000e+03\n2019.0\n8.0\n8.000000e+00\n5.000000e+00\n2.300000e+01\n3.396700e+01\n-9.801800e+01\n1.010000e+02\n1.200000e+02\n0.000000e+00\n3.048000e+03\n5.000000e+00\n1.609300e+04\n1.960000e+01\n1.380000e+01\n1011.800000\n5.000000e+00\n5.579015e+01\n\n\n50%\n7.227280e+05\n1.386000e+04\n2019.0\n8.0\n1.600000e+01\n1.100000e+01\n5.000000e+01\n3.835000e+01\n-9.170800e+01\n2.520000e+02\n1.800000e+02\n2.100000e+00\n2.200000e+04\n5.000000e+00\n1.609300e+04\n2.350000e+01\n1.810000e+01\n1014.100000\n9.000000e+00\n7.655374e+01\n\n\n75%\n7.250900e+05\n5.476700e+04\n2019.0\n8.0\n2.400000e+01\n1.700000e+01\n5.500000e+01\n4.194000e+01\n-8.298600e+01\n4.000000e+02\n2.600000e+02\n3.600000e+00\n2.200000e+04\n5.000000e+00\n1.609300e+04\n2.780000e+01\n2.170000e+01\n1016.400000\n9.000000e+00\n9.062916e+01\n\n\nmax\n7.268130e+05\n9.499800e+04\n2019.0\n8.0\n3.100000e+01\n2.300000e+01\n5.900000e+01\n4.894100e+01\n-6.831300e+01\n9.999000e+03\n3.600000e+02\n3.600000e+01\n2.200000e+04\n9.000000e+00\n1.600000e+05\n5.600000e+01\n3.600000e+01\n1059.900000\n9.000000e+00\n1.000000e+02\n\n\n\n\n\n\n\n\nNote that this doesn’t tell us if there are any missing data!"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-more-closely-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data-more-closely-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the data more closely",
+    "text": "Check the data more closely\nIt is a little harder to quickly summarize missing data in pandas, but here’s a way to count missing observations and calculate the percent missing.\n\nmissing = met.isna().sum().to_frame(\"n_missing\")\nmissing[\"pct_missing\"] = (missing[\"n_missing\"] / len(met)).round(4)\nmissing.sort_values(\"pct_missing\", ascending=False).head(20)\n\n\n\n\n\n\n\n\nn_missing\npct_missing\n\n\n\n\natm.press\n1666274\n0.7009\n\n\nwind.dir\n785290\n0.3303\n\n\nceiling.ht\n121275\n0.0510\n\n\nvis.dist\n80956\n0.0341\n\n\nwind.sp\n79693\n0.0335\n\n\ndew.point\n66288\n0.0279\n\n\nrh\n66426\n0.0279\n\n\ntemp\n60089\n0.0253\n\n\nlat\n0\n0.0000\n\n\nday\n0\n0.0000\n\n\natm.press.qc\n0\n0.0000\n\n\nyear\n0\n0.0000\n\n\ndew.point.qc\n0\n0.0000\n\n\nmonth\n0\n0.0000\n\n\ntemp.qc\n0\n0.0000\n\n\nvis.var.qc\n0\n0.0000\n\n\nvis.var\n0\n0.0000\n\n\nvis.dist.qc\n0\n0.0000\n\n\nsky.cond\n0\n0.0000\n\n\nlon\n0\n0.0000"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#very-large-data",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#very-large-data",
+    "title": "JSC 370: Data Science II",
+    "section": "Very large data",
+    "text": "Very large data\n\nIf met_all.gz is very large, pd.read_csv() may be slow; you can add usecols=..., dtype=..., and parse_dates=... to speed it up and reduce memory.\nIf your file is not CSV (common for NOAA-ish datasets), set sep=\"\\t\" or sep=\"|\" accordingly.\n\nIf you paste one row of the file header (or tell me the delimiter + key columns like datetime/station/temp/humidity), I’ll extend this into the next slides: outliers, unit checks, grouped summaries (hottest/coldest stations, hottest day), and core EDA plots (hist, box/violin, time series, scatter + hexbin for overplotting)."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-types-of-variables-in-our-dataset",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-the-types-of-variables-in-our-dataset",
+    "title": "JSC 370: Data Science II",
+    "section": "Check the types of variables in our dataset",
+    "text": "Check the types of variables in our dataset\nWe can get the types of data (integer, float, character) from met.info. This also tells us the memory usage.\n\nmet.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2377343 entries, 0 to 2377342\nData columns (total 30 columns):\n #   Column             Dtype  \n---  ------             -----  \n 0   USAFID             int64  \n 1   WBAN               int64  \n 2   year               int64  \n 3   month              int64  \n 4   day                int64  \n 5   hour               int64  \n 6   min                int64  \n 7   lat                float64\n 8   lon                float64\n 9   elev               int64  \n 10  wind.dir           float64\n 11  wind.dir.qc        object \n 12  wind.type.code     object \n 13  wind.sp            float64\n 14  wind.sp.qc         object \n 15  ceiling.ht         float64\n 16  ceiling.ht.qc      int64  \n 17  ceiling.ht.method  object \n 18  sky.cond           object \n 19  vis.dist           float64\n 20  vis.dist.qc        object \n 21  vis.var            object \n 22  vis.var.qc         object \n 23  temp               float64\n 24  temp.qc            object \n 25  dew.point          float64\n 26  dew.point.qc       object \n 27  atm.press          float64\n 28  atm.press.qc       int64  \n 29  rh                 float64\ndtypes: float64(10), int64(10), object(10)\nmemory usage: 544.1+ MB"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-variables-more-closely",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-variables-more-closely",
+    "title": "JSC 370: Data Science II",
+    "section": "Check variables more closely",
+    "text": "Check variables more closely\nIf we return to our initial question—what weather stations reported the hottest and coldest temperatures, we should take a closer look at our key variable, temperature (temp).\n\nmet[\"temp\"].describe()\n\ncount    2.317254e+06\nmean     2.359054e+01\nstd      6.059275e+00\nmin     -4.000000e+01\n25%      1.960000e+01\n50%      2.350000e+01\n75%      2.780000e+01\nmax      5.600000e+01\nName: temp, dtype: float64\n\n\n\nIt looks like the data are in Celsius."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-variables-more-closely-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#check-variables-more-closely-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Check variables more closely",
+    "text": "Check variables more closely\n\nIt’s odd to have -40C in August.\nSubset rows where temp == -40.0 and select a few columns with loc, which is an indexer for selecting rows and columns.\n\n\nmet_ss = met.loc[met[\"temp\"] == -40.0, [\"USAFID\",\"hour\", \"lat\", \"lon\",  \"elev\", \"temp\", \"wind.sp\"]]\nmet_ss.shape\nmet_ss.head()\n\n\n\n\n\n\n\n\nUSAFID\nhour\nlat\nlon\nelev\ntemp\nwind.sp\n\n\n\n\n496047\n720717\n0\n29.117\n-89.55\n36\n-40.0\nNaN\n\n\n496048\n720717\n0\n29.117\n-89.55\n36\n-40.0\nNaN\n\n\n496049\n720717\n0\n29.117\n-89.55\n36\n-40.0\nNaN\n\n\n496050\n720717\n1\n29.117\n-89.55\n36\n-40.0\nNaN\n\n\n496051\n720717\n1\n29.117\n-89.55\n36\n-40.0\nNaN\n\n\n\n\n\n\n\n\nIt appears that all of the data with -40C are from the same site and have missing. Points to a data issue."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#validate-against-an-external-source",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#validate-against-an-external-source",
+    "title": "JSC 370: Data Science II",
+    "section": "Validate against an external source",
+    "text": "Validate against an external source\nWe should check outside sources to make sure that our data make sense. The observation with -40°C is suspicious, so we should look up the location of the weather station.\nGo to Google maps and enter the coordinates for the site with -40C (29.12, -89.55)\n\n\n\n\n\n\n\n\nIt doesn’t make much sense to have a -40C reading in the Gulf of Mexico off the coast of Louisiana."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#filter-implausible-values",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#filter-implausible-values",
+    "title": "JSC 370: Data Science II",
+    "section": "Filter implausible values",
+    "text": "Filter implausible values\nFilter with loc and sort the data with sort_values in one line:\n\nmet = met.loc[met[\"temp\"] &gt; -40].sort_values(\"temp\")\nmet.head(20)\n\n\n\n\n\n\n\n\nUSAFID\nWBAN\nyear\nmonth\nday\nhour\nmin\nlat\nlon\nelev\n...\nvis.dist.qc\nvis.var\nvis.var.qc\ntemp\ntemp.qc\ndew.point\ndew.point.qc\natm.press\natm.press.qc\nrh\n\n\n\n\n1203054\n722817\n3068\n2019\n8\n1\n1\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203127\n722817\n3068\n2019\n8\n3\n11\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203128\n722817\n3068\n2019\n8\n3\n12\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203221\n722817\n3068\n2019\n8\n6\n21\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203224\n722817\n3068\n2019\n8\n6\n22\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203052\n722817\n3068\n2019\n8\n1\n0\n56\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.2\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1203225\n722817\n3068\n2019\n8\n6\n23\n3\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.0\n6\nNaN\n9\nNaN\n9\nNaN\n\n\n1203220\n722817\n3068\n2019\n8\n6\n21\n39\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.0\n6\nNaN\n9\nNaN\n9\nNaN\n\n\n1203222\n722817\n3068\n2019\n8\n6\n22\n32\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.0\n6\nNaN\n9\nNaN\n9\nNaN\n\n\n1203223\n722817\n3068\n2019\n8\n6\n22\n41\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.0\n6\nNaN\n9\nNaN\n9\nNaN\n\n\n1203053\n722817\n3068\n2019\n8\n1\n1\n6\n38.767\n-104.300\n1838\n...\n9\nN\n5\n-17.0\n5\nNaN\n9\nNaN\n9\nNaN\n\n\n1105458\n722518\n12974\n2019\n8\n12\n3\n56\n27.901\n-98.052\n78\n...\n9\n9\n9\n-17.0\n1\nNaN\n9\n1011.6\n1\nNaN\n\n\n1105456\n722518\n12974\n2019\n8\n12\n1\n56\n27.901\n-98.052\n78\n...\n9\n9\n9\n-17.0\n1\nNaN\n9\n1010.3\n1\nNaN\n\n\n1105454\n722518\n12974\n2019\n8\n11\n23\n56\n27.901\n-98.052\n78\n...\n9\n9\n9\n-17.0\n1\nNaN\n9\n1010.3\n1\nNaN\n\n\n2370757\n726764\n94163\n2019\n8\n27\n11\n50\n44.683\n-111.116\n2025\n...\n5\nN\n5\n-3.0\nC\n-5.0\nC\nNaN\n9\n86.265368\n\n\n2370758\n726764\n94163\n2019\n8\n27\n12\n10\n44.683\n-111.116\n2025\n...\n5\nN\n5\n-3.0\n5\n-4.0\n5\nNaN\n9\n92.910834\n\n\n2370759\n726764\n94163\n2019\n8\n27\n12\n30\n44.683\n-111.116\n2025\n...\n5\nN\n5\n-3.0\n5\n-4.0\n5\nNaN\n9\n92.910834\n\n\n2370760\n726764\n94163\n2019\n8\n27\n12\n50\n44.683\n-111.116\n2025\n...\n5\nN\n5\n-3.0\nC\n-4.0\nC\nNaN\n9\n92.910834\n\n\n252488\n720411\n137\n2019\n8\n18\n12\n35\n36.422\n-105.290\n2554\n...\n5\nN\n5\n-2.4\n5\n-3.7\n5\nNaN\n9\n90.914749\n\n\n2370687\n726764\n94163\n2019\n8\n26\n12\n30\n44.683\n-111.116\n2025\n...\n5\nN\n5\n-2.0\n5\n-3.0\n5\nNaN\n9\n92.966900\n\n\n\n\n20 rows × 30 columns\n\n\n\n\nWe should do a quick check of (38.767, -104.300) and (27.901, -98.052) to see if the -17C rows are also implausible and should be removed."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#back-to-question-what-weather-stations-reported-the-hottest-and-coldest-daily-temperatures",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#back-to-question-what-weather-stations-reported-the-hottest-and-coldest-daily-temperatures",
+    "title": "JSC 370: Data Science II",
+    "section": "Back to question: what weather stations reported the hottest and coldest daily temperatures?",
+    "text": "Back to question: what weather stations reported the hottest and coldest daily temperatures?\nCompute the min and max hourly temperatures and the associated stations. Filter with loc and find min and max (it ignores missing) with idxmin() and inxmax()\n\nmin_row = met.loc[met[\"temp\"].idxmin(), [\"temp\", \"USAFID\", \"day\"]]\nmax_row = met.loc[met[\"temp\"].idxmax(), [\"temp\", \"USAFID\", \"day\"]]\nmin_row, max_row\n\n(temp       -17.2\n USAFID    722817\n day            1\n Name: 1203054, dtype: object,\n temp        56.0\n USAFID    720267\n day           26\n Name: 42402, dtype: object)\n\n\n\nOk but we need daily temperatures to answer our questions!"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#grouping-and-summarizing-data",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#grouping-and-summarizing-data",
+    "title": "JSC 370: Data Science II",
+    "section": "Grouping and summarizing data",
+    "text": "Grouping and summarizing data\nWe need to transform our data to answer our initial question at the daily scale. Let’s find daily mean temperature by station and day. Use groupby and agg to calculate the mean and create a new dataset met_daily.\n\nmet_daily = (\n    met.groupby([\"USAFID\", \"day\"], as_index=False)\n       .agg(\n           temp=(\"temp\", \"mean\"),\n           lat=(\"lat\", \"mean\"),\n           lon=(\"lon\", \"mean\"),\n           rh=(\"rh\", \"mean\"),\n       )\n       .sort_values(\"temp\")\n)\n\nmet_daily.head(), met_daily.tail() \n\n(       USAFID  day       temp     lat    lon         rh\n 20774  722817    3 -17.200000  38.767 -104.3        NaN\n 20773  722817    1 -17.133333  38.767 -104.3        NaN\n 20775  722817    6 -17.066667  38.767 -104.3        NaN\n 43605  726130   11   4.278261  44.270  -71.3  99.540440\n 43625  726130   31   4.304348  44.270  -71.3  99.710254,\n        USAFID  day       temp        lat         lon         rh\n 27043  723805    5  40.975000  34.768000 -114.618000  11.369535\n 2345   720339   14  41.000000  32.146000 -111.171000   9.137857\n 27042  723805    4  41.183333  34.768000 -114.618000  14.211822\n 20623  722787    5  41.357143  33.527000 -112.295000  19.829822\n 30     690150   31  41.716667  34.299667 -116.165667   8.676717)"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#grouping-and-summarizing-data-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#grouping-and-summarizing-data-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Grouping and summarizing data",
+    "text": "Grouping and summarizing data\nWhat day of the month was the hottest?\n\nmin_daily = met_daily.loc[met_daily[\"temp\"].idxmin(), [\"temp\", \"USAFID\", \"day\"]]\nmax_daily = met_daily.loc[met_daily[\"temp\"].idxmax(), [\"temp\", \"USAFID\", \"day\"]]\nmin_daily, max_daily\n\n(temp         -17.2\n USAFID    722817.0\n day            3.0\n Name: 20774, dtype: float64,\n temp          41.716667\n USAFID    690150.000000\n day           31.000000\n Name: 30, dtype: float64)\n\n\n\nThe hottest day was August 31st, and the average daily temperature was 41.7C"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#looking-at-two-variables-at-a-time",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#looking-at-two-variables-at-a-time",
+    "title": "JSC 370: Data Science II",
+    "section": "Looking at two variables at a time",
+    "text": "Looking at two variables at a time\nTo answer the last question about covariation between temperature and humidity, we can first calculate correlation\n\npearson = met[\"temp\"].corr(met[\"rh\"], method=\"pearson\")\nspearman = met[\"temp\"].corr(met[\"rh\"], method=\"spearman\")\n\npearson, spearman, spearman - pearson\n\n(np.float64(-0.5464705142984516),\n np.float64(-0.5461260667477443),\n np.float64(0.00034444755070728306))\n\n\nIs it the same for the daily data?\n\npearson = met_daily[\"temp\"].corr(met_daily[\"rh\"], method=\"pearson\")\nspearman = met_daily[\"temp\"].corr(met_daily[\"rh\"], method=\"spearman\")\n\npearson, spearman, spearman - pearson\n\n(np.float64(-0.25729536769933825),\n np.float64(-0.20801597675598085),\n np.float64(0.0492793909433574))\n\n\nThe correlation is quite different between hourly and daily data. Why?"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nWith exploratory graphs we aim to:\n•   debug any issues remaining in the data\n•   understand properties of the data\n•   look for patterns in the data\n•   inform modeling strategies\nExploratory graphs do not need to be perfect, we’ll look at presentation-ready plots with python’s ggplot equivalent."
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nWhat type of data are these types of exploratory graphs good for?\n•   histograms \n•   boxplots\n•   scatterplots \n•   barplots \n•   lineplots\n•   violin plots \n•   maps"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-2",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-2",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nFocusing on temperature, let’s look at the distribution of hourly temperature (after removing -40°C) using a histogram.\n\nplt.hist(met[\"temp\"].dropna(), bins=50)\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Count\")\nplt.title(\"Hourly Temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-3",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-3",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nLet’s look at the daily data\n\nplt.hist(met_daily[\"temp\"].dropna(), bins=50)\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Count\")\nplt.title(\"Daily Mean Temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-4",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-4",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nA boxplot gives us an idea of the quantiles of the distribution and any outliers.\n\nplt.boxplot(met[\"temp\"].dropna(), vert=True)\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Hourly temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-5",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-5",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nOften boxplots are better for grouped continuous data, such as temperature by hour (over all days in the dataset).\n\nhours = range(24)\ndata_by_hour = [met.loc[met[\"hour\"] == h, \"temp\"].to_numpy() for h in hours]\n\nplt.boxplot(data_by_hour, labels=list(hours), showfliers=False)\nplt.xlabel(\"Hour\")\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Temperature by Hour\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-6",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-graphs-6",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory graphs",
+    "text": "Exploratory graphs\nOften violin plots are helpful for grouped continuous data (they show the shape of the distribution), such as temperature by hour (over all days in the dataset).\n\nplt.violinplot(data_by_hour, showmeans=False, showmedians=True, showextrema=False)\nplt.xticks(ticks=np.arange(1, 25), labels=list(hours))\nplt.xlabel(\"Hour\")\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Temperature by Hour\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-histogram",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-histogram",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory histogram",
+    "text": "Exploratory histogram\nFocusing on temperature, let’s look at the distribution of hourly temperature (after removing -40°C) using a histogram.\n\nplt.hist(met[\"temp\"].dropna(), bins=50)\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Count\")\nplt.title(\"Hourly Temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-histogram-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-histogram-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory histogram",
+    "text": "Exploratory histogram\nLet’s look at the daily data\n\nplt.hist(met_daily[\"temp\"].dropna(), bins=50)\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Count\")\nplt.title(\"Daily Mean Temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-boxplot",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-boxplot",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory boxplot",
+    "text": "Exploratory boxplot\nA boxplot gives us an idea of the quantiles of the distribution and any outliers.\n\nplt.boxplot(met[\"temp\"].dropna(), vert=True)\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Hourly temperature\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-boxplot-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-boxplot-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory boxplot",
+    "text": "Exploratory boxplot\nOften boxplots are better for grouped continuous data, such as temperature by hour (over all days in the dataset).\n\nhours = range(24)\ndata_by_hour = [met.loc[met[\"hour\"] == h, \"temp\"].to_numpy() for h in hours]\n\nplt.boxplot(data_by_hour, labels=list(hours), showfliers=False)\nplt.xlabel(\"Hour\")\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Temperature by Hour\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-violin-plot",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-violin-plot",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory violin plot",
+    "text": "Exploratory violin plot\nOften violin plots are helpful for grouped continuous data (they show the shape of the distribution), such as temperature by hour (over all days in the dataset).\n\nplt.violinplot(data_by_hour, showmeans=False, showmedians=True, showextrema=False)\nplt.xticks(ticks=np.arange(1, 25), labels=list(hours))\nplt.xlabel(\"Hour\")\nplt.ylabel(\"Temperature (°C)\")\nplt.title(\"Temperature by Hour\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-scatterplot",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-scatterplot",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory scatterplot",
+    "text": "Exploratory scatterplot\nLet’s check covariation with a scatterplot of humidity vs temperature.\n\nplt.scatter(met[\"temp\"], met[\"rh\"])\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Relative humidity (%)\")\nplt.title(\"Temperature vs humidity (sample)\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-scatterplot-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-scatterplot-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory scatterplot",
+    "text": "Exploratory scatterplot\nSince there are so many points let’s take a random sample of 10,000 rows using sample and add alpha transparency to see the scatter better. random_state is like setting a seed for reproducibility.\n\nmet_s = met.sample(min(10_000, len(met)), random_state=1)\n\nplt.scatter(met_s[\"temp\"], met_s[\"rh\"], alpha=0.2)\nplt.xlabel(\"Temperature (°C)\")\nplt.ylabel(\"Relative humidity (%)\")\nplt.title(\"Temperature vs humidity (sample)\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory map",
+    "text": "Exploratory map"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory map",
+    "text": "Exploratory map\nMay need to python3 -m pip install geopandas contextily to make these maps\n\nimport geopandas as gpd\nimport contextily as cx\n\n# extract latitudes and longitudes\ngdf = gpd.GeoDataFrame(\n    met_daily.dropna(subset=[\"lat\", \"lon\"]).copy(),\n    geometry=gpd.points_from_xy(met_daily[\"lon\"], met_daily[\"lat\"]),\n    crs=\"EPSG:4326\"   \n)\n\ngdf_web = gdf.to_crs(epsg=3857)\n\nax = gdf_web.plot(markersize=10, alpha=0.6)\ncx.add_basemap(ax, source=cx.providers.CartoDB.Positron)\nax.set_axis_off()\nplt.show()"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#section",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#section",
+    "title": "JSC 370: Data Science II",
+    "section": ":::",
+    "text": ":::"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-2",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-2",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory map",
+    "text": "Exploratory map\nLet’s now look at where the hottest and coldest places were based on the daily temperatures. We add a layer for cold and a layer for hot.\n\ncold = met_daily.loc[met_daily[\"temp\"].idxmin()]\nhot  = met_daily.loc[met_daily[\"temp\"].idxmax()]\ncold, hot\n\ncenter = [met_daily[\"lat\"].mean(), met_daily[\"lon\"].mean()]\nm = folium.Map(location=center, zoom_start=4, tiles=\"CartoDB positron\")\n\n# Coldest (blue)\nfolium.CircleMarker(\n    location=[cold[\"lat\"], cold[\"lon\"]],\n    radius=10,\n    popup=f\"Coldest daily mean: {cold['temp']:.2f}°C&lt;br&gt;USAFID={cold['USAFID']}&lt;br&gt;day={cold['day']}\",\n    color=\"blue\",\n    fill=True,\n    fill_color=\"blue\",\n    fill_opacity=0.9,\n).add_to(m)\n\n# Hottest (red)\nfolium.CircleMarker(\n    location=[hot[\"lat\"], hot[\"lon\"]],\n    radius=10,\n    popup=f\"Hottest daily mean: {hot['temp']:.2f}°C&lt;br&gt;USAFID={hot['USAFID']}&lt;br&gt;day={hot['day']}\",\n    color=\"red\",\n    fill=True,\n    fill_color=\"red\",\n    fill_opacity=0.9,\n).add_to(m)\n\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-3",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-3",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory map",
+    "text": "Exploratory map\nThis is how folium works:\n\nselect unique lat and lon\nset up the map with folium.Map\nadd the location points on the map with folium.CircleMarker, add opacity and radius for point size here\n\n\nimport folium\n\npts = met_daily[[\"lat\", \"lon\"]].dropna().drop_duplicates()\n\nm = folium.Map(\n    location=[pts[\"lat\"].mean(), pts[\"lon\"].mean()],\n    zoom_start=4,\n    tiles=\"CartoDB positron\"\n)\n\nfor _, r in pts.iterrows():\n    folium.CircleMarker(\n        location=[r[\"lat\"], r[\"lon\"]],\n        radius=2,\n        fill=True,\n        fill_opacity=0.8,\n        opacity=0.8,\n    ).add_to(m)\n\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-4",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-map-4",
+    "title": "JSC 370: Data Science II",
+    "section": "Exploratory map",
+    "text": "Exploratory map\nLet’s now look at where the hottest and coldest places were based on the daily temperatures.\n\ncold = met_daily.loc[met_daily[\"temp\"].idxmin()]\nhot  = met_daily.loc[met_daily[\"temp\"].idxmax()]\ncold, hot\n\ncenter = [met_daily[\"lat\"].mean(), met_daily[\"lon\"].mean()]\nm = folium.Map(location=center, zoom_start=4, tiles=\"CartoDB positron\")\n\nfolium.CircleMarker(\n    location=[cold[\"lat\"], cold[\"lon\"]],\n    radius=10,\n    popup=f\"Coldest daily mean: {cold['temp']:.2f}°C&lt;br&gt;USAFID={cold['USAFID']}&lt;br&gt;day={cold['day']}\",\n    fill=True,\n).add_to(m)\n\nfolium.CircleMarker(\n    location=[hot[\"lat\"], hot[\"lon\"]],\n    radius=10,\n    popup=f\"Hottest daily mean: {hot['temp']:.2f}°C&lt;br&gt;USAFID={hot['USAFID']}&lt;br&gt;day={hot['day']}\",\n    fill=True,\n).add_to(m)\n\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map",
+    "title": "JSC 370: Data Science II",
+    "section": "Interactive map",
+    "text": "Interactive map\n\nSlightly more advanced to make an interactive map with folium.\nYou can use leaflet as another (my preferred) option, but it seems to have some problems in quarto.\n\n\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map-1",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map-1",
+    "title": "JSC 370: Data Science II",
+    "section": "Interactive map",
+    "text": "Interactive map\nThis is how folium works:\n\nselect unique lat and lon\nset up the map with folium.Map\nadd the location points on the map with folium.CircleMarker, add opacity and radius for point size here"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map-2",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#interactive-map-2",
+    "title": "JSC 370: Data Science II",
+    "section": "Interactive map",
+    "text": "Interactive map\n\nimport folium\n\npts = met_daily[[\"lat\", \"lon\"]].dropna().drop_duplicates()\n\nm = folium.Map(\n    location=[pts[\"lat\"].mean(), pts[\"lon\"].mean()],\n    zoom_start=4,\n    tiles=\"CartoDB positron\"\n)\n\nfor _, r in pts.iterrows():\n    folium.CircleMarker(\n        location=[r[\"lat\"], r[\"lon\"]],\n        radius=2,\n        fill=True,\n        fill_opacity=0.8,\n        opacity=0.8,\n    ).add_to(m)\n\nm"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#filter-and-select",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#filter-and-select",
+    "title": "JSC 370: Data Science II",
+    "section": "Filter and select",
+    "text": "Filter and select\nBack to question: what weather stations reported the hottest and coldest daily temperatures?\nCompute the min and max hourly temperatures and the associated stations. Filter with loc and find min and max (it ignores missing) with idxmin() and inxmax()\n\nmin_row = met.loc[met[\"temp\"].idxmin(), [\"temp\", \"USAFID\", \"day\"]]\nmax_row = met.loc[met[\"temp\"].idxmax(), [\"temp\", \"USAFID\", \"day\"]]\nmin_row, max_row\n\n(temp       -17.2\n USAFID    722817\n day            1\n Name: 1203054, dtype: object,\n temp        56.0\n USAFID    720267\n day           26\n Name: 42402, dtype: object)\n\n\n\nOk but we need daily temperatures to answer our questions!"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#plotnine-ggplot-style-plots-in-python",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#plotnine-ggplot-style-plots-in-python",
+    "title": "JSC 370: Data Science II",
+    "section": "plotnine (ggplot-style plots in Python)",
+    "text": "plotnine (ggplot-style plots in Python)\nIf you like ggplot2, plotnine uses the same “add layers with +” workflow: - map variables with aes() - add geoms (points, smoothers) - add labels/themes\n\nimport numpy as np\nfrom sklearn.metrics import r2_score\nfrom plotnine import (\n    ggplot, aes, geom_point, geom_smooth, labs, theme_bw, annotate, coord_cartesian\n)\n\nmet_s = met[[\"temp\", \"rh\"]].dropna().sample(min(10_000, len(met)), random_state=1)\n\n# Fit line: rh = m*temp + b\nx = met_s[\"temp\"].to_numpy()\ny = met_s[\"rh\"].to_numpy()\nm, b = np.polyfit(x, y, 1)\n\ny_hat = m * x + b\nr2 = r2_score(y, y_hat)\n\nlabel = f\"rh = {m:.2f}·temp + {b:.2f}\\nR² = {r2:.3f}\"\n\n# location for the label\nx_pos = np.quantile(x, 0.9)\ny_pos = np.quantile(y, 0.999)\n\n(\n  ggplot(met_s, aes(x=\"temp\", y=\"rh\"))\n  + geom_point(alpha=0.2, size=1.0)\n  + geom_smooth(method=\"lm\", se=False)\n  + annotate(\"text\", x=x_pos, y=y_pos, label=label, ha=\"left\")\n  + coord_cartesian(ylim=(0, 100))\n  + labs(\n      title=\"Temperature vs humidity (sample) with linear fit\",\n      x=\"Temperature (°C)\",\n      y=\"Relative humidity (%)\"\n    )\n  + theme_bw()\n)"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html#plotnine",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html#plotnine",
+    "title": "JSC 370: Data Science II",
+    "section": "plotnine",
+    "text": "plotnine\n\n(\n  ggplot(met_s, aes(x=\"temp\", y=\"rh\"))\n  + geom_point(alpha=0.2, size=1.0)\n  + geom_smooth(method=\"loess\", se=False)\n  + coord_cartesian(ylim=(0, 100))\n  + labs(\n      title=\"Temperature vs humidity (sample) with linear fit\",\n      x=\"Temperature (°C)\",\n      y=\"Relative humidity (%)\"\n    )\n  + theme_bw()\n)"
   }
 ]

@@ -1,0 +1,808 @@
+---
+title: "JSC 370: Data Science II"
+subtitle: "Week 3: EDA and Data Visualization"
+format:
+  revealjs:
+    slide-number: true
+    incremental: true
+    scrollable: true
+    css: styles.css
+execute:
+  echo: true
+  warning: false
+  message: false
+jupyter: python3
+---
+
+## Goals
+
+- Load in large datasets stored locally and remotely (GitHub), check memory issues
+- Understand what EDA is (and is not)
+- Build a repeatable EDA workflow
+- Make plots that reveal structure, not just decoration
+- Avoid common visualization pitfalls
+
+---
+
+## Data Science Pipeline
+
+- We will work on the blue words today
+
+![](img/data-science2.png){fig-align="center" width="80%"}
+
+---
+
+## What is Exploratory Data Analysis?
+
+::: {.incremental}
+- EDA = **iterative** exploration and building **modeling intuition**
+- Focus on data distributions, missingness, relationships, anomalies
+- Create: summary stats, exploratory plots
+- Output: questions, hypotheses, and next steps
+:::
+
+---
+
+## Exploratory Data Analysis
+
+* EDA is the process of summarizing data
+* It should be the first step in your analysis pipeline, and it serves to:
+
+  + ✅ check data (import issues, outliers, missing values, data errors)
+  + 🧹 clean data (fix implausible values, remove missing if necessary, rename, etc.)
+  + $\Sigma$ summary statistics of key variables (univariate and bivariate)
+  + 📊 basic plots and graphs
+
+---
+
+## EDA Checklist
+
+EDA Checklist:
+
+- 1.	Formulate a question
+- 2.	Read in the data
+- 3.	Check the dimensions and headers and footers of the data
+- 4.	Check the variable types in the data
+- 5.	Take a closer look at some/all of the variables
+- 6.	Validate with an external source
+- 7.	Conduct some summary statistics to answer the initial question
+- 8.	Make exploratory graphs
+
+---
+
+## Case Study
+We are going to use a dataset created from the National Center for Environmental Information [NOAA/NCEI](https://www.ncei.noaa.gov/). The data are hourly measurements from weather stations across the continental U.S.
+
+![](img/weather.png){fig-align="center" width="80%"}
+
+---
+
+## Formulate a Question
+
+It is a good idea to first have a question such as:
+
+- what weather stations reported the hottest and coldest daily temperatures?
+- what day of the month was on average the hottest?
+- is there covariation between temperature and humidity in my dataset?
+
+---
+
+## Read in the data
+
+There are several ways to read in data (some depend on the type of data you have):
+
+- pandas.read_csv() for delimited files
+- pandas.read_parquet() for parquet
+- pandas.read_feather() for feather
+- pandas.read_excel() for .xls and .xlsx
+- pyarrow.dataset / dask for larger-than-memory workflows
+
+---
+
+## Read in the data
+
+We'll use Python packages `pandas`, `numpy`, `matplotlib`, `seaborn`, `plotnine`
+
+```{python}
+#| echo: true
+import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from plotnine import ggplot, aes, geom_point, labs
+```
+
+---
+
+## Example: read in local file
+If your data are a gzipped delimited file (e.g., met_all.gz), pandas can read it directly.
+
+::: {.smaller}
+
+```{python}
+met = pd.read_csv("met_all.gz", compression="gzip")
+met.head(4)
+```
+
+:::
+
+---
+
+## Example: read in github file
+If your data are a gzipped delimited file but stored on github, use
+
+```{python}
+url = "https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz"
+met = pd.read_csv(url, compression="gzip")    
+met.head(4)
+```
+
+---
+
+## Check the types of variables in our dataset
+
+We can get the types of data (integer, float, character) from `met.info`. This also tells us the memory usage.
+
+```{python}
+met.info()
+```
+
+---
+
+## What counts as “very large” data on a laptop?
+
+On laptops, “very large” usually means **it stresses RAM and slows basic operations**.
+
+A dataset can be “very large” even with *only* a few million rows if it has:
+
+  - many columns
+  - lots of strings (`object` dtype)
+  - expensive operations (joins, groupbys, sorting)
+
+---
+
+## Practical rule-of-thumb
+
+Think in terms of **memory**, not just rows × columns.
+
+- **Comfortable:** under ~1 GB in RAM
+- **Large:** ~1–5 GB (needs care: dtypes, filtering early)
+- **Very large:** > ~5 GB *or* doesn’t fit in RAM → you need a different approach/tool
+
+---
+
+## Measure size in pandas 
+
+- Calculate the total memory used by the DataFrame (convert bytes -> GB)
+
+```{python}
+met.memory_usage(deep=True).sum() / 1024**3
+```
+
+---
+
+## Measure size in pandas 
+
+- Find the biggest memory columns (this time in MB)
+```{python}
+(met.memory_usage(deep=True).sort_values(ascending=False) / 1024**2).head(10)
+```
+
+---
+
+## Why strings make data "big"
+
+- In pandas, object columns (strings) are often the memory hog. 
+- `dtypes` tells is what kind of variables we have in a dataset.
+
+```{python}
+met.dtypes
+```
+
+---
+
+## Big data can be read in more cautiously
+
+::: {.smaller}
+If the file is really big (ours is borderline), we could read only the columns we need. This is where having a question in mind is useful. For ours, we probably just want station location (lat, lon), year, month, day, hour, temperature and humidity.
+:::
+
+```{python}
+url = "https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz"
+usecols = ["USAFID","lat","lon", "year", "month","day","hour","temp", "rh"]
+met_small = pd.read_csv(
+    url,
+    compression="gzip",
+    usecols=usecols
+)
+met_small.head(4)
+```
+
+
+---
+
+## Big data can be read in more cautiously
+Chunking in pandas means reading in a file in pieces so you don't load the whole dataset into RAM at once.
+
+```{python}
+url = "https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz"
+chunks = pd.read_csv(url, compression="gzip", chunksize=200_000)
+n = 0
+temp_sum = 0.0
+for ch in chunks:
+    temp_sum += ch["temp"].sum(skipna=True)
+    n += ch["temp"].notna().sum()
+temp_sum / n
+```
+
+This computes the overall mean temperature without ever storing the full dataset:
+
+::: {.nonincremental}
+  * temp_sum accumulates the sum of temps across chunks.
+  * n accumulates how many non-missing temps you saw.
+  * temp_sum / n is the mean.
+:::
+
+We're basically doing:
+$\bar{x} = \frac{\sum x_i}{\#\{x_i \text{ not missing}\}}$
+
+---
+
+
+## Check the data
+
+Once we have loaded the data we should check the dimensions of the dataset. In pandas, the we use `met.shape`.
+
+```{python}
+print("shape:", met.shape)
+print("n_rows:", met.shape[0])
+print("n_cols:", met.shape[1])
+```
+
+---
+
+
+## Check the data: Summary
+
+* We see that there are 2,377,343 records of hourly temperature in August 2019 from all of the weather stations in the US. The data set has 30 variables. 
+
+* We know that we are supposed to have hourly measurements of weather data for the month of August 2019 for the entire US. We should check that we have all of these components. Let us check:
+
+  ::: {.smaller}
+  
+  - the year, month, hours
+  - the range of locations (latitude and longitude)
+  - temperature
+  - relative humidity
+  :::
+
+
+---
+
+
+
+## Check the data more closely
+
+We can get a quick summary from `met.describe`.
+
+```{python}
+met.describe()
+```
+
+- Note that this doesn't tell us if there are any missing data!
+
+---
+
+## Check the data more closely
+
+It is a little harder to quickly summarize missing data in pandas, but here's a way to count missing observations and calculate the percent missing.
+
+```{python}
+missing = met.isna().sum().to_frame("n_missing")
+missing["pct_missing"] = (missing["n_missing"] / len(met)).round(4)
+missing.sort_values("pct_missing", ascending=False).head(20)
+```
+
+---
+
+## Check variables more closely
+
+If we return to our initial question—what weather stations reported the hottest and coldest temperatures, we should take a closer look at our key variable, temperature (`temp`).
+
+```{python}
+met["temp"].describe()
+```
+
+
+- It looks like the data are in Celsius.
+
+---
+
+## Check variables more closely
+
+- It's odd to have -40C in August. 
+- Subset rows where temp == -40.0 and select a few columns with `loc`, which is an indexer for selecting rows and columns.
+
+```{python}
+met_ss = met.loc[met["temp"] == -40.0, ["USAFID","hour", "lat", "lon",  "elev", "temp", "wind.sp"]]
+met_ss.shape
+met_ss.head()
+```
+
+- It appears that all of the data with -40C are from the same site and have missing. Points to a data issue.
+
+---
+
+## Validate against an external source
+
+We should check outside sources to make sure that our data make sense. The observation with -40°C is suspicious, so we should look up the location of the weather station.
+
+Go to [Google maps](https://www.google.com/maps/) and enter the coordinates for the site with -40C (29.12, -89.55)
+
+::: {incremental}
+![](img/map.png){fig-align="center" width="80%"}
+:::
+
+- It doesn't make much sense to have a -40C reading in the Gulf of Mexico off the coast of Louisiana.
+
+---
+
+## Filter implausible values
+
+Filter with `loc` and sort the data with `sort_values` in one line:
+
+```{python}
+met = met.loc[met["temp"] > -40].sort_values("temp")
+met.head(20)
+```
+
+- We should do a quick check of (38.767,	-104.300) and (27.901,	-98.052) to see if the -17C rows are also implausible and should be removed.
+
+---
+
+## Filter and select
+
+Back to question: what weather stations reported the hottest and coldest daily temperatures?
+
+Compute the min and max hourly temperatures and the associated stations. Filter with `loc` and find min and max (it ignores missing) with `idxmin()` and `inxmax()`
+
+```{python}
+min_row = met.loc[met["temp"].idxmin(), ["temp", "USAFID", "day"]]
+max_row = met.loc[met["temp"].idxmax(), ["temp", "USAFID", "day"]]
+min_row, max_row
+```
+
+- Ok but we need daily temperatures to answer our questions!
+
+---
+
+## Grouping and summarizing data
+
+We need to transform our data to answer our initial question at the daily scale.
+Let’s find daily mean temperature by station and day. Use `groupby` and `agg` to calculate the mean and create a new dataset `met_daily`.
+
+```{python}
+met_daily = (
+    met.groupby(["USAFID", "day"], as_index=False)
+       .agg(
+           temp=("temp", "mean"),
+           lat=("lat", "mean"),
+           lon=("lon", "mean"),
+           rh=("rh", "mean"),
+       )
+       .sort_values("temp")
+)
+
+met_daily.head(), met_daily.tail() 
+```
+
+---
+
+## Grouping and summarizing data
+
+What day of the month was the hottest?
+
+
+```{python}
+min_daily = met_daily.loc[met_daily["temp"].idxmin(), ["temp", "USAFID", "day"]]
+max_daily = met_daily.loc[met_daily["temp"].idxmax(), ["temp", "USAFID", "day"]]
+min_daily, max_daily
+```
+
+- The hottest day was August 31st, and the average daily temperature was 41.7C
+
+---
+
+## Looking at two variables at a time
+
+To answer the last question about covariation between temperature and humidity, we can first calculate correlation
+
+```{python}
+pearson = met["temp"].corr(met["rh"], method="pearson")
+spearman = met["temp"].corr(met["rh"], method="spearman")
+
+pearson, spearman, spearman - pearson
+```
+
+Is it the same for the daily data?
+
+```{python}
+pearson = met_daily["temp"].corr(met_daily["rh"], method="pearson")
+spearman = met_daily["temp"].corr(met_daily["rh"], method="spearman")
+
+pearson, spearman, spearman - pearson
+```
+
+The correlation is quite different between hourly and daily data. Why?
+
+---
+
+## Exploratory graphs
+
+With exploratory graphs we aim to:
+
+	•	debug any issues remaining in the data
+	•	understand properties of the data
+	•	look for patterns in the data
+	•	inform modeling strategies
+
+Exploratory graphs do not need to be perfect, we’ll look at presentation-ready plots with python's ggplot equivalent.
+
+---
+
+## Exploratory graphs
+
+What type of data are these types of exploratory graphs good for?
+
+	•	histograms 
+	•	boxplots
+	•	scatterplots 
+	•	barplots 
+	•	lineplots
+	•	violin plots 
+	•	maps
+
+---
+
+## Exploratory histogram
+
+Focusing on temperature, let’s look at the distribution of **hourly** temperature (after removing -40°C) using a histogram.
+
+```{python}
+plt.hist(met["temp"].dropna(), bins=50)
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Count")
+plt.title("Hourly Temperature")
+plt.show()
+
+```
+
+## Exploratory histogram
+
+Let's look at the daily data
+
+```{python}
+plt.hist(met_daily["temp"].dropna(), bins=50)
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Count")
+plt.title("Daily Mean Temperature")
+plt.show()
+```
+
+---
+
+## Exploratory boxplot
+
+A boxplot gives us an idea of the quantiles of the distribution and any outliers.
+
+```{python}
+plt.boxplot(met["temp"].dropna(), vert=True)
+plt.ylabel("Temperature (°C)")
+plt.title("Hourly temperature")
+plt.show()
+```
+
+---
+
+## Exploratory boxplot
+
+Often boxplots are better for grouped continuous data, such as temperature by hour (over all days in the dataset).
+
+```{python}
+hours = range(24)
+data_by_hour = [met.loc[met["hour"] == h, "temp"].to_numpy() for h in hours]
+
+plt.boxplot(data_by_hour, labels=list(hours), showfliers=False)
+plt.xlabel("Hour")
+plt.ylabel("Temperature (°C)")
+plt.title("Temperature by Hour")
+plt.show()
+```
+
+---
+
+## Exploratory violin plot
+
+Often violin plots are helpful for grouped continuous data (they show the **shape** of the distribution), such as temperature by hour (over all days in the dataset).
+
+```{python}
+plt.violinplot(data_by_hour, showmeans=False, showmedians=True, showextrema=False)
+plt.xticks(ticks=np.arange(1, 25), labels=list(hours))
+plt.xlabel("Hour")
+plt.ylabel("Temperature (°C)")
+plt.title("Temperature by Hour")
+plt.show()
+```
+
+---
+
+
+## Exploratory scatterplot 
+
+Let's check covariation with a scatterplot of humidity vs temperature.
+
+```{python}
+plt.scatter(met["temp"], met["rh"])
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Relative humidity (%)")
+plt.title("Temperature vs humidity (sample)")
+plt.show()
+```
+
+---
+
+## Exploratory scatterplot 
+
+Since there are so many points let's take a random sample of 10,000 rows using `sample` and add `alpha` transparency to see the scatter better. `random_state` is like setting a seed for reproducibility.
+
+```{python}
+
+met_s = met.sample(min(10_000, len(met)), random_state=1)
+
+plt.scatter(met_s["temp"], met_s["rh"], alpha=0.2)
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Relative humidity (%)")
+plt.title("Temperature vs humidity (sample)")
+plt.show()
+```
+
+---
+
+## Exploratory map
+
+```{python}
+#| echo: false
+import geopandas as gpd
+import contextily as cx
+
+# extract latitudes and longitudes
+gdf = gpd.GeoDataFrame(
+    met_daily.dropna(subset=["lat", "lon"]).copy(),
+    geometry=gpd.points_from_xy(met_daily["lon"], met_daily["lat"]),
+    crs="EPSG:4326"  
+)
+
+
+gdf_web = gdf.to_crs(epsg=3857)
+
+ax = gdf_web.plot(markersize=10, alpha=0.6)
+cx.add_basemap(ax, source=cx.providers.CartoDB.Positron)
+ax.set_axis_off()
+plt.show()
+```
+
+---
+
+## Exploratory map
+
+May need to `python3 -m pip install geopandas contextily` to make these maps
+
+```{python}
+#| echo: true
+#| eval: false
+import geopandas as gpd
+import contextily as cx
+
+# extract latitudes and longitudes
+gdf = gpd.GeoDataFrame(
+    met_daily.dropna(subset=["lat", "lon"]).copy(),
+    geometry=gpd.points_from_xy(met_daily["lon"], met_daily["lat"]),
+    crs="EPSG:4326"   
+)
+
+gdf_web = gdf.to_crs(epsg=3857)
+
+ax = gdf_web.plot(markersize=10, alpha=0.6)
+cx.add_basemap(ax, source=cx.providers.CartoDB.Positron)
+ax.set_axis_off()
+plt.show()
+```
+
+---
+
+## Interactive map
+
+- Slightly more advanced to make an interactive map with `folium`. 
+- You can use `leaflet` as another (my preferred) option, but it seems to have some problems in quarto.
+
+```{python}
+#| echo: false
+import folium
+
+pts = met_daily[["lat", "lon"]].dropna().drop_duplicates()
+
+m = folium.Map(
+    location=[pts["lat"].mean(), pts["lon"].mean()],
+    zoom_start=4,
+    tiles="CartoDB positron"
+)
+
+for _, r in pts.iterrows():
+    folium.CircleMarker(
+        location=[r["lat"], r["lon"]],
+        radius=2,
+        fill=True,
+        fill_opacity=0.8,
+        opacity=0.8,
+    ).add_to(m)
+
+m
+```
+
+---
+
+## Interactive map
+
+This is how `folium` works:
+
+- select unique lat and lon
+- set up the map with `folium.Map`
+- add the location points on the map with `folium.CircleMarker`, add opacity and radius for point size here
+
+---
+
+## Interactive map
+
+```{python}
+#| echo: true
+#| eval: false
+import folium
+
+pts = met_daily[["lat", "lon"]].dropna().drop_duplicates()
+
+m = folium.Map(
+    location=[pts["lat"].mean(), pts["lon"].mean()],
+    zoom_start=4,
+    tiles="CartoDB positron"
+)
+
+for _, r in pts.iterrows():
+    folium.CircleMarker(
+        location=[r["lat"], r["lon"]],
+        radius=2,
+        fill=True,
+        fill_opacity=0.8,
+        opacity=0.8,
+    ).add_to(m)
+
+m
+```
+
+
+---
+
+## Exploratory map
+
+Let's now look at where the hottest and coldest places were based on the daily temperatures. We add a layer for cold and a layer for hot.
+
+```{python}
+cold = met_daily.loc[met_daily["temp"].idxmin()]
+hot  = met_daily.loc[met_daily["temp"].idxmax()]
+cold, hot
+
+center = [met_daily["lat"].mean(), met_daily["lon"].mean()]
+m = folium.Map(location=center, zoom_start=4, tiles="CartoDB positron")
+
+# Coldest (blue)
+folium.CircleMarker(
+    location=[cold["lat"], cold["lon"]],
+    radius=10,
+    popup=f"Coldest daily mean: {cold['temp']:.2f}°C<br>USAFID={cold['USAFID']}<br>day={cold['day']}",
+    color="blue",
+    fill=True,
+    fill_color="blue",
+    fill_opacity=0.9,
+).add_to(m)
+
+# Hottest (red)
+folium.CircleMarker(
+    location=[hot["lat"], hot["lon"]],
+    radius=10,
+    popup=f"Hottest daily mean: {hot['temp']:.2f}°C<br>USAFID={hot['USAFID']}<br>day={hot['day']}",
+    color="red",
+    fill=True,
+    fill_color="red",
+    fill_opacity=0.9,
+).add_to(m)
+
+m
+```
+
+
+---
+
+# Adding a bit more information to exploratory graphs
+
+- We have seen the concept of layering data in the maps. 
+- We can add more information to a lot of different types of plots. For example, a scatterplot shows individual observations, but it can be hard to see relationships.
+- A common EDA move is to add a regression line to summarize how `rh` changes with `temp`
+
+---
+
+
+## `plotnine` (ggplot-style plots in Python)
+
+If you like ggplot2, `plotnine` uses the same “add layers with +” workflow:
+- map variables with `aes()`
+- add geoms (points, smoothers)
+- add labels/themes
+
+```{python}
+import numpy as np
+from sklearn.metrics import r2_score
+from plotnine import (
+    ggplot, aes, geom_point, geom_smooth, labs, theme_bw, annotate, coord_cartesian
+)
+
+met_s = met[["temp", "rh"]].dropna().sample(min(10_000, len(met)), random_state=1)
+
+# Fit line: rh = m*temp + b
+x = met_s["temp"].to_numpy()
+y = met_s["rh"].to_numpy()
+m, b = np.polyfit(x, y, 1)
+
+y_hat = m * x + b
+r2 = r2_score(y, y_hat)
+
+label = f"rh = {m:.2f}·temp + {b:.2f}\nR² = {r2:.3f}"
+
+# location for the label
+x_pos = np.quantile(x, 0.9)
+y_pos = np.quantile(y, 0.999)
+
+(
+  ggplot(met_s, aes(x="temp", y="rh"))
+  + geom_point(alpha=0.2, size=1.0)
+  + geom_smooth(method="lm", se=False)
+  + annotate("text", x=x_pos, y=y_pos, label=label, ha="left")
+  + coord_cartesian(ylim=(0, 100))
+  + labs(
+      title="Temperature vs humidity (sample) with linear fit",
+      x="Temperature (°C)",
+      y="Relative humidity (%)"
+    )
+  + theme_bw()
+)
+```
+
+---
+
+
+## `plotnine`
+
+```{python}
+(
+  ggplot(met_s, aes(x="temp", y="rh"))
+  + geom_point(alpha=0.2, size=1.0)
+  + geom_smooth(method="loess", se=False)
+  + coord_cartesian(ylim=(0, 100))
+  + labs(
+      title="Temperature vs humidity (sample) with linear fit",
+      x="Temperature (°C)",
+      y="Relative humidity (%)"
+    )
+  + theme_bw()
+)
+```
