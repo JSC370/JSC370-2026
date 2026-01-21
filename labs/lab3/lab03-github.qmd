@@ -39,6 +39,7 @@ We will work with similar meteorological data that was presented in lecture. Rec
 ### 0. Load libraries
 
 Notes: 
+
 - import the necessary libraries
 - note setting pandas options for nicer display of the output
 - in the yaml above set enabled to true when you want the code to render
