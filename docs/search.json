@@ -808,8 +808,8 @@
     "objectID": "slides/03-eda-viz/JSC370-slides-03.html#goals",
     "href": "slides/03-eda-viz/JSC370-slides-03.html#goals",
     "title": "JSC 370: Data Science II",
-    "section": "Goals",
-    "text": "Goals\n\nLoad in large datasets stored locally and remotely (GitHub), check memory issues\nUnderstand what EDA is (and is not)\nBuild a repeatable EDA workflow\nMake plots that reveal structure, not just decoration\nAvoid common visualization pitfalls"
+    "section": "",
+    "text": "Load in large datasets stored locally and remotely (GitHub), check memory issues\nUnderstand what EDA is (and is not)\nBuild a repeatable EDA workflow\nMake plots that reveal structure, not just decoration\nAvoid common visualization pitfalls"
   },
   {
     "objectID": "slides/03-eda-viz/JSC370-slides-03.html#data-science-pipeline",
@@ -823,7 +823,7 @@
     "href": "slides/03-eda-viz/JSC370-slides-03.html#what-is-exploratory-data-analysis",
     "title": "JSC 370: Data Science II",
     "section": "What is Exploratory Data Analysis?",
-    "text": "What is Exploratory Data Analysis?\n\nEDA = iterative exploration and building modeling intuition\nFocus on data distributions, missingness, relationships, anomalies\nCreate: summary stats, exploratory plots\nOutput: questions, hypotheses, and next steps"
+    "text": "What is Exploratory Data Analysis?\n\n\nEDA = iterative exploration and building modeling intuition\nFocus on data distributions, missingness, relationships, anomalies\nCreate: summary stats, exploratory plots\nOutput: questions, hypotheses, and next steps"
   },
   {
     "objectID": "slides/03-eda-viz/JSC370-slides-03.html#exploratory-data-analysis",
@@ -865,7 +865,7 @@
     "href": "slides/03-eda-viz/JSC370-slides-03.html#read-in-the-data-1",
     "title": "JSC 370: Data Science II",
     "section": "Read in the data",
-    "text": "Read in the data\nWe’ll use Python packages pandas, numpy, matplotlib, seaborn, plotnine\n\nimport pandas as pd\nimport numpy as np\n\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nfrom plotnine import ggplot, aes, geom_point, labs"
+    "text": "Read in the data\nWe’ll use Python packages pandas, numpy, matplotlib, seaborn, plotnine\n\nimport pandas as pd\nimport numpy as np\n\nimport matplotlib.pyplot as plt\n\nfrom plotnine import ggplot, aes, geom_point, labs"
   },
   {
     "objectID": "slides/03-eda-viz/JSC370-slides-03.html#example-read-in-local-file",
@@ -935,7 +935,7 @@
     "href": "slides/03-eda-viz/JSC370-slides-03.html#big-data-can-be-read-in-more-cautiously-1",
     "title": "JSC 370: Data Science II",
     "section": "Big data can be read in more cautiously",
-    "text": "Big data can be read in more cautiously\nChunking in pandas means reading in a file in pieces so you don’t load the whole dataset into RAM at once.\n\nurl = \"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz\"\nchunks = pd.read_csv(url, compression=\"gzip\", chunksize=200_000)\nn = 0\ntemp_sum = 0.0\nfor ch in chunks:\n    temp_sum += ch[\"temp\"].sum(skipna=True)\n    n += ch[\"temp\"].notna().sum()\ntemp_sum / n\n\nnp.float64(23.590542469664527)\n\n\nThis computes the overall mean temperature without ever storing the full dataset:\n\ntemp_sum accumulates the sum of temps across chunks.\nn accumulates how many non-missing temps you saw.\ntemp_sum / n is the mean.\n\nWe’re basically doing: \\(\\bar{x} = \\frac{\\sum x_i}{\\#\\{x_i \\text{ not missing}\\}}\\)"
+    "text": "Big data can be read in more cautiously\nChunking in pandas means reading in a file in pieces so you don’t load the whole dataset into RAM at once.\n\nurl = \"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all.gz\"\nchunks = pd.read_csv(url, compression=\"gzip\", chunksize=200_000)\nn = 0\ntemp_sum = 0.0\nfor ch in chunks:\n    temp_sum += ch[\"temp\"].sum(skipna=True)\n    n += ch[\"temp\"].notna().sum()\ntemp_sum / n\n\nnp.float64(23.590542469664527)\n\n\nThis computes the overall mean temperature without ever storing the full dataset:\n\n\ntemp_sum accumulates the sum of temps across chunks.\nn accumulates how many non-missing temps you saw.\ntemp_sum / n is the mean.\n\n\nWe’re basically doing: \\(\\bar{x} = \\frac{\\sum x_i}{\\#\\{x_i \\text{ not missing}\\}}\\)"
   },
   {
     "objectID": "slides/03-eda-viz/JSC370-slides-03.html#check-the-data",
@@ -1153,5 +1153,82 @@
     "title": "Lab 03 - EDA and Viz 1",
     "section": "6. Answer research questions",
     "text": "6. Answer research questions\nRemember to keep the initial questions in mind. We want to pick out the weather station with minimum elevation and examine its temperature.\nSome ideas for steps: 1. subset the data for the weather station with minimum elevation 2. look at histograms of temperature 3. make a time series plot (need to create date variable) 4. make a map to see where it is\n\n6a. Subset minimum elevation site\n\n# Subset data for the weather station with minimum elevation\n\n\n\n6b. Histogram of temperature at minimum elevation site\n\nplt.hist(...)\n\n\n\n6c. Create date variable and time series plot\n\nLook at the time series of temperature at this location. For this we will need to create a date-time variable for the x-axis.\nSummarize any trends that you see in these time series plots.\n\n\n# Create a date variable for min_elev_station\nmin_elev_station = min_elev_station.copy()\nmin_elev_station['date'] = pd.to_datetime(\n    min_elev_station[...]\n)\n\n# Sort by date\nmin_elev_station = min_elev_station.sort_values('date')\n\n# Create line plot of temperature by date\n\nplt.plot(...)\nplt.xlabel()\nplt.ylabel()\nplt.show()\n\nSummary: - Summarize time series plot.\n\n\n6d. Where is the lowest weather station?\n\nstation_location = min_elev_station[...].drop_duplicates()\n\nlat = station_location['lat'].iloc[0]\nlon = station_location['lon'].iloc[0]\nelev = station_location['elev'].iloc[0]\n\n# make elev into GeoDataFrame for mapping\ngdf = gpd.GeoDataFrame(\n    {'elevation': [elev]},\n    geometry=gpd.points_from_xy([lon], [lat]),\n    crs='EPSG:4326'\n)\n\n# Convert to Web Mercator for basemap\ngdf = gdf.to_crs('EPSG:3857')\n\n# map\nfig, ax = plt.subplots(figsize=(10, 8))\ngdf.plot(ax=ax, color='red', markersize=300, marker='*', edgecolor='black', linewidth=2, zorder=5)\ncx.add_basemap(ax, source=cx.providers.OpenStreetMap.Mapnik)\nax.set_xlabel('Longitude')\nax.set_ylabel('Latitude')\nax.set_title(f'Lowest Elevation Station (Elevation: {elev} m)')\nplt.show()\n\nSummary: where is the lowest elevation station?"
+  },
+  {
+    "objectID": "slides/03-eda-viz/JSC370-slides-03.html",
+    "href": "slides/03-eda-viz/JSC370-slides-03.html",
+    "title": "JSC 370: Data Science II",
+    "section": "",
+    "text": "Load in large datasets stored locally and remotely (GitHub), check memory issues\nUnderstand what EDA is (and is not)\nBuild a repeatable EDA workflow\nMake plots that reveal structure, not just decoration\nAvoid common visualization pitfalls"
+  },
+  {
+    "objectID": "labs/lab03-github.html",
+    "href": "labs/lab03-github.html",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "",
+    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\nUpload your .qmd to MarkUs"
+  },
+  {
+    "objectID": "labs/lab03-github.html#overview",
+    "href": "labs/lab03-github.html#overview",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "",
+    "text": "In this lab you will:\n\nInstall/confirm VS Code, Python, and Quarto\nConfirm Quarto can run Python chunks (via Jupyter)\nRender a Quarto document locally\nUpload your .qmd to MarkUs"
+  },
+  {
+    "objectID": "labs/lab03-github.html#what-you-will-submit-to-markus",
+    "href": "labs/lab03-github.html#what-you-will-submit-to-markus",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "What you will submit to MarkUs",
+    "text": "What you will submit to MarkUs\n\nThis completed .qmd file. Download the lab .qmd on GitHub\nThe rendered HTML output (JSC370-lab-01.html)"
+  },
+  {
+    "objectID": "labs/lab03-github.html#before-you-start",
+    "href": "labs/lab03-github.html#before-you-start",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "0. Before you start",
+    "text": "0. Before you start\n\nIf you do not already have it, install VS Code. Then open this file in .\nIn VS Code open the terminal (Terminal -&gt; New Terminal). Recall you can toggle between terminals in VS Code. You should see a list of terminals on the bottom right panel."
+  },
+  {
+    "objectID": "labs/lab03-github.html#quarto",
+    "href": "labs/lab03-github.html#quarto",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "1. Quarto",
+    "text": "1. Quarto\nIn the terminal, run:\nquarto --version\nIf it is not installed, go to the Quarto download page and install for your OS: https://quarto.org/docs/download/.\nAfter installing, quit and reopen VS Code (so PATH updates), then run quarto –version again.\nPASTE YOUR VERSION HERE\nNow install the Quarto extension in VS Code:\n\nIn VS Code, click the Extensions icon (left sidebar), or press:\n\nmacOS: Cmd+Shift+X\nWindows/Linux: Ctrl+Shift+X\n\nSearch: Quarto\nInstall: Quarto (publisher: quarto-dev)\nYou may need to reload VS Code.\n\nPreview this lab in VS Code\nOpen this .qmd file, then preview it with Command Palette (Cmd/Ctrl+Shift+P) and select Quarto: Preview.\nTo stop preview: press Ctrl+C in the terminal running the preview."
+  },
+  {
+    "objectID": "labs/lab03-github.html#confirm-python-is-installed",
+    "href": "labs/lab03-github.html#confirm-python-is-installed",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "2. Confirm Python is installed",
+    "text": "2. Confirm Python is installed\nYou can try this in terminal:\n#| echo: true\npython3 --version\n(If python3 doesn’t work, try python –version in terminal.) Paste the output, but the chunk above should do it for you if installed correctly."
+  },
+  {
+    "objectID": "labs/lab03-github.html#install-core-packages-in-terminal",
+    "href": "labs/lab03-github.html#install-core-packages-in-terminal",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "3. Install core packages in terminal",
+    "text": "3. Install core packages in terminal\nRun the following in terminal. It is best to install packages in the terminal (not from inside Quarto).\npython3 -m pip install -U pip\npython3 -m pip install numpy pandas matplotlib jupyter ipykernel plotnine plotly\nAlso install the Jupyter extension in VS Code, similarly to how we installed the Quarto extension above (search for Jupyter).\nConfirm Quarto can see Jupyter\nquarto check jupyter\nPASTE OUTPUT HERE"
+  },
+  {
+    "objectID": "labs/lab03-github.html#verify-your-python-environment",
+    "href": "labs/lab03-github.html#verify-your-python-environment",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "4. Verify your Python environment",
+    "text": "4. Verify your Python environment\nRun the chunk below. If this fails, double-check that VS Code is using the Python environment where you installed packages.\nimport sys\nimport pandas as pd\n\nprint(\"Python executable:\", sys.executable)\nprint(\"pandas version:\", pd.__version__)"
+  },
+  {
+    "objectID": "labs/lab03-github.html#your-turn-make-a-plot",
+    "href": "labs/lab03-github.html#your-turn-make-a-plot",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "5. Your turn: make a plot",
+    "text": "5. Your turn: make a plot\nUse the plotnine library (ggplot-like) to make a simple scatterplot. Update the code below:\n\nTitle must include your name (e.g., \"Penguin bill measurements — Your Name\").\nChange the point transparency by setting alpha to a new value.\n\nfrom plotnine import ggplot, aes, geom_point, labs, theme_minimal\nfrom plotnine.data import penguins\n\n(\n    ggplot(penguins, aes(\"bill_length_mm\", \"bill_depth_mm\", color=\"species\"))\n    + geom_point(alpha=0.4)  \n    + labs(title=\"Penguin bill measurements — YOUR NAME\")  \n    + theme_minimal()\n)"
+  },
+  {
+    "objectID": "labs/lab03-github.html#render-.qmd-to-.html",
+    "href": "labs/lab03-github.html#render-.qmd-to-.html",
+    "title": "Lab 1 — Setup: VS Code with Python and Quarto",
+    "section": "6. Render ‘.qmd’ to ‘.html’",
+    "text": "6. Render ‘.qmd’ to ‘.html’\nIn the terminal, make sure you are in the folder containing this file, then run:\nquarto render JSC370-lab-01.qmd\nThis should create an HTML file in the same folder, e.g. JSC370-lab-01.html.\nConfirm it exists:\nls -l JSC370-lab-01.html\nPrint out the output and make sure it is in this lab. Also open the HTML in your browser to confirm it looks correct."
   }
 ]

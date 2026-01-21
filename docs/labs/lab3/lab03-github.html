@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-ff63373b1067ca6f91cf1456aa1f00a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -105,45 +105,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
-<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#lab-description" id="toc-lab-description" class="nav-link" data-scroll-target="#lab-description">Lab Description</a></li>
-  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a>
-  <ul class="collapse">
-  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries">0. Load libraries</a></li>
-  <li><a href="#read-in-the-data" id="toc-read-in-the-data" class="nav-link" data-scroll-target="#read-in-the-data">1. Read in the data</a></li>
-  <li><a href="#check-the-memory-size-dataset-dimensions-and-the-header.-how-many-columns-rows-are-there" id="toc-check-the-memory-size-dataset-dimensions-and-the-header.-how-many-columns-rows-are-there" class="nav-link" data-scroll-target="#check-the-memory-size-dataset-dimensions-and-the-header.-how-many-columns-rows-are-there">2. Check the memory size, dataset dimensions, and the header. How many columns, rows are there?</a></li>
-  <li><a href="#look-at-data-types-of-the-variables-in-the-dataset." id="toc-look-at-data-types-of-the-variables-in-the-dataset." class="nav-link" data-scroll-target="#look-at-data-types-of-the-variables-in-the-dataset.">3. Look at data types of the variables in the dataset.</a></li>
-  <li><a href="#take-a-closer-look-at-the-key-variables-temp-and-elev." id="toc-take-a-closer-look-at-the-key-variables-temp-and-elev." class="nav-link" data-scroll-target="#take-a-closer-look-at-the-key-variables-temp-and-elev.">4. Take a closer look at the key variables (<code>temp</code> and <code>elev</code>).</a></li>
-  <li><a href="#check-the-data-against-an-external-data-source-and-make-any-other-adjustments." id="toc-check-the-data-against-an-external-data-source-and-make-any-other-adjustments." class="nav-link" data-scroll-target="#check-the-data-against-an-external-data-source-and-make-any-other-adjustments.">5. Check the data against an external data source and make any other adjustments.</a></li>
-  <li><a href="#answer-research-questions" id="toc-answer-research-questions" class="nav-link" data-scroll-target="#answer-research-questions">6. Answer research questions</a>
-  <ul class="collapse">
-  <li><a href="#a.-subset-minimum-elevation-site" id="toc-a.-subset-minimum-elevation-site" class="nav-link" data-scroll-target="#a.-subset-minimum-elevation-site">6a. Subset minimum elevation site</a></li>
-  <li><a href="#b.-histogram-of-temperature-at-minimum-elevation-site" id="toc-b.-histogram-of-temperature-at-minimum-elevation-site" class="nav-link" data-scroll-target="#b.-histogram-of-temperature-at-minimum-elevation-site">6b. Histogram of temperature at minimum elevation site</a></li>
-  <li><a href="#c.-create-date-variable-and-time-series-plot" id="toc-c.-create-date-variable-and-time-series-plot" class="nav-link" data-scroll-target="#c.-create-date-variable-and-time-series-plot">6c. Create date variable and time series plot</a></li>
-  <li><a href="#d.-where-is-the-lowest-weather-station" id="toc-d.-where-is-the-lowest-weather-station" class="nav-link" data-scroll-target="#d.-where-is-the-lowest-weather-station">6d. Where is the lowest weather station?</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -192,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="load-libraries">0. Load libraries</h3>
 <p>Notes: - import the necessary libraries - note setting pandas options for nicer display of the output - in the yaml above set enabled to true when you want the code to render</p>
-<div id="ff9b201c" class="cell">
+<div id="faa6241b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.float_format"</span>, <span class="st">"</span><span class="sc">{:.2f}</span><span class="st">"</span>.<span class="bu">format</span>) </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -205,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="read-in-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="read-in-the-data">1. Read in the data</h3>
 <p>Connect to github and read in data with pandas.</p>
-<div id="ca894eb3" class="cell">
+<div id="a58536a6" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/JSC370/JSC370-2026/main/data/met_all_2025.gz"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>met <span class="op">=</span> pd.read_csv(...)    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -215,20 +188,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>fill in where there are …</li>
 </ul>
-<div id="b5551da2" class="cell">
+<div id="6f239d4c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>met.memory_usage(deep<span class="op">=</span><span class="va">True</span>).<span class="bu">sum</span>() <span class="op">/</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="9c952ef0" class="cell">
+<div id="d67d736c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>met.shape[...]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="838f935d" class="cell">
+<div id="f0b74315" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>met.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Summary: - add bullets with your summary</p>
 </section>
 <section id="look-at-data-types-of-the-variables-in-the-dataset." class="level3">
 <h3 class="anchored" data-anchor-id="look-at-data-types-of-the-variables-in-the-dataset.">3. Look at data types of the variables in the dataset.</h3>
-<div id="2d0094de" class="cell">
+<div id="f0cc4cc2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>met.info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Summary: - add bullets with your summary</p>
@@ -238,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Are there missing data in these variables? If so, make sure they are coded correctly.</li>
 </ul>
-<div id="19774b80" class="cell">
+<div id="8a84fdab" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>key_vars <span class="op">=</span> [<span class="st">'temp'</span>, <span class="st">'elev'</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>met[...].isnull().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -246,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Are there any unusual values that look suspicious?</li>
 </ul>
-<div id="32c622c4" class="cell">
+<div id="1049d5cb" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>minT <span class="op">=</span> met[<span class="st">'temp'</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>maxT <span class="op">=</span> ...</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -267,12 +240,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Fix any problems that arise in your checks.</p></li>
 <li></li>
 </ul>
-<div id="28e07048" class="cell">
+<div id="4efa33e7" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>met.loc[...] <span class="op">=</span> np.nan</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>met[[<span class="st">'temp'</span>]].describe().<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Summary:</p>
-<div id="074f057d" class="cell">
+<div id="95b4ae5c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cold_temps <span class="op">=</span> met[met[<span class="st">'temp'</span>] ...]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># display data here extract lat and lon and check google</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -280,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Summary</li>
 </ul>
-<div id="26154c94" class="cell">
+<div id="26b789ee" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix up data here, remove implausible values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -290,13 +263,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Some ideas for steps: 1. subset the data for the weather station with minimum elevation 2. look at histograms of temperature 3. make a time series plot (need to create date variable) 4. make a map to see where it is</p>
 <section id="a.-subset-minimum-elevation-site" class="level3">
 <h3 class="anchored" data-anchor-id="a.-subset-minimum-elevation-site">6a. Subset minimum elevation site</h3>
-<div id="e175aa56" class="cell">
+<div id="e40f1db2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data for the weather station with minimum elevation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="b.-histogram-of-temperature-at-minimum-elevation-site" class="level3">
 <h3 class="anchored" data-anchor-id="b.-histogram-of-temperature-at-minimum-elevation-site">6b. Histogram of temperature at minimum elevation site</h3>
-<div id="e0b6e624" class="cell">
+<div id="ca8fcb51" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.hist(...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -306,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Look at the time series of temperature at this location. For this we will need to create a date-time variable for the x-axis.</p></li>
 <li><p>Summarize any trends that you see in these time series plots.</p></li>
 </ul>
-<div id="fae961c5" class="cell">
+<div id="cdcddfa7" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a date variable for min_elev_station</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>min_elev_station <span class="op">=</span> min_elev_station.copy()</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>min_elev_station[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(</span>
@@ -327,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="d.-where-is-the-lowest-weather-station" class="level3">
 <h3 class="anchored" data-anchor-id="d.-where-is-the-lowest-weather-station">6d. Where is the lowest weather station?</h3>
-<div id="f363912b" class="cell">
+<div id="129c337c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>station_location <span class="op">=</span> min_elev_station[...].drop_duplicates()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>lat <span class="op">=</span> station_location[<span class="st">'lat'</span>].iloc[<span class="dv">0</span>]</span>
@@ -375,17 +348,6 @@ W10=
 </section>
 
 </main> <!-- /main -->
-<script type="ojs-module-contents">
-eyJjb250ZW50cyI6W119
-</script>
-<script type="module">
-if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../../labs/lab3";
-window._ojs.paths.runtimeToRoot = "../..";
-window._ojs.paths.docToRoot = "../..";
-window._ojs.selfContained = false;
-window._ojs.runtime.interpretFromScriptTags();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
