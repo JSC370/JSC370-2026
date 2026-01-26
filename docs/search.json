@@ -1243,14 +1243,14 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#this-week-1",
     "title": "JSC 370: Data Science II",
     "section": "This week",
-    "text": "This week\nWe will also dig into non-parametric regression with splines and generalized additive models (GAMs).\nA generalized additive model (GAM) predicts \\(y\\) by adding up learned smooth functions of the predictors:\n\\[\ng(\\mathbb{E}[Y \\mid X])=\\beta_0 + f_1(x_1) + f_2(x_2) + \\cdots + f_p(x_p)\n\\]\n\nNonlinear: each \\((f_j(\\cdot))\\) is a flexible curve (often a spline basis)\nRegularized: we control “wiggliness” with a penalty (bias–variance tradeoff)\nFits the ML pattern: choose flexibility by minimizing training loss + complexity penalty\nInterpretable: you can plot each learned effect \\((f_j(x_j))\\) (partial effect curves)\nGeneralized: works for continuous, binary, counts via a link \\((g(\\cdot))\\)\nMental model: like linear regression, but each coefficient is replaced by a smooth curve."
+    "text": "This week\nWe will also dig into non-parametric regression with splines and generalized additive models (GAMs).\nA generalized additive model (GAM) predicts \\(y\\) by adding up learned smooth functions of the predictors:\n\\[\ng(\\mathbb{E}[Y \\mid X])=\\beta_0 + s_1(x_1) + s_2(x_2) + \\cdots + s_p(x_p)\n\\]\n\nNonlinear: each \\(s_j(\\cdot)\\) is a flexible curve (often a spline)\nRegularized: we control “wiggliness” with a penalty (bias–variance tradeoff)\nFits the ML pattern: choose flexibility by minimizing training loss + complexity penalty\nInterpretable: you can plot each learned effect \\(s_j(x_j)\\) (partial effect curves)\nGeneralized: works for continuous, binary, counts via a link \\(g(\\cdot)\\)\nMental model: like linear regression, but each coefficient is replaced by a smooth curve."
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#background",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#background",
     "title": "JSC 370: Data Science II",
     "section": "Background",
-    "text": "Background\nplotnine is based on the grammar of graphics, the same underlying philosophy as R’s ggplot2. In the Python ecosystem, we use pandas for data manipulation (similar to R’s dplyr), and plotnine for visualization.\nThe tidyverse philosophy of readable, chainable operations translates well to Python with method chaining in pandas.\n\nimport pandas as pd\nimport numpy as np\nfrom plotnine import *\nimport warnings\nwarnings.filterwarnings('ignore')\nimport matplotlib.pyplot as plt\n# Using pygam for GAM fitting\nfrom pygam import LinearGAM, s"
+    "text": "Background\nplotnine is based on the grammar of graphics, the same underlying philosophy as R’s ggplot2. In the Python ecosystem, we use pandas for data manipulation (similar to R’s dplyr), and plotnine for visualization.\nThe tidyverse philosophy of readable, chainable operations translates well to Python with method chaining in pandas."
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#layers-pandas-and-method-chaining",
@@ -1263,8 +1263,8 @@
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#method-chaining-in-python",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#method-chaining-in-python",
     "title": "JSC 370: Data Science II",
-    "section": "Method Chaining in Python",
-    "text": "Method Chaining in Python\n\nMethod chaining passes the result of one operation to the next method call.\nWe can think of it as a sequence of transformations, similar to R’s pipe."
+    "section": "Method chaining in Python",
+    "text": "Method chaining in Python\n\nAn example using method chaining: subset the flights data to LAX, and take the mean arrival delay times by year, month, day.\nWe need to start with the data, query or boolean indexing to filter to the desired destination (LAX), groupby to prepare the groups that we want to aggregate over, then agg to take the mean.\n\n\n(flights\n .query('dest == \"LAX\"')\n .groupby(['year', 'month', 'day'])\n .agg(arr_delay=('arr_delay', lambda x: x.mean(skipna=True)))\n .reset_index())\n\n\n\n\n\n\n\n\nyear\nmonth\nday\narr_delay\n\n\n\n\n0\n2013\n1\n1\n7.743590\n\n\n1\n2013\n1\n2\n-7.414634\n\n\n2\n2013\n1\n3\n-28.725000\n\n\n3\n2013\n1\n4\n-25.125000\n\n\n4\n2013\n1\n5\n-3.142857\n\n\n...\n...\n...\n...\n...\n\n\n360\n2013\n12\n27\n-29.957447\n\n\n361\n2013\n12\n28\n-15.650000\n\n\n362\n2013\n12\n29\n8.355556\n\n\n363\n2013\n12\n30\n-6.000000\n\n\n364\n2013\n12\n31\n6.230769\n\n\n\n\n365 rows × 4 columns"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#flights-data",
@@ -1285,21 +1285,21 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#method-chaining-in-python-1",
     "title": "JSC 370: Data Science II",
     "section": "Method chaining in Python",
-    "text": "Method chaining in Python\n\nAn example using method chaining: subset the flights data to LAX, and take the mean arrival delay times by year, month, day.\nWe need to start with the data, query or boolean indexing to filter to the desired destination (LAX), groupby to prepare the groups that we want to aggregate over, then agg to take the mean.\n\n\n(flights\n .query('dest == \"LAX\"')\n .groupby(['year', 'month', 'day'])\n .agg(arr_delay=('arr_delay', lambda x: x.mean(skipna=True)))\n .reset_index())"
+    "text": "Method chaining in Python\n\nAn example using method chaining: subset the flights data to LAX, and take the mean arrival delay times by year, month, day.\nWe need to start with the data, query or boolean indexing to filter to the desired destination (LAX), groupby to prepare the groups that we want to aggregate over, then agg to take the mean.\n\n\n(flights\n .query('dest == \"LAX\"')\n .groupby(['year', 'month', 'day'])\n .agg(arr_delay=('arr_delay', lambda x: x.mean(skipna=True)))\n .reset_index())\n\n\n\n\n\n\n\n\nyear\nmonth\nday\narr_delay\n\n\n\n\n0\n2013\n1\n1\n7.743590\n\n\n1\n2013\n1\n2\n-7.414634\n\n\n2\n2013\n1\n3\n-28.725000\n\n\n3\n2013\n1\n4\n-25.125000\n\n\n4\n2013\n1\n5\n-3.142857\n\n\n...\n...\n...\n...\n...\n\n\n360\n2013\n12\n27\n-29.957447\n\n\n361\n2013\n12\n28\n-15.650000\n\n\n362\n2013\n12\n29\n8.355556\n\n\n363\n2013\n12\n30\n-6.000000\n\n\n364\n2013\n12\n31\n6.230769\n\n\n\n\n365 rows × 4 columns"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#alternative-syntax-with-pipe",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#alternative-syntax-with-pipe",
     "title": "JSC 370: Data Science II",
     "section": "Alternative syntax with pipe()",
-    "text": "Alternative syntax with pipe()\nLet’s do the same thing using pandas’ pipe() method for a more functional style:\n\n(flights\n .pipe(lambda df: df[df['dest'] == 'LAX'])\n .groupby(['year', 'month', 'day'])\n .agg(arr_delay=('arr_delay', 'mean'))\n .reset_index())"
+    "text": "Alternative syntax with pipe()\nLet’s do the same thing using pandas’ pipe() method for a more functional style:\n\n(flights\n .pipe(lambda df: df[df['dest'] == 'LAX'])\n .groupby(['year', 'month', 'day'])\n .agg(arr_delay=('arr_delay', 'mean'))\n .reset_index())\n\n\n\n\n\n\n\n\nyear\nmonth\nday\narr_delay\n\n\n\n\n0\n2013\n1\n1\n7.743590\n\n\n1\n2013\n1\n2\n-7.414634\n\n\n2\n2013\n1\n3\n-28.725000\n\n\n3\n2013\n1\n4\n-25.125000\n\n\n4\n2013\n1\n5\n-3.142857\n\n\n...\n...\n...\n...\n...\n\n\n360\n2013\n12\n27\n-29.957447\n\n\n361\n2013\n12\n28\n-15.650000\n\n\n362\n2013\n12\n29\n8.355556\n\n\n363\n2013\n12\n30\n-6.000000\n\n\n364\n2013\n12\n31\n6.230769\n\n\n\n\n365 rows × 4 columns"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#a-few-coding-style-tips",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#a-few-coding-style-tips",
     "title": "JSC 370: Data Science II",
     "section": "A few coding style tips",
-    "text": "A few coding style tips\n\nVariable names should use only lowercase letters, numbers, and _\nUse _ to separate words within a name (snake_case)\nMethod chains should have each method on its own line, indented\nWrap long chains in parentheses for cleaner formatting\nEach chained method should be indented for readability\n\n\nshort_flights = (flights\n    .query('air_time &lt; 60'))"
+    "text": "A few coding style tips\n\nVariable names should use only lowercase letters, numbers, and _\nUse _ to separate words within a name (snake_case)\nMethod chains should have each method on its own line, indented\nWrap long chains in parentheses for cleaner formatting\nEach chained method should be indented for readability\n\nExample:\n\nshort_flights = (flights\n    .query('air_time &lt; 60'))"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#flights-data-in-more-detail",
@@ -1313,7 +1313,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#flights-data-in-more-detail-1",
     "title": "JSC 370: Data Science II",
     "section": "Flights data in more detail",
-    "text": "Flights data in more detail\nLooks like we can join these datasets on year, month, day, hour and origin (which is the origin airport). We can examine the relationship between flight delays and weather at the origin airports (JFK, LGA, EWR).\nA merge with how='left' will keep all of the observations in the left DataFrame (flights) and merge with the observations in the right DataFrame (weather at origin).\n\nflights_weather = pd.merge(\n    flights,\n    weather,\n    how='left',\n    on=['year', 'month', 'day', 'hour', 'origin']\n)"
+    "text": "Flights data in more detail\nLooks like we can join these datasets on year, month, day, hour and origin (which is the origin airport). We can examine the relationship between flight delays and weather at the origin airports (JFK, LGA, EWR).\nA merge with how='left' will keep all of the observations in the left DataFrame (flights) and merge with the observations in the right DataFrame (weather at origin).\n\nflights_weather = pd.merge(\n    flights,\n    weather,\n    how='left',\n    on=['year', 'month', 'day', 'hour', 'origin']\n)\n\nflights_weather.head()\nprint(\"Shape:\", flights_weather.shape)\n\nShape: (336776, 29)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#flights-data-in-more-detail-2",
@@ -1439,14 +1439,14 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#facets-2",
     "title": "JSC 370: Data Science II",
     "section": "Facets 2",
-    "text": "Facets 2\nOr you can facet on two variables:\n\n(ggplot(flights_weather_day, aes(x='arr_delay', y='dep_delay')) +\n  geom_point(alpha=0.3, size=0.5) +\n  facet_grid('month~origin') +\n  theme_minimal() +\n  theme(figure_size=(12, 16)))"
+    "text": "Facets 2\nOr you can facet on two variables:\n\n(ggplot(flights_weather_day, aes(x='arr_delay', y='dep_delay')) +\n  geom_point(alpha=0.3, size=0.5) +\n  facet_grid('month~origin') +\n  theme_minimal() +\n  theme(figure_size=(12, 16)))\n\n\n\n\n\n\n\n\nNote this plot is probably too large and busy for practical use, but it gives you the idea what is possible with faceting."
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#geometric-objects-1",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#geometric-objects-1",
     "title": "JSC 370: Data Science II",
     "section": "Geometric Objects 1",
-    "text": "Geometric Objects 1\nGeometric objects are used to control the type of plot you draw. Let’s plot a smoothed line fitted to the scatterplot data between pressure and departure delay."
+    "text": "Geometric Objects 1\nGeometric objects are used to control the type of plot you draw. Let’s plot a smoothed line fitted to the scatterplot data between pressure and departure delay.\n\n(ggplot(flights_weather_day, aes(x='pressure', y='dep_delay')) +\n  geom_point(alpha=0.3) +\n  geom_smooth() +\n  theme_minimal())"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#geometric-objects-1-1",
@@ -1579,7 +1579,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#summary-r-to-python-translation",
     "title": "JSC 370: Data Science II",
     "section": "Summary: R to Python Translation",
-    "text": "Summary: R to Python Translation\n\n\n\nR (tidyverse/ggplot2)\nPython (pandas/plotnine)\n\n\n\n\nlibrary(ggplot2)\nfrom plotnine import *\n\n\n%&gt;% or |&gt;\nMethod chaining with .\n\n\nfilter()\n.query() or boolean indexing\n\n\ngroup_by()\n.groupby()\n\n\nsummarize()\n.agg()\n\n\nleft_join()\npd.merge(how='left')\n\n\naes(x = var)\naes(x='var')"
+    "text": "Summary: R to Python Translation\nFor those of you who have used tidyverse and ggplot in R and want to compare to Python’s pandas/plotnine:\n\n\n\nR (tidyverse/ggplot2)\nPython (pandas/plotnine)\n\n\n\n\nlibrary(ggplot2)\nfrom plotnine import *\n\n\n%&gt;% or |&gt;\nMethod chaining with .\n\n\nfilter()\n.query() or boolean indexing\n\n\ngroup_by()\n.groupby()\n\n\nsummarize()\n.agg()\n\n\nleft_join()\npd.merge(how='left')\n\n\naes(x = var)\naes(x='var')"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#what-is-geom_smooth-actually-doing",
@@ -1642,7 +1642,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#why-splines",
     "title": "JSC 370: Data Science II",
     "section": "Why Splines?",
-    "text": "Why Splines?\n\nPolynomial regression: models non-linearity but has global effects\nSplines: model structure in the mean function using piecewise polynomials\n\nGeneral setup:\n\\[Z(s) = f(s) + \\epsilon, \\quad \\epsilon \\sim N(0, \\sigma^2 I)\\]\n\nGoal: estimate a smooth function \\(f(s)\\) that captures the trend\nBenefits:\n\nFlexible, nonparametric modeling of trends\nStill yields prediction errors (statistical smoothing)\nNaturally extended to generalized additive models (GAMs)"
+    "text": "Why Splines?\n\nPolynomial regression: models non-linearity but has global effects\nSplines: model structure in the mean function using piecewise polynomials\n\nGeneral setup:\n\\[y = f(x) + \\epsilon, \\quad \\epsilon \\sim N(0, \\sigma^2 I)\\]\n\nGoal: estimate a smooth function \\(f(x)\\) that captures the trend\nBenefits:\n\nFlexible, nonparametric modeling of trends\nStill yields prediction errors (statistical smoothing)\nNaturally extended to generalized additive models (GAMs)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#basis-functions-intuition",
@@ -1719,21 +1719,21 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-concept",
     "title": "JSC 370: Data Science II",
     "section": "Smoothing Splines: Concept",
-    "text": "Smoothing Splines: Concept\nGoal: Fit a smooth curve \\(f(t)\\) through noisy data \\((t_i, y_i)\\).\nWe want to balance:\n\nGoodness of fit: match the data closely\nSmoothness: avoid overly wiggly functions\n\nDefine an objective function:\n\\[\\text{RSS}(f) + \\lambda J(f)\\]\nwhere:\n\\[\\text{RSS}(f) = \\sum_i (y_i - f(t_i))^2, \\quad J(f) = \\int (f''(t))^2 \\, dt\\]\n\n\\(\\lambda \\geq 0\\) is the smoothness parameter\n\nSmall \\(\\lambda\\): fit the data very closely (wiggly curve)\nLarge \\(\\lambda\\): force \\(f\\) to be smoother (nearly linear)"
+    "text": "Smoothing Splines: Concept\nGoal: Fit a smooth curve \\(f(x)\\) through noisy data \\((x_i, y_i)\\).\nWe want to balance:\n\nGoodness of fit: match the data closely\nSmoothness: avoid overly wiggly functions\n\nDefine an objective function:\n\\[\\text{RSS}(f) + \\lambda J(f)\\]\nwhere:\n\\[\\text{RSS}(f) = \\sum_i (y_i - f(x_i))^2, \\quad J(f) = \\int (f''(x))^2 \\, dx\\]\n\n\\(\\lambda \\geq 0\\) is the smoothness parameter\n\nSmall \\(\\lambda\\): fit the data very closely (wiggly curve)\nLarge \\(\\lambda\\): force \\(f\\) to be smoother (nearly linear)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-optimization",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-optimization",
     "title": "JSC 370: Data Science II",
     "section": "Smoothing Splines: Optimization",
-    "text": "Smoothing Splines: Optimization\nWe minimize the penalized residual sum of squares:\n\\[\\min_f \\left\\{ \\sum_i (y_i - f(t_i))^2 + \\lambda \\int (f''(t))^2 \\, dt \\right\\}\\]\nThis is a trade-off between:\n\n\\(\\sum_i (y_i - f(t_i))^2\\) = data fidelity\n\\(\\int (f''(t))^2 dt\\) = roughness penalty\n\nSolution: a natural cubic spline with knots at each unique \\(t_i\\).\nThe “best” curve is obtained by penalizing the wiggliness of the spline."
+    "text": "Smoothing Splines: Optimization\nWe minimize the penalized residual sum of squares:\n\\[\\min_f \\left\\{ \\sum_i (y_i - f(x_i))^2 + \\lambda \\int (f''(x))^2 \\, dx \\right\\}\\]\nThis is a trade-off between:\n\n\\(\\sum_i (y_i - f(x_i))^2\\) = data fidelity (how well the curve fits the observed points)\n\\(\\int (f''(x))^2 \\, dx\\) = roughness penalty (penalizes curvature/wiggliness)\n\nSolution: a natural cubic spline with knots at each unique \\(x_i\\).\nThe “best” curve is obtained by penalizing the wiggliness of the spline."
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-basis-representation",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-basis-representation",
     "title": "JSC 370: Data Science II",
     "section": "Smoothing Splines: Basis Representation",
-    "text": "Smoothing Splines: Basis Representation\nRepresent \\(f(t)\\) using spline basis functions:\n\\[f(t) = \\sum_{j=1}^K \\beta_j b_j(t)\\]\nLet \\(B\\) be the basis matrix, \\(S\\) the penalty matrix:\n\\[B_{ij} = b_j(t_i), \\quad S_{jk} = \\int b_j''(t) b_k''(t) \\, dt\\]\nThe optimization problem becomes:\n\\[\\min_\\beta \\; (y - B\\beta)^\\top (y - B\\beta) + \\lambda \\beta^\\top S \\beta\\]\nSolution:\n\\[\\hat\\beta = (B^\\top B + \\lambda S)^{-1} B^\\top y\\]"
+    "text": "Smoothing Splines: Basis Representation\nRepresent \\(f(x)\\) using spline basis functions:\n\\[f(x) = \\sum_{j=1}^K \\beta_j b_j(x)\\]\nLet \\(\\mathbf{B}\\) be the basis matrix and \\(\\mathbf{S}\\) be the penalty matrix:\n\\[B_{ij} = b_j(x_i), \\quad S_{jk} = \\int b_j''(x) \\, b_k''(x) \\, dx\\]\nThe optimization problem becomes:\n\\[\\min_\\beta \\; (\\mathbf{y} - \\mathbf{B}\\boldsymbol{\\beta})^\\top (\\mathbf{y} - \\mathbf{B}\\boldsymbol{\\beta}) + \\lambda \\boldsymbol{\\beta}^\\top \\mathbf{S} \\boldsymbol{\\beta}\\]\nSolution (penalized least squares):\n\\[\\hat{\\boldsymbol{\\beta}} = (\\mathbf{B}^\\top \\mathbf{B} + \\lambda \\mathbf{S})^{-1} \\mathbf{B}^\\top \\mathbf{y}\\]"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#smoothing-splines-co₂-example",
@@ -1754,7 +1754,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#knots-vs.-penalty-parameter-lambda",
     "title": "JSC 370: Data Science II",
     "section": "Knots vs. Penalty Parameter \\(\\lambda\\)",
-    "text": "Knots vs. Penalty Parameter \\(\\lambda\\)\nIn smoothing splines:\n\nA knot is placed at each observation \\(t_i\\)\nThis gives the spline the potential to fit the data exactly\n\nThe penalty parameter \\(\\lambda\\) controls how much we use that flexibility:\n\n\\(\\lambda \\to 0\\): little penalty → spline interpolates the data (very wiggly)\n\\(\\lambda \\to \\infty\\): heavy penalty → spline approaches a straight line\n\nInterpretation:\n\nKnots: define the “vocabulary” of possible wiggles\n\\(\\lambda\\): decides how much of that vocabulary is actually used"
+    "text": "Knots vs. Penalty Parameter \\(\\lambda\\)\nIn smoothing splines:\n\nA knot is placed at each observation \\(x_i\\)\nThis gives the spline the potential to fit the data exactly\n\nThe penalty parameter \\(\\lambda\\) controls how much we use that flexibility:\n\n\\(\\lambda \\to 0\\): little penalty → spline interpolates the data (very wiggly)\n\\(\\lambda \\to \\infty\\): heavy penalty → spline approaches a straight line\n\nInterpretation:\n\nKnots: define the “vocabulary” of possible wiggles\n\\(\\lambda\\): decides how much of that vocabulary is actually used"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#knots-vs.-lambda-visualization",
@@ -1768,14 +1768,14 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#types-of-1-d-splines-summary",
     "title": "JSC 370: Data Science II",
     "section": "Types of 1-D Splines: Summary",
-    "text": "Types of 1-D Splines: Summary\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nCubic splines\nPiecewise cubic polynomials joined smoothly\n\n\nCyclic splines\nCubic splines with connected ends (for periodic data)\n\n\nB-splines\nBasis splines with other polynomial orders\n\n\nCardinal splines\nKnot placement is always a certain distance apart\n\n\nNatural splines\nLinear constraints at boundaries\n\n\nSmoothing splines\nKnots at every point, controlled by \\(\\lambda\\)"
+    "text": "Types of 1-D Splines: Summary\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nCubic splines\nPiecewise cubic polynomials with smooth joins at knots\n\n\nNatural cubic splines\nCubic splines with boundary constraints (linear tails beyond boundary knots)\n\n\nPeriodic/Cyclic splines\nEnforce wrap-around continuity (function and derivatives match at endpoints)\n\n\nB-splines\nA numerically stable basis representation for polynomial splines (local support)\n\n\nRegression splines\nFinite set of knots; fit spline coefficients by least squares\n\n\nSmoothing/penalized splines\nKnots at every point, add a roughness penalty \\(\\lambda\\) to control fit-smoothness\n\n\nCardinal splines\nKnot placement is always a certain distance apart (common in grid settings)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#from-splines-to-gams",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#from-splines-to-gams",
     "title": "JSC 370: Data Science II",
     "section": "From Splines to GAMs",
-    "text": "From Splines to GAMs\nA Generalized Additive Model (GAM) extends this idea:\n\\[y = \\beta_0 + f_1(x_1) + f_2(x_2) + \\ldots + f_p(x_p) + \\epsilon\\]\nWhere each \\(f_j\\) is a smooth function (typically a spline).\nKey advantages:\n\nEach predictor can have its own non-linear relationship\nThe effects are additive (easy to interpret)\nAutomatic smoothness selection via penalization"
+    "text": "From Splines to GAMs\nA Generalized Additive Model (GAM) extends splines to multiple predictors. It is a regression model where predictors enter through a spline. GAMs can have a combination of splines and linear terms.\n\\[y = \\beta_0 + s_1(x_1) + s_2(x_2) + \\ldots + s_p(x_p) + \\epsilon\\]\nWhere each \\(s_j(x_j)\\) is a smooth function (typically a penalized cubic spline) of predictor \\(x_j\\).\nKey advantages:\n\nEach predictor can have its own non-linear relationship with the response\nThe effects are additive — total effect is the sum of individual smooth effects\nAutomatic smoothness selection — each \\(s_j\\) has its own penalty \\(\\lambda_j\\)\nInterpretable — you can plot each \\(s_j(x_j)\\) to see how predictor \\(j\\) affects \\(y\\)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#gams-in-python",
@@ -1789,7 +1789,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#gam-summary",
     "title": "JSC 370: Data Science II",
     "section": "GAM Summary",
-    "text": "GAM Summary\n\nprint(gam.summary())\n\nLinearGAM                                                                                                 \n=============================================== ==========================================================\nDistribution:                        NormalDist Effective DoF:                                      4.0838\nLink Function:                     IdentityLink Log Likelihood:                                   -13.6117\nNumber of Samples:                           12 AIC:                                               37.3911\n                                                AICc:                                               47.847\n                                                GCV:                                                1.9142\n                                                Scale:                                              0.8918\n                                                Pseudo R-Squared:                                    0.847\n==========================================================================================================\nFeature Function                  Lambda               Rank         EDoF         P &gt; x        Sig. Code   \n================================= ==================== ============ ============ ============ ============\ns(0)                              [0.6]                10           4.1          1.45e-02     *           \nintercept                                              1            0.0          1.11e-16     ***         \n==========================================================================================================\nSignificance codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nWARNING: Fitting splines and a linear function to a feature introduces a model identifiability problem\n         which can cause p-values to appear significant when they are not.\n\nWARNING: p-values calculated in this manner behave correctly for un-penalized models or models with\n         known smoothing parameters, but when smoothing parameters have been estimated, the p-values\n         are typically lower than they should be, meaning that the tests reject the null too readily.\nNone"
+    "text": "GAM Summary\n\ngam.summary()\n  \nprint(gam.terms)\nprint(gam.coef_[:11])  # fitted coefficients\n\nLinearGAM                                                                                                 \n=============================================== ==========================================================\nDistribution:                        NormalDist Effective DoF:                                      4.0838\nLink Function:                     IdentityLink Log Likelihood:                                   -13.6117\nNumber of Samples:                           12 AIC:                                               37.3911\n                                                AICc:                                               47.847\n                                                GCV:                                                1.9142\n                                                Scale:                                              0.8918\n                                                Pseudo R-Squared:                                    0.847\n==========================================================================================================\nFeature Function                  Lambda               Rank         EDoF         P &gt; x        Sig. Code   \n================================= ==================== ============ ============ ============ ============\ns(0)                              [0.6]                10           4.1          1.45e-02     *           \nintercept                                              1            0.0          1.11e-16     ***         \n==========================================================================================================\nSignificance codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nWARNING: Fitting splines and a linear function to a feature introduces a model identifiability problem\n         which can cause p-values to appear significant when they are not.\n\nWARNING: p-values calculated in this manner behave correctly for un-penalized models or models with\n         known smoothing parameters, but when smoothing parameters have been estimated, the p-values\n         are typically lower than they should be, meaning that the tests reject the null too readily.\ns(0) + intercept\n[ 36.58068341  38.26196477  39.94449927  41.23700237  40.90631244\n  38.83656747  36.99855708  37.08258697  38.46904898  40.03810926\n 388.35533059]"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#gam-predictions",
@@ -1831,7 +1831,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#key-gam-concepts",
     "title": "JSC 370: Data Science II",
     "section": "Key GAM Concepts",
-    "text": "Key GAM Concepts\n\n\n\nConcept\nDescription\n\n\n\n\nSpline\nPiecewise polynomial with smooth connections\n\n\nKnots\nPoints where polynomial pieces connect\n\n\nBasis functions\nBuilding blocks combined to form the smooth\n\n\nPenalization\nControls wiggliness, prevents overfitting\n\n\nEDF\nEffective degrees of freedom (complexity measure)"
+    "text": "Key GAM Concepts\n\n\n\n\n\n\n\nConcept\nDescription\n\n\n\n\nSpline\nPiecewise polynomial with smooth connections\n\n\nKnots\nPoints where polynomial pieces connect\n\n\nBasis functions \\(b_j(x)\\)\nBuilding blocks combined to form the smooth\n\n\nPenalization (\\(\\lambda\\))\nControls wiggliness, prevents overfitting\n\n\nEDF\nEffective degrees of freedom (complexity measure)\n\n\n\nNotation convention:\n\n\\(f(x) = \\sum_j \\beta_j b_j(x)\\): a spline (smooth function built from basis functions)\n\\(s_j(x_j)\\): smooth term for predictor \\(x_j\\) in a GAM"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#when-to-use-gams",
@@ -1845,7 +1845,7 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#summary-smooth-regression",
     "title": "JSC 370: Data Science II",
     "section": "Summary: Smooth Regression",
-    "text": "Summary: Smooth Regression\n\nLinear models assume straight-line relationships\nPolynomial regression allows curves but has limitations\nSplines are piecewise polynomials joined at knots\nGAMs use splines to model each predictor flexibly\ngeom_smooth() uses these techniques under the hood\nIn Python: use pygam or statsmodels for GAM fitting"
+    "text": "Summary: Smooth Regression\n\nLinear models assume straight-line relationships: \\(y = \\beta_0 + \\beta_1 x\\)\nPolynomial regression allows curves but has global effects and boundary issues\nSplines \\(f(x) = \\sum_j \\beta_j b_j(x)\\) are piecewise polynomials joined at knots\nSmoothing parameter \\(\\lambda\\) controls the bias-variance tradeoff\nGAMs model each predictor flexibly: \\(y = \\beta_0 + s_1(x_1) + \\ldots + s_p(x_p)\\)\ngeom_smooth() uses these techniques under the hood\nIn Python: use pygam or statsmodels for GAM fitting (pygam shown today)"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#python-libraries-for-gams",
@@ -1873,14 +1873,14 @@
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#mapping-flight-routes",
     "title": "JSC 370: Data Science II",
     "section": "Mapping Flight Routes",
-    "text": "Mapping Flight Routes\nThe nycflights13 package also includes airport coordinates. We can merge these in with flights to map where are the popular NYC destinations.\n\nfrom nycflights13 import airports\n\nflight_routes = (flights\n    .groupby(['origin', 'dest'])\n    .size()\n    .reset_index(name='n_flights'))\n\nairports[['faa', 'name', 'lat', 'lon']].head()\n\n\n\n\n\n\n\n\nfaa\nname\nlat\nlon\n\n\n\n\n0\n04G\nLansdowne Airport\n41.130472\n-80.619583\n\n\n1\n06A\nMoton Field Municipal Airport\n32.460572\n-85.680028\n\n\n2\n06C\nSchaumburg Regional\n41.989341\n-88.101243\n\n\n3\n06N\nRandall Airport\n41.431912\n-74.391561\n\n\n4\n09J\nJekyll Island Airport\n31.074472\n-81.427778"
+    "text": "Mapping Flight Routes\nThe nycflights13 package also includes airport coordinates. We can merge these in with flights to map where are the popular NYC destinations.\n\nfrom nycflights13 import airports\n\n# get routes by origin (EWR, JFK, LGA) and destination, count the number of flights per\n\nflight_routes = (flights\n    .groupby(['origin', 'dest'])\n    .size()\n    .reset_index(name='n_flights'))\n\n# extract geospatial and merging info about the airports\nairports[['faa', 'name', 'lat', 'lon']].head()\n\n\n\n\n\n\n\n\nfaa\nname\nlat\nlon\n\n\n\n\n0\n04G\nLansdowne Airport\n41.130472\n-80.619583\n\n\n1\n06A\nMoton Field Municipal Airport\n32.460572\n-85.680028\n\n\n2\n06C\nSchaumburg Regional\n41.989341\n-88.101243\n\n\n3\n06N\nRandall Airport\n41.431912\n-74.391561\n\n\n4\n09J\nJekyll Island Airport\n31.074472\n-81.427778"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#flight-routes-data",
     "href": "slides/04-viz-ml1/JSC370-slides-04.html#flight-routes-data",
     "title": "JSC 370: Data Science II",
     "section": "Flight Routes Data",
-    "text": "Flight Routes Data\nMerge flight routes with geospatial information (latitude and longitude)\n\nflight_routes_geo = (flight_routes\n    .merge(airports[['faa', 'lat', 'lon']],\n           left_on='dest', right_on='faa', how='inner')\n    .rename(columns={'lat': 'dest_lat', 'lon': 'dest_lon'})\n    .drop(columns=['faa'])\n    .merge(airports[['faa', 'lat', 'lon']],\n           left_on='origin', right_on='faa', how='inner')\n    .rename(columns={'lat': 'origin_lat', 'lon': 'origin_lon'})\n    .drop(columns=['faa']))\n\nprint(f\"Routes mapped: {len(flight_routes_geo)}\")\nflight_routes_geo.head()\n\nRoutes mapped: 217\n\n\n\n\n\n\n\n\n\norigin\ndest\nn_flights\ndest_lat\ndest_lon\norigin_lat\norigin_lon\n\n\n\n\n0\nEWR\nALB\n439\n42.748267\n-73.801692\n40.6925\n-74.168667\n\n\n1\nEWR\nANC\n8\n61.174361\n-149.996361\n40.6925\n-74.168667\n\n\n2\nEWR\nATL\n5022\n33.636719\n-84.428067\n40.6925\n-74.168667\n\n\n3\nEWR\nAUS\n968\n30.194528\n-97.669889\n40.6925\n-74.168667\n\n\n4\nEWR\nAVL\n265\n35.436194\n-82.541806\n40.6925\n-74.168667"
+    "text": "Flight Routes Data\nMerge flight routes with geospatial information (latitude and longitude) by origin (it is the faa column in airports) and rename to have dest_lat, dest_lon along with origin_lat and origin_lon\n\nflight_routes_geo = (flight_routes\n    .merge(airports[['faa', 'lat', 'lon']],\n           left_on='dest', right_on='faa', how='inner')\n    .rename(columns={'lat': 'dest_lat', 'lon': 'dest_lon'})\n    .drop(columns=['faa'])\n    .merge(airports[['faa', 'lat', 'lon']],\n           left_on='origin', right_on='faa', how='inner')\n    .rename(columns={'lat': 'origin_lat', 'lon': 'origin_lon'})\n    .drop(columns=['faa']))\n\nprint(f\"Routes mapped: {len(flight_routes_geo)}\")\nflight_routes_geo.head()\n\nRoutes mapped: 217\n\n\n\n\n\n\n\n\n\norigin\ndest\nn_flights\ndest_lat\ndest_lon\norigin_lat\norigin_lon\n\n\n\n\n0\nEWR\nALB\n439\n42.748267\n-73.801692\n40.6925\n-74.168667\n\n\n1\nEWR\nANC\n8\n61.174361\n-149.996361\n40.6925\n-74.168667\n\n\n2\nEWR\nATL\n5022\n33.636719\n-84.428067\n40.6925\n-74.168667\n\n\n3\nEWR\nAUS\n968\n30.194528\n-97.669889\n40.6925\n-74.168667\n\n\n4\nEWR\nAVL\n265\n35.436194\n-82.541806\n40.6925\n-74.168667"
   },
   {
     "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#flight-routes-map-with-basemap",
@@ -1951,5 +1951,40 @@
     "title": "JSC 370: Data Science II",
     "section": "Coordinate systems",
     "text": "Coordinate systems\nThe “easy” ones you’ll use a lot\ncoord_flip() swaps x and y after the plot is built. Great for boxplots/bar charts to make labels readable.\ncoord_cartesian(xlim=..., ylim=...) zooms without dropping data (unlike hard limits on scales).\ncoord_fixed(ratio=1) forces equal aspect ratio (useful for geometry or maps).\nWhere it gets tricky\n\nStats + coords interactions: some geoms/stats compute first, then coords transform. Most of the time that’s fine, but it can surprise you when you expect “compute in the new coordinate system.”\nLimits behavior:\n\nscale_*_continuous(limits=...) can drop data before statistics are computed.\ncoord_cartesian(...) usually keeps the data and just zooms the view.\nNon-Cartesian coords (if you use them): e.g., coord_polar() changes the whole geometry, so not every plot makes sense there."
+  },
+  {
+    "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#smooth-regression-and-gams",
+    "href": "slides/04-viz-ml1/JSC370-slides-04.html#smooth-regression-and-gams",
+    "title": "JSC 370: Data Science II",
+    "section": "Smooth Regression and GAMs",
+    "text": "Smooth Regression and GAMs"
+  },
+  {
+    "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#interpreting-gam-summary",
+    "href": "slides/04-viz-ml1/JSC370-slides-04.html#interpreting-gam-summary",
+    "title": "JSC 370: Data Science II",
+    "section": "Interpreting GAM Summary",
+    "text": "Interpreting GAM Summary\nIn pygam output:\n\ns(k) represents a smooth function of predictor column k in your X matrix\nf(k) represents a factor/categorical term (discrete levels)\n\nNote on notation: In pygam, s() denotes smooth terms. This matches our mathematical notation \\(s_j(x_j)\\) for GAM smooth functions.\nEDoF (effective degrees of freedom) tells you “what shape did the model learn?”\n\nedf \\(\\approx\\) 1: the term is essentially linear (heavily penalized)\nedf 2–4: mild curvature\nedf large: more wiggle/complexity (less penalized)\n\nLambda (\\(\\lambda\\)) is the smoothing penalty — larger values = smoother curves"
+  },
+  {
+    "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#interpreting-gam-coefficients",
+    "href": "slides/04-viz-ml1/JSC370-slides-04.html#interpreting-gam-coefficients",
+    "title": "JSC 370: Data Science II",
+    "section": "Interpreting GAM Coefficients",
+    "text": "Interpreting GAM Coefficients\nThe output of gam.coef_[:] gives us the rank 10 spline basis weights (for s(0)): 36.58, 38.26, 39.94, 41.24, 40.91, 38.84, 37.00, 37.08, 38.47, 40.04\nThese are the beta weights \\[s(x) = \\sum_{j=1}^{10} \\beta_j B_j(x)\\]\nAnd the intercept: 388.35533059\nSo the prediction is \\(\\hat{y} = \\beta_0 + s(x)\\) and the individual \\(\\beta_j\\) values are usually not interpretable by themselves; the interpretable object is the curve \\(s(x)\\)."
+  },
+  {
+    "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#multiple-geoms-4",
+    "href": "slides/04-viz-ml1/JSC370-slides-04.html#multiple-geoms-4",
+    "title": "JSC 370: Data Science II",
+    "section": "Multiple Geoms 4",
+    "text": "Multiple Geoms 4\nWe can layer the points with geom_point and error bars on the geom_smooth.\nWe can add color and linetype by origin airport.\n\n(ggplot(flights_weather_day, aes(x='pressure', y='dep_delay', linetype='origin',color='origin')) +\n  geom_smooth(se=True) +\n  geom_point(alpha=0.3) +\n  theme_minimal())"
+  },
+  {
+    "objectID": "slides/04-viz-ml1/JSC370-slides-04.html#coordinate-flip-the-statistical-transformation-plot",
+    "href": "slides/04-viz-ml1/JSC370-slides-04.html#coordinate-flip-the-statistical-transformation-plot",
+    "title": "JSC 370: Data Science II",
+    "section": "Coordinate flip the statistical transformation plot",
+    "text": "Coordinate flip the statistical transformation plot\n\n(ggplot(flights_weather_ss, aes(x='dest', y='dep_delay')) +\n  stat_summary(fun_y=np.median,\n               fun_ymin=lambda x: np.percentile(x.dropna(), 25),\n               fun_ymax=lambda x: np.percentile(x.dropna(), 75)) +\n  coord_flip() +\n  theme_minimal())"
   }
 ]

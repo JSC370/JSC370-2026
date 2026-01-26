@@ -29,14 +29,14 @@ We will also dig into non-parametric regression with splines and generalized add
 A **generalized additive model (GAM)** predicts $y$ by adding up **learned smooth functions** of the predictors:
 
 $$
-g(\mathbb{E}[Y \mid X])=\beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p)
+g(\mathbb{E}[Y \mid X])=\beta_0 + s_1(x_1) + s_2(x_2) + \cdots + s_p(x_p)
 $$
 
-- **Nonlinear**: each $(f_j(\cdot))$ is a flexible curve (often a spline basis)
-- **Regularized**: we control “wiggliness” with a **penalty** (bias–variance tradeoff)
+- **Nonlinear**: each $s_j(\cdot)$ is a flexible curve (often a spline)
+- **Regularized**: we control "wiggliness" with a **penalty** (bias–variance tradeoff)
 - **Fits the ML pattern**: choose flexibility by minimizing *training loss + complexity penalty*
-- **Interpretable**: you can plot each learned effect $(f_j(x_j))$ (partial effect curves)
-- **Generalized**: works for continuous, binary, counts via a link $(g(\cdot))$
+- **Interpretable**: you can plot each learned effect $s_j(x_j)$ (partial effect curves)
+- **Generalized**: works for continuous, binary, counts via a link $g(\cdot)$
 - **Mental model:** like linear regression, but each coefficient is replaced by a smooth curve.
 
 ---
@@ -48,7 +48,7 @@ $$
 The tidyverse philosophy of readable, chainable operations translates well to Python with method chaining in pandas.
 
 ```{python}
-#| output: false
+#| echo: false
 #| warning: false
 import pandas as pd
 import numpy as np
@@ -73,13 +73,6 @@ from pygam import LinearGAM, s
 
 ---
 
-## Method Chaining in Python
-
-* Method chaining passes the result of one operation to the next method call.
-* We can think of it as a sequence of transformations, similar to R's pipe.
-
----
-
 ## Flights data
 
 To illustrate many of today's visualization examples we will look at the `flights` data from the `nycflights13` package. They are all flights that departed from NYC airports (JFK, LGA, EWR) in 2013.
@@ -100,7 +93,7 @@ print("Shape:", flights.shape)
 * We need to start with the data, `query` or boolean indexing to filter to the desired destination (LAX), `groupby` to prepare the groups that we want to aggregate over, then `agg` to take the mean.
 
 ```{python}
-#| eval: false
+
 (flights
  .query('dest == "LAX"')
  .groupby(['year', 'month', 'day'])
@@ -115,7 +108,7 @@ print("Shape:", flights.shape)
 Let's do the same thing using pandas' `pipe()` method for a more functional style:
 
 ```{python}
-#| eval: false
+
 (flights
  .pipe(lambda df: df[df['dest'] == 'LAX'])
  .groupby(['year', 'month', 'day'])
@@ -133,6 +126,7 @@ Let's do the same thing using pandas' `pipe()` method for a more functional styl
 * Wrap long chains in parentheses for cleaner formatting
 * Each chained method should be indented for readability
 
+Example:
 ```{python}
 #| eval: false
 short_flights = (flights
@@ -166,13 +160,7 @@ flights_weather = pd.merge(
     how='left',
     on=['year', 'month', 'day', 'hour', 'origin']
 )
-```
 
----
-
-## Flights data in more detail
-
-```{python}
 flights_weather.head()
 print("Shape:", flights_weather.shape)
 ```
@@ -205,11 +193,14 @@ The `nycflights13` package also includes airport coordinates. We can merge these
 ```{python}
 from nycflights13 import airports
 
+# get routes by origin (EWR, JFK, LGA) and destination, count the number of flights per
+
 flight_routes = (flights
     .groupby(['origin', 'dest'])
     .size()
     .reset_index(name='n_flights'))
 
+# extract geospatial and merging info about the airports
 airports[['faa', 'name', 'lat', 'lon']].head()
 ```
 
@@ -217,7 +208,7 @@ airports[['faa', 'name', 'lat', 'lon']].head()
 
 ## Flight Routes Data
 
-Merge flight routes with geospatial information (latitude and longitude)
+Merge flight routes with geospatial information (latitude and longitude) by `origin` (it is the `faa` column in airports) and rename to have `dest_lat`, `dest_lon` along with `origin_lat` and `origin_lon`
 
 ```{python}
 flight_routes_geo = (flight_routes
@@ -242,8 +233,6 @@ Like we saw last week, we can make a basic map we can use `matplotlib` and `cont
 
 ```{python}
 #| fig-align: center
-#| fig-width: 10
-#| fig-height: 6
 import matplotlib.pyplot as plt
 import contextily as ctx
 
@@ -420,7 +409,6 @@ Note when there are a lot of classes or groups, the coloring is not distinguishe
 This is generally bad practice.
 
 ```{python}
-#| eval: false
 (ggplot(flights_weather, aes(x='arr_delay', y='dep_delay', color='dest')) +
   geom_point() +
   theme_minimal())
@@ -515,6 +503,8 @@ Or you can facet on two variables:
   theme(figure_size=(12, 16)))
 ```
 
+Note this plot is probably too large and busy for practical use, but it gives you the idea what is possible with faceting.
+
 ---
 
 
@@ -523,7 +513,6 @@ Or you can facet on two variables:
 Geometric objects are used to control the type of plot you draw. Let's plot a smoothed line fitted to the scatterplot data between pressure and departure delay.
 
 ```{python}
-#| echo: false
 #| fig-align: center
 #| warning: false
 (ggplot(flights_weather_day, aes(x='pressure', y='dep_delay')) +
@@ -584,7 +573,7 @@ To display multiple geoms in the same plot, add multiple `geom` functions to `gg
 If you place mappings in a `geom` function, `plotnine` will use these mappings to extend or overwrite the global mappings for that layer only. This makes it possible to display different aesthetics in different layers.
 
 ```{python}
-#| eval: false
+
 (ggplot(flights_weather_day, aes(x='pressure', y='dep_delay')) +
   geom_point(aes(color='origin'), alpha=0.5) +
   geom_smooth() +
@@ -603,6 +592,23 @@ jfk_data = flights_weather_day.query('origin == "JFK"')
 (ggplot(flights_weather_day, aes(x='pressure', y='dep_delay')) +
   geom_point(aes(color='origin'), alpha=0.5) +
   geom_smooth(data=jfk_data, se=False, color='black') +
+  theme_minimal())
+```
+
+---
+
+## Multiple Geoms 4
+
+We can layer the points with `geom_point` and error bars on the `geom_smooth`.
+
+We can add `color` and `linetype` by origin airport.
+
+```{python}
+#| fig-align: center
+#| warning: false
+(ggplot(flights_weather_day, aes(x='pressure', y='dep_delay', linetype='origin',color='origin')) +
+  geom_smooth(se=True) +
+  geom_point(alpha=0.3) +
   theme_minimal())
 ```
 
@@ -685,13 +691,13 @@ You might want to draw greater attention to the statistical transformation in yo
 Here we plot the median delay with IQR (25th-75th quantiles) as bars.
 
 ```{python}
-#| eval: false
 (ggplot(flights_weather_ss, aes(x='dest', y='dep_delay')) +
   stat_summary(fun_y=np.median,
                fun_ymin=lambda x: np.percentile(x.dropna(), 25),
                fun_ymax=lambda x: np.percentile(x.dropna(), 75)) +
   theme_minimal())
 ```
+
 
 ---
 
@@ -712,6 +718,19 @@ To start with something simple, here's how to flip axes:
 # Flipped
 (ggplot(flights_weather_day, aes(x='origin', y='dep_delay')) +
   geom_boxplot() +
+  coord_flip() +
+  theme_minimal())
+```
+
+---
+
+## Coordinate flip the statistical transformation plot
+
+```{python}
+(ggplot(flights_weather_ss, aes(x='dest', y='dep_delay')) +
+  stat_summary(fun_y=np.median,
+               fun_ymin=lambda x: np.percentile(x.dropna(), 25),
+               fun_ymax=lambda x: np.percentile(x.dropna(), 75)) +
   coord_flip() +
   theme_minimal())
 ```
@@ -809,6 +828,8 @@ You can get as detailed as you would like for the color ramp.
 
 ## Summary: R to Python Translation
 
+For those of you who have used tidyverse and ggplot in R and want to compare to Python's pandas/plotnine:
+
 | R (tidyverse/ggplot2) | Python (pandas/plotnine) |
 |---|---|
 | `library(ggplot2)` | `from plotnine import *` |
@@ -821,7 +842,7 @@ You can get as detailed as you would like for the color ramp.
 
 ---
 
-# Smooth Regression and GAMs
+## Smooth Regression and GAMs
 
 ---
 
@@ -962,9 +983,9 @@ We need something more **flexible** and **local**. This motivates using **spline
 
 General setup:
 
-$$Z(s) = f(s) + \epsilon, \quad \epsilon \sim N(0, \sigma^2 I)$$
+$$y = f(x) + \epsilon, \quad \epsilon \sim N(0, \sigma^2 I)$$
 
-* Goal: estimate a smooth function $f(s)$ that captures the trend
+* Goal: estimate a smooth function $f(x)$ that captures the trend
 * Benefits:
   - Flexible, nonparametric modeling of trends
   - Still yields prediction errors (statistical smoothing)
@@ -1119,7 +1140,7 @@ Each B-spline basis function is non-zero only over a limited range — this give
 
 ## Smoothing Splines: Concept
 
-Goal: Fit a smooth curve $f(t)$ through noisy data $(t_i, y_i)$.
+Goal: Fit a smooth curve $f(x)$ through noisy data $(x_i, y_i)$.
 
 We want to balance:
 
@@ -1132,7 +1153,7 @@ $$\text{RSS}(f) + \lambda J(f)$$
 
 where:
 
-$$\text{RSS}(f) = \sum_i (y_i - f(t_i))^2, \quad J(f) = \int (f''(t))^2 \, dt$$
+$$\text{RSS}(f) = \sum_i (y_i - f(x_i))^2, \quad J(f) = \int (f''(x))^2 \, dx$$
 
 * $\lambda \geq 0$ is the **smoothness parameter**
   - Small $\lambda$: fit the data very closely (wiggly curve)
@@ -1144,14 +1165,14 @@ $$\text{RSS}(f) = \sum_i (y_i - f(t_i))^2, \quad J(f) = \int (f''(t))^2 \, dt$$
 
 We minimize the penalized residual sum of squares:
 
-$$\min_f \left\{ \sum_i (y_i - f(t_i))^2 + \lambda \int (f''(t))^2 \, dt \right\}$$
+$$\min_f \left\{ \sum_i (y_i - f(x_i))^2 + \lambda \int (f''(x))^2 \, dx \right\}$$
 
 This is a trade-off between:
 
-* $\sum_i (y_i - f(t_i))^2$ = **data fidelity**
-* $\int (f''(t))^2 dt$ = **roughness penalty**
+* $\sum_i (y_i - f(x_i))^2$ = **data fidelity** (how well the curve fits the observed points)
+* $\int (f''(x))^2 \, dx$ = **roughness penalty** (penalizes curvature/wiggliness)
 
-Solution: a **natural cubic spline** with knots at each unique $t_i$.
+Solution: a **natural cubic spline** with knots at each unique $x_i$.
 
 The "best" curve is obtained by penalizing the wiggliness of the spline.
 
@@ -1159,21 +1180,21 @@ The "best" curve is obtained by penalizing the wiggliness of the spline.
 
 ## Smoothing Splines: Basis Representation
 
-Represent $f(t)$ using spline basis functions:
+Represent $f(x)$ using spline basis functions:
 
-$$f(t) = \sum_{j=1}^K \beta_j b_j(t)$$
+$$f(x) = \sum_{j=1}^K \beta_j b_j(x)$$
 
-Let $B$ be the basis matrix, $S$ the penalty matrix:
+Let $\mathbf{B}$ be the basis matrix and $\mathbf{S}$ be the penalty matrix:
 
-$$B_{ij} = b_j(t_i), \quad S_{jk} = \int b_j''(t) b_k''(t) \, dt$$
+$$B_{ij} = b_j(x_i), \quad S_{jk} = \int b_j''(x) \, b_k''(x) \, dx$$
 
 The optimization problem becomes:
 
-$$\min_\beta \; (y - B\beta)^\top (y - B\beta) + \lambda \beta^\top S \beta$$
+$$\min_\beta \; (\mathbf{y} - \mathbf{B}\boldsymbol{\beta})^\top (\mathbf{y} - \mathbf{B}\boldsymbol{\beta}) + \lambda \boldsymbol{\beta}^\top \mathbf{S} \boldsymbol{\beta}$$
 
-Solution:
+Solution (penalized least squares):
 
-$$\hat\beta = (B^\top B + \lambda S)^{-1} B^\top y$$
+$$\hat{\boldsymbol{\beta}} = (\mathbf{B}^\top \mathbf{B} + \lambda \mathbf{S})^{-1} \mathbf{B}^\top \mathbf{y}$$
 
 ---
 
@@ -1199,7 +1220,7 @@ A smoothing spline fit to the CO₂ data captures both the long-term trend and s
 
 In smoothing splines:
 
-* A knot is placed at each observation $t_i$
+* A knot is placed at each observation $x_i$
 * This gives the spline the potential to fit the data exactly
 
 The penalty parameter $\lambda$ controls how much we use that flexibility:
@@ -1228,28 +1249,30 @@ Interpretation:
 
 | Type | Description |
 |------|-------------|
-| **Cubic splines** | Piecewise cubic polynomials joined smoothly |
-| **Cyclic splines** | Cubic splines with connected ends (for periodic data) |
-| **B-splines** | Basis splines with other polynomial orders |
-| **Cardinal splines** | Knot placement is always a certain distance apart |
-| **Natural splines** | Linear constraints at boundaries |
-| **Smoothing splines** | Knots at every point, controlled by $\lambda$ |
+| **Cubic splines** | Piecewise cubic polynomials with smooth joins at knots |
+| **Natural cubic splines** | Cubic splines with boundary constraints (linear tails beyond boundary knots) |
+| **Periodic/Cyclic splines** | Enforce wrap-around continuity (function and derivatives match at endpoints) |
+| **B-splines** | A numerically stable basis representation for polynomial splines (local support) |
+| **Regression splines** | Finite set of knots; fit spline coefficients by least squares |
+| **Smoothing/penalized splines** | Knots at every point, add a roughness penalty  $\lambda$ to control fit-smoothness|
+| **Cardinal splines** | Knot placement is always a certain distance apart (common in grid settings) |
 
 ---
 
 ## From Splines to GAMs
 
-A **Generalized Additive Model (GAM)** extends this idea:
+A **Generalized Additive Model (GAM)** extends splines to multiple predictors. It is a regression model where predictors enter through a spline. GAMs can have a combination of splines and linear terms.
 
-$$y = \beta_0 + f_1(x_1) + f_2(x_2) + \ldots + f_p(x_p) + \epsilon$$
+$$y = \beta_0 + s_1(x_1) + s_2(x_2) + \ldots + s_p(x_p) + \epsilon$$
 
-Where each $f_j$ is a **smooth function** (typically a spline).
+Where each $s_j(x_j)$ is a **smooth function** (typically a penalized cubic spline) of predictor $x_j$.
 
 Key advantages:
 
-* Each predictor can have its own non-linear relationship
-* The effects are **additive** (easy to interpret)
-* **Automatic smoothness selection** via penalization
+* Each predictor can have its own non-linear relationship with the response
+* The effects are **additive** — total effect is the sum of individual smooth effects
+* **Automatic smoothness selection** — each $s_j$ has its own penalty $\lambda_j$
+* **Interpretable** — you can plot each $s_j(x_j)$ to see how predictor $j$ affects $y$
 
 ---
 
@@ -1276,8 +1299,43 @@ gam = LinearGAM(s(0, n_splines=10)).fit(X, y)
 ## GAM Summary
 
 ```{python}
-print(gam.summary())
+gam.summary()
+  
+print(gam.terms)
+print(gam.coef_[:11])  # fitted coefficients
 ```
+
+---
+
+## Interpreting GAM Summary
+
+In `pygam` output:
+
+* `s(k)` represents a smooth function of predictor column k in your X matrix
+* `f(k)` represents a factor/categorical term (discrete levels)
+
+**Note on notation:** In pygam, `s()` denotes smooth terms. This matches our mathematical notation $s_j(x_j)$ for GAM smooth functions.
+
+**EDoF (effective degrees of freedom)** tells you "what shape did the model learn?"
+
+- edf $\approx$ 1: the term is essentially linear (heavily penalized)
+- edf 2–4: mild curvature
+- edf large: more wiggle/complexity (less penalized)
+
+**Lambda** ($\lambda$) is the smoothing penalty — larger values = smoother curves
+  
+---
+
+## Interpreting GAM Coefficients 
+
+The output of gam.coef_[:] gives us the rank 10 spline basis weights (for s(0)):
+36.58, 38.26, 39.94, 41.24, 40.91, 38.84, 37.00, 37.08, 38.47, 40.04
+
+These are the beta weights $$s(x) = \sum_{j=1}^{10} \beta_j B_j(x)$$
+
+And the intercept: 388.35533059
+
+So the prediction is $\hat{y} = \beta_0 + s(x)$ and the individual $\beta_j$ values are usually not interpretable by themselves; the interpretable object is the curve $s(x)$.
 
 ---
 
@@ -1386,9 +1444,14 @@ geom_smooth(method='lowess')  # Local regression
 |---------|-------------|
 | **Spline** | Piecewise polynomial with smooth connections |
 | **Knots** | Points where polynomial pieces connect |
-| **Basis functions** | Building blocks combined to form the smooth |
-| **Penalization** | Controls wiggliness, prevents overfitting |
+| **Basis functions** $b_j(x)$ | Building blocks combined to form the smooth |
+| **Penalization** ($\lambda$) | Controls wiggliness, prevents overfitting |
 | **EDF** | Effective degrees of freedom (complexity measure) |
+
+**Notation convention:**
+
+* $f(x) = \sum_j \beta_j b_j(x)$: a spline (smooth function built from basis functions)
+* $s_j(x_j)$: smooth term for predictor $x_j$ in a GAM
 
 ---
 
@@ -1411,12 +1474,13 @@ Cautions:
 
 ## Summary: Smooth Regression
 
-1. **Linear models** assume straight-line relationships
-2. **Polynomial regression** allows curves but has limitations
-3. **Splines** are piecewise polynomials joined at knots
-4. **GAMs** use splines to model each predictor flexibly
-5. **geom_smooth()** uses these techniques under the hood
-6. In Python: use `pygam` or `statsmodels` for GAM fitting
+1. **Linear models** assume straight-line relationships: $y = \beta_0 + \beta_1 x$
+2. **Polynomial regression** allows curves but has global effects and boundary issues
+3. **Splines** $f(x) = \sum_j \beta_j b_j(x)$ are piecewise polynomials joined at knots
+4. **Smoothing parameter** $\lambda$ controls the bias-variance tradeoff
+5. **GAMs** model each predictor flexibly: $y = \beta_0 + s_1(x_1) + \ldots + s_p(x_p)$
+6. `geom_smooth()` uses these techniques under the hood
+7. In Python: use `pygam` or `statsmodels` for GAM fitting (`pygam` shown today)
 
 ---
 
