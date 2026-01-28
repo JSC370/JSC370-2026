@@ -98,7 +98,7 @@ Use `geom_violin` and subset the data to the first two weeks in July.
 - Use facets
 - Summarize below
 
-```{python}
+<!--```{python}
 # Subset to first two weeks of July
 met_july = met[(met['date'] >= '2025-07-01') & (met['date'] < '2025-07-15')].copy()
 
@@ -112,7 +112,7 @@ met_july = met[(met['date'] >= '2025-07-01') & (met['date'] < '2025-07-15')].cop
   theme_minimal())
 
 ```
-
+-->
 Summary:
 
 
@@ -123,7 +123,7 @@ Summary:
 - Try a second plot with counts and `dodge` positioning
 - Summarize below
 
-```{python}
+<!--```{python}
 # Proportion barplot (position='fill')
 (ggplot(met_july,
         aes(x='____', fill='____')) +
@@ -133,8 +133,8 @@ Summary:
        title='____') +
   theme_minimal())
 ```
-
-```{python}
+-->
+<!--```{python}
 # Count barplot with dodge positioning
 (ggplot(met_july,
         aes(x='____', fill='____')) +
@@ -145,7 +145,7 @@ Summary:
   theme_minimal())
 
 ```
-
+-->
 Summary:
 
 
@@ -157,7 +157,7 @@ Summary:
 - Add labels and a title
 - Summarize below
 
-```{python}
+<!--```{python}
 # Use stat_summary with fun_y, fun_ymin, fun_ymax
 # Hint: fun_ymin=lambda x: np.mean(x) - np.std(x)
 
@@ -171,7 +171,7 @@ Summary:
        title='____') +
   theme_minimal())
 ```
-
+-->
 Summary:
 
 
@@ -185,7 +185,7 @@ Let's practice running regression models with smooth functions on X. We use the 
 - For the spline model try `n_splines` = 20
 - Summarize and plot the results from the models.
 
-```{python}
+<!--```{python}
 # Data prep
 # Remove NaN values before fitting
 met_clean = met_july.dropna(subset=['wind_sp', 'temp', 'dew_point'])
@@ -193,10 +193,10 @@ met_clean = met_july.dropna(subset=['wind_sp', 'temp', 'dew_point'])
 X = met_clean[['wind_sp', 'temp']].values
 y = met_clean['dew_point'].values
 ```
-
+-->
 - Now fit linear model with sm.OLS
 
-```{python}
+<!--```{python}
 # Don't forget to add a constant
 X_const = sm.add_constant(____)
 
@@ -204,14 +204,14 @@ linear_mod = sm.OLS(____, ____).fit()
 print("Linear Model:")
 print(linear_mod.summary())
 ```
-
+-->
 Summary:
 
 - Report adjusted R2
 - Are the beta coefficients for wind speed and temperature significant?
 
 
-```{python}
+<!--```{python}
 # GAM spline model
 # Use LinearGAM with s() for smooth terms
 # s(0) refers to first column, s(1) to second column
@@ -222,14 +222,14 @@ gam_mod = LinearGAM(
 print("\nSmooth Spline Model:")
 print(gam_mod.summary())
 ```
-
+-->
 Summary:
 
 - Report pseudo R2, how does it compare to the linear model R2?
 - What are the EDoF for wind speed and temp?
 - Are the smooths for wind speed and temperature significant?
 
-```{python}
+<!--```{python}
 #| fig-align: center
 # Plot partial dependence curves for each predictor
 
@@ -256,7 +256,7 @@ for ax, (term, xcol, xlabel, color, title) in zip(axes, spec):
 plt.tight_layout()
 plt.show()
 ```
-
+-->
 Summary:
 
 - Visual inspection of the fitted curves
