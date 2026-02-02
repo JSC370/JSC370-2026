@@ -3,17 +3,14 @@ title: "JSC 370: Data Science II"
 subtitle: "Week 5: Scraping and APIs"
 format:
   revealjs:
-    theme: default
     slide-number: true
-    show-slide-number: all
-    progress: true
-    hash: true
-    transition: slide
-    highlight-style: github
-    code-line-numbers: true
-    code-overflow: wrap
+    incremental: true
     scrollable: true
     css: styles.css
+execute:
+  echo: true
+  warning: false
+  message: false
 jupyter: python3
 ---
 
