@@ -230,7 +230,7 @@
 <li class="fragment"><strong>DELETE</strong>: Remove data</li>
 </ul>
 <p>We’ll use the <code>requests</code> library in Python to interact with APIs.</p>
-<div id="aa2676a1" class="cell" data-execution_count="1">
+<div id="14d76cfb" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a></a>response <span class="op">=</span> requests.get(<span class="st">"https://api.example.com/data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -458,8 +458,8 @@ URL: https://api.themoviedb.org/3/discover/movie?api_key=f6600b8ecd0876798ce4688
 <span id="cb11-5"><a></a><span class="bu">print</span>(<span class="ss">f"Total pages: </span><span class="sc">{</span>data<span class="sc">.</span>get(<span class="st">'total_pages'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-6"><a></a><span class="bu">print</span>(<span class="ss">f"Movies on this page: </span><span class="sc">{</span><span class="bu">len</span>(data.get(<span class="st">'results'</span>, []))<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Total results: 240380
-Total pages: 12019
+<pre><code>Total results: 240444
+Total pages: 12023
 Movies on this page: 20</code></pre>
 </div>
 </div>
@@ -485,7 +485,7 @@ Movies on this page: 20</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Found 20 movies</code></pre>
 </div>
-<div id="tmdb-extract" class="cell-output cell-output-display" data-execution_count="33">
+<div id="tmdb-extract" class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -518,7 +518,7 @@ Movies on this page: 20</code></pre>
 <td>19995</td>
 <td>Avatar</td>
 <td>2009-12-16</td>
-<td>43.7770</td>
+<td>40.8368</td>
 <td>7.600</td>
 </tr>
 <tr class="even">
@@ -526,7 +526,7 @@ Movies on this page: 20</code></pre>
 <td>299534</td>
 <td>Avengers: Endgame</td>
 <td>2019-04-24</td>
-<td>17.3797</td>
+<td>16.6766</td>
 <td>8.236</td>
 </tr>
 <tr class="odd">
@@ -534,7 +534,7 @@ Movies on this page: 20</code></pre>
 <td>76600</td>
 <td>Avatar: The Way of Water</td>
 <td>2022-12-14</td>
-<td>41.0016</td>
+<td>36.5326</td>
 <td>7.600</td>
 </tr>
 <tr class="even">
@@ -542,15 +542,15 @@ Movies on this page: 20</code></pre>
 <td>597</td>
 <td>Titanic</td>
 <td>1997-12-18</td>
-<td>30.2952</td>
-<td>7.902</td>
+<td>32.0289</td>
+<td>7.900</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>140607</td>
 <td>Star Wars: The Force Awakens</td>
 <td>2015-12-15</td>
-<td>9.9024</td>
+<td>9.6842</td>
 <td>7.252</td>
 </tr>
 <tr class="even">
@@ -558,7 +558,7 @@ Movies on this page: 20</code></pre>
 <td>299536</td>
 <td>Avengers: Infinity War</td>
 <td>2018-04-25</td>
-<td>28.5981</td>
+<td>27.4076</td>
 <td>8.234</td>
 </tr>
 <tr class="odd">
@@ -566,15 +566,15 @@ Movies on this page: 20</code></pre>
 <td>634649</td>
 <td>Spider-Man: No Way Home</td>
 <td>2021-12-15</td>
-<td>25.5223</td>
-<td>7.934</td>
+<td>24.5079</td>
+<td>7.933</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
 <td>1022789</td>
 <td>Inside Out 2</td>
 <td>2024-06-11</td>
-<td>21.0638</td>
+<td>20.2485</td>
 <td>7.546</td>
 </tr>
 <tr class="odd">
@@ -582,7 +582,7 @@ Movies on this page: 20</code></pre>
 <td>420818</td>
 <td>The Lion King</td>
 <td>2019-07-12</td>
-<td>9.3301</td>
+<td>8.9089</td>
 <td>7.097</td>
 </tr>
 <tr class="even">
@@ -590,8 +590,8 @@ Movies on this page: 20</code></pre>
 <td>24428</td>
 <td>The Avengers</td>
 <td>2012-04-25</td>
-<td>67.3150</td>
-<td>7.928</td>
+<td>58.9549</td>
+<td>7.931</td>
 </tr>
 </tbody>
 </table>
@@ -1521,7 +1521,7 @@ Redacted: Contact us at [EMAIL] or [EMAIL]</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Merged shape: (50, 10)</code></pre>
 </div>
-<div id="scraping-merge-real" class="cell-output cell-output-display" data-execution_count="50">
+<div id="scraping-merge-real" class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1608,7 +1608,7 @@ Redacted: Contact us at [EMAIL] or [EMAIL]</code></pre>
 <th data-quarto-table-cell-role="th">8</th>
 <td>Zootopia 2 †</td>
 <td>2025</td>
-<td>$1,776,957,359</td>
+<td>$1,777,638,637</td>
 <td>NaN</td>
 </tr>
 <tr class="even">
@@ -1638,7 +1638,7 @@ Redacted: Contact us at [EMAIL] or [EMAIL]</code></pre>
 <span id="cb55-8"><a></a></span>
 <span id="cb55-9"><a></a>merged[<span class="st">'gross_clean'</span>] <span class="op">=</span> gross_clean</span>
 <span id="cb55-10"><a></a>merged[[<span class="st">'Title'</span>, <span class="st">'Worldwide gross'</span>, <span class="st">'gross_clean'</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="scraping-clean-gross" class="cell-output cell-output-display" data-execution_count="51">
+<div id="scraping-clean-gross" class="cell-output cell-output-display" data-execution_count="24">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1738,7 +1738,7 @@ Redacted: Contact us at [EMAIL] or [EMAIL]</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>           num_movies          avg_gross  median_gross
 won_oscar                                             
-False              37  1409851897.621622  1308476166.0
+False              37  1409896224.810811  1308476166.0
 True               13  1510293283.384615  1290000000.0</code></pre>
 </div>
 </div>
