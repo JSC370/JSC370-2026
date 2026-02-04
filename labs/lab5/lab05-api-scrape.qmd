@@ -32,6 +32,8 @@ warnings.filterwarnings('ignore')
 - Merge datasets from different sources
 - Practice your GitHub skills
 
+##### Download lab `.qmd` and dataset [here](https://github.com/JSC370/JSC370-2026/tree/main/labs/lab5)
+
 # Deliverables
 
 Upload your html and qmd to Quercus by 11:59 pm Wednesday February 4th, 2026.
