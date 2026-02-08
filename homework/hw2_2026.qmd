@@ -5,7 +5,7 @@ format: pdf
 
 ## Due Date
 
-Friday February 15, 2026 by 11:59pm.
+Sunday February 15, 2026 by 11:59pm.
 
 # Learning Goals
 - Use an API, scrape, wrangle, and get familiar different datasets. 
