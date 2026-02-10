@@ -5,9 +5,6 @@ format:
   revealjs:
     transition: slide
     slide-number: true
-    chalkboard: true
-    code-overflow: wrap
-    highlight-style: github
     scrollable: true
     css: styles.css
 execute:
