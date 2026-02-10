@@ -3,7 +3,6 @@ title: "JSC 370: Data Science II"
 subtitle: "Week 6: Text Mining & Large Language Models"
 format:
   revealjs:
-    theme: simple
     transition: slide
     slide-number: true
     chalkboard: true
