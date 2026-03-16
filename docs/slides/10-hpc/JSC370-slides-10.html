@@ -195,7 +195,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">JSC 370: Data Science II</h1>
-  <p class="subtitle">High Performance Computing</p>
+  <p class="subtitle">Week 10: High Performance Computing</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -226,7 +226,7 @@
 <section id="serial-computation" class="slide level2">
 <h2>Serial computation</h2>
 
-<img data-src="fig/pll-computing-explained-serial.svg" style="width:30.0%" class="r-stretch quarto-figure-center"><p class="caption">Here we are using a single core. The function is applied one element at a time, leaving the other 3 cores without usage.</p></section>
+<img data-src="img/pll-computing-explained-serial.svg" style="width:30.0%" class="r-stretch quarto-figure-center"><p class="caption">Here we are using a single core. The function is applied one element at a time, leaving the other 3 cores without usage.</p></section>
 <section id="serial-computation-1" class="slide level2">
 <h2>Serial computation</h2>
 <ul>
@@ -407,7 +407,7 @@
 <li>On Unix: supports <strong>forking</strong> (<code>fork</code>/<code>forkserver</code>). On Windows: <strong>spawn</strong> only.</li>
 <li>Let’s look at our session info</li>
 </ul>
-<div id="8bfc9c48" class="cell" data-execution_count="2">
+<div id="5ef21edb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> sys, platform, numpy, multiprocessing, concurrent.futures</span>
 <span id="cb1-2"><a></a><span class="bu">print</span>(<span class="ss">f"Python:          </span><span class="sc">{</span>sys<span class="sc">.</span>version<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-3"><a></a><span class="bu">print</span>(<span class="ss">f"Platform:        </span><span class="sc">{</span>platform<span class="sc">.</span>platform()<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -430,7 +430,7 @@ CPUs available:  8</code></pre>
 <li><strong>Distribute the work</strong> with <code>pool.map()</code>, which sends one copy of <code>x</code> to each of the 4 workers and collects their return values.</li>
 <li><strong>Print the results</strong> — each line should show a different process ID, confirming parallel execution.</li>
 </ol>
-<div id="c017a32b" class="cell" data-execution_count="3">
+<div id="7239396f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">import</span> multiprocessing</span>
 <span id="cb3-2"><a></a><span class="im">import</span> os</span>
 <span id="cb3-3"><a></a></span>
@@ -444,10 +444,10 @@ CPUs available:  8</code></pre>
 <span id="cb3-11"><a></a><span class="cf">for</span> r <span class="kw">in</span> results:</span>
 <span id="cb3-12"><a></a>    <span class="bu">print</span>(r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hello from process #31118. I see x and it equals 20.
-Hello from process #31119. I see x and it equals 20.
-Hello from process #31120. I see x and it equals 20.
-Hello from process #31121. I see x and it equals 20.</code></pre>
+<pre><code>Hello from process #53316. I see x and it equals 20.
+Hello from process #53317. I see x and it equals 20.
+Hello from process #53318. I see x and it equals 20.
+Hello from process #53319. I see x and it equals 20.</code></pre>
 </div>
 </div>
 </section>
@@ -457,7 +457,7 @@ Hello from process #31121. I see x and it equals 20.</code></pre>
 <p><span class="math display">\[
 y = X_i\beta_i + \varepsilon,\quad \varepsilon\sim N(0, \sigma^2_i), \quad i = 1,\ldots,999
 \]</span></p>
-<div id="90f6d817" class="cell" data-execution_count="4">
+<div id="6122e732" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a></a></span>
 <span id="cb5-3"><a></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">131</span>)</span>
@@ -487,7 +487,7 @@ y shape: (500,)</code></pre>
 <section id="example-2-parallel-regressions-contd" class="slide level2">
 <h2>Example 2: Parallel regressions (cont’d)</h2>
 <p><strong>Key design rule</strong>: worker functions must be <strong>self-contained</strong> — pass all needed data as arguments, never rely on globals. We pack <code>(col, y)</code> into a tuple so <code>pool.map</code> can distribute it.</p>
-<div id="782ed1d4" class="cell" data-execution_count="5">
+<div id="84a6cb53" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> fit_ols(args):</span>
 <span id="cb7-2"><a></a>    <span class="co">"""Fit OLS: y ~ x. Takes a (col, y) tuple; returns (intercept, slope)."""</span></span>
 <span id="cb7-3"><a></a>    col, y_vec <span class="op">=</span> args</span>
@@ -511,7 +511,7 @@ y shape: (500,)</code></pre>
 </section>
 <section id="example-2-parallel-regressions-contd-2" class="slide level2">
 <h2>Example 2: Parallel regressions (cont’d 2)</h2>
-<div id="c19d9cae" class="cell" data-execution_count="6">
+<div id="c177a64b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="im">import</span> time</span>
 <span id="cb9-2"><a></a></span>
 <span id="cb9-3"><a></a><span class="co"># Parallel — use fork context (required in Jupyter/Quarto on macOS)</span></span>
@@ -534,9 +534,9 @@ y shape: (500,)</code></pre>
 <span id="cb9-20"><a></a><span class="cf">assert</span> np.allclose(np.array(ans_serial_timed), np.array(ans_parallel))</span>
 <span id="cb9-21"><a></a><span class="bu">print</span>(<span class="st">"Results match ✓"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Serial:   16.7 ms
-Parallel: 29.3 ms
-Speedup:  0.57x
+<pre><code>Serial:   17.3 ms
+Parallel: 24.4 ms
+Speedup:  0.71x
 Results match ✓</code></pre>
 </div>
 </div>
@@ -588,7 +588,7 @@ Results match ✓</code></pre>
 </section>
 <section id="conways-game-of-flu-python-setup" class="slide level2">
 <h2>Conway’s Game of Flu: Python Setup</h2>
-<div id="801e4e5f" class="cell" data-execution_count="7">
+<div id="88b66c23" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a></a></span>
 <span id="cb11-3"><a></a><span class="co"># Status codes</span></span>
@@ -604,7 +604,7 @@ Results match ✓</code></pre>
 </section>
 <section id="conways-game-of-flu-simulation" class="slide level2">
 <h2>Conway’s Game of Flu: Simulation</h2>
-<div id="bb4f4057" class="cell" data-execution_count="8">
+<div id="6d9fecfd" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="kw">def</span> simulate_flu(pop_size<span class="op">=</span><span class="dv">900</span>, n_sick<span class="op">=</span><span class="dv">10</span>, n_vaccinated<span class="op">=</span><span class="dv">0</span>,</span>
 <span id="cb12-2"><a></a>                 n_steps<span class="op">=</span><span class="dv">15</span>, seed<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb12-3"><a></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
@@ -657,7 +657,7 @@ Results match ✓</code></pre>
 </section>
 <section id="how-does-the-simulation-look" class="slide level2">
 <h2>How does the simulation look?</h2>
-<div id="44f8dc26" class="cell" data-execution_count="9">
+<div id="def10793" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>result <span class="op">=</span> simulate_flu(pop_size<span class="op">=</span><span class="dv">1600</span>, n_sick<span class="op">=</span><span class="dv">160</span>,</span>
 <span id="cb13-2"><a></a>                      n_vaccinated<span class="op">=</span><span class="dv">400</span>, n_steps<span class="op">=</span><span class="dv">20</span>, seed<span class="op">=</span><span class="dv">7123</span>)</span>
 <span id="cb13-3"><a></a><span class="bu">print</span>(<span class="st">"Deceased by time step:"</span>)</span>
@@ -687,7 +687,7 @@ Results match ✓</code></pre>
 </section>
 <section id="results-effect-of-vaccination-coverage" class="slide level2">
 <h2>Results: Effect of Vaccination Coverage</h2>
-<div id="8597970e" class="cell" data-execution_count="11">
+<div id="907b24de" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb15-2"><a></a></span>
 <span id="cb15-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -719,7 +719,7 @@ Results match ✓</code></pre>
 <section id="speed-things-up-timing-under-serial-implementation" class="slide level2">
 <h2>Speed things up: Timing under serial implementation</h2>
 <p>We will use <code>time.time()</code> to measure how much time it takes to complete 50 simulations serially versus in parallel using 4 cores.</p>
-<div id="f7fc0ff3" class="cell" data-execution_count="12">
+<div id="584e055a" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">import</span> time</span>
 <span id="cb16-2"><a></a></span>
 <span id="cb16-3"><a></a>start <span class="op">=</span> time.time()</span>
@@ -728,14 +728,14 @@ Results match ✓</code></pre>
 <span id="cb16-6"><a></a>time_serial <span class="op">=</span> time.time() <span class="op">-</span> start</span>
 <span id="cb16-7"><a></a><span class="bu">print</span>(<span class="ss">f"Serial time: </span><span class="sc">{</span>time_serial<span class="sc">:.2f}</span><span class="ss">s"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Serial time: 0.99s</code></pre>
+<pre><code>Serial time: 1.03s</code></pre>
 </div>
 </div>
 </section>
 <section id="speed-things-up-parallel-with-pool.map" class="slide level2">
 <h2>Speed things up: Parallel with Pool.map</h2>
 <p>Python’s <code>multiprocessing.Pool.map</code> is the primary tool for embarrassingly parallel workloads:</p>
-<div id="7682a12e" class="cell" data-execution_count="13">
+<div id="37f092bb" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="kw">def</span> run_one(seed):</span>
 <span id="cb18-2"><a></a>    <span class="cf">return</span> simulate_flu(pop_size<span class="op">=</span><span class="dv">900</span>, n_sick<span class="op">=</span><span class="dv">10</span>,</span>
 <span id="cb18-3"><a></a>                        n_vaccinated<span class="op">=</span><span class="dv">900</span>, n_steps<span class="op">=</span><span class="dv">20</span>, seed<span class="op">=</span>seed)</span>
@@ -749,15 +749,15 @@ Results match ✓</code></pre>
 <span id="cb18-11"><a></a><span class="bu">print</span>(<span class="ss">f"Parallel time (4 cores): </span><span class="sc">{</span>time_parallel<span class="sc">:.2f}</span><span class="ss">s"</span>)</span>
 <span id="cb18-12"><a></a><span class="bu">print</span>(<span class="ss">f"Speedup: </span><span class="sc">{</span>time_serial<span class="op">/</span>time_parallel<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Parallel time (4 cores): 0.32s
-Speedup: 3.13x</code></pre>
+<pre><code>Parallel time (4 cores): 0.35s
+Speedup: 2.97x</code></pre>
 </div>
 </div>
 </section>
 <section id="speed-things-up-parallel-with-concurrent.futures" class="slide level2">
 <h2>Speed things up: Parallel with concurrent.futures</h2>
 <p><code>concurrent.futures.ProcessPoolExecutor</code> is a higher-level alternative with a cleaner API. Pass <code>mp_context</code> to use <code>fork</code> (required in Jupyter/Quarto on macOS — same reason as <code>Pool</code>):</p>
-<div id="3322b8a7" class="cell" data-execution_count="14">
+<div id="db873d82" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>ctx <span class="op">=</span> multiprocessing.get_context(<span class="st">"fork"</span>)</span>
 <span id="cb20-2"><a></a></span>
 <span id="cb20-3"><a></a>start <span class="op">=</span> time.time()</span>
@@ -768,8 +768,8 @@ Speedup: 3.13x</code></pre>
 <span id="cb20-8"><a></a><span class="bu">print</span>(<span class="ss">f"ProcessPoolExecutor time (4 cores): </span><span class="sc">{</span>time_futures<span class="sc">:.2f}</span><span class="ss">s"</span>)</span>
 <span id="cb20-9"><a></a><span class="bu">print</span>(<span class="ss">f"Speedup vs serial: </span><span class="sc">{</span>time_serial<span class="op">/</span>time_futures<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ProcessPoolExecutor time (4 cores): 0.29s
-Speedup vs serial: 3.39x</code></pre>
+<pre><code>ProcessPoolExecutor time (4 cores): 0.39s
+Speedup vs serial: 2.63x</code></pre>
 </div>
 </div>
 </section>
@@ -793,16 +793,16 @@ Speedup vs serial: 3.39x</code></pre>
 </section>
 <section id="serial-vs-parallel-time" class="slide level2">
 <h2>Serial vs Parallel Time</h2>
-<div id="e2258f96" class="cell" data-execution_count="15">
+<div id="26d443dd" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="bu">print</span>(<span class="ss">f"Serial time:             </span><span class="sc">{</span>time_serial<span class="sc">:.3f}</span><span class="ss">s"</span>)</span>
 <span id="cb23-2"><a></a><span class="bu">print</span>(<span class="ss">f"Pool.map time:           </span><span class="sc">{</span>time_parallel<span class="sc">:.3f}</span><span class="ss">s"</span>)</span>
 <span id="cb23-3"><a></a><span class="bu">print</span>(<span class="ss">f"ProcessPoolExecutor:     </span><span class="sc">{</span>time_futures<span class="sc">:.3f}</span><span class="ss">s"</span>)</span>
 <span id="cb23-4"><a></a><span class="bu">print</span>(<span class="ss">f"Speedup (Pool.map):      </span><span class="sc">{</span>time_serial<span class="op">/</span>time_parallel<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Serial time:             0.993s
-Pool.map time:           0.318s
-ProcessPoolExecutor:     0.293s
-Speedup (Pool.map):      3.13x</code></pre>
+<pre><code>Serial time:             1.027s
+Pool.map time:           0.346s
+ProcessPoolExecutor:     0.390s
+Speedup (Pool.map):      2.97x</code></pre>
 </div>
 </div>
 <p>We care about the <strong>elapsed (wall clock)</strong> time.</p>
@@ -966,7 +966,7 @@ Speedup (Pool.map):      3.13x</code></pre>
 <section id="xgboost-load-prepare-bike-share-data" class="slide level2">
 <h2>XGBoost: Load &amp; Prepare Bike Share Data</h2>
 <p>Let’s use the same data as last week</p>
-<div id="73b43594" class="cell" data-execution_count="16">
+<div id="3f018077" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a><span class="im">import</span> requests, zipfile, io</span>
 <span id="cb33-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb33-3"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -993,7 +993,7 @@ Speedup (Pool.map):      3.13x</code></pre>
 </section>
 <section id="xgboost-feature-engineering" class="slide level2">
 <h2>XGBoost: Feature Engineering</h2>
-<div id="0e096a59" class="cell" data-execution_count="17">
+<div id="09a0d37e" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a>bike.columns <span class="op">=</span> (bike.columns.<span class="bu">str</span>.strip()</span>
 <span id="cb35-2"><a></a>                             .<span class="bu">str</span>.replace(<span class="vs">r'</span><span class="dv">\s</span><span class="op">+</span><span class="vs">'</span>, <span class="st">'_'</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb35-3"><a></a>                             .<span class="bu">str</span>.lower())</span>
@@ -1026,7 +1026,7 @@ Speedup (Pool.map):      3.13x</code></pre>
 </section>
 <section id="xgboost-comparing-1-4-and-all-cores" class="slide level2">
 <h2>XGBoost: Comparing 1, 4, and All Cores</h2>
-<div id="86a82110" class="cell" data-execution_count="18">
+<div id="ae649e1f" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>results <span class="op">=</span> {}</span>
 <span id="cb37-2"><a></a><span class="cf">for</span> nthread <span class="kw">in</span> [<span class="dv">1</span>, <span class="dv">4</span>, multiprocessing.cpu_count()]:</span>
 <span id="cb37-3"><a></a>    model <span class="op">=</span> xgb.XGBRegressor(</span>
@@ -1043,19 +1043,19 @@ Speedup (Pool.map):      3.13x</code></pre>
 <span id="cb37-14"><a></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Speedup (1 → 4 cores):    </span><span class="sc">{</span>results[<span class="dv">1</span>]<span class="op">/</span>results[<span class="dv">4</span>]<span class="sc">:.2f}</span><span class="ss">x"</span>)</span>
 <span id="cb37-15"><a></a><span class="bu">print</span>(<span class="ss">f"Speedup (1 → all cores):  </span><span class="sc">{</span>results[<span class="dv">1</span>]<span class="op">/</span>results[multiprocessing.cpu_count()]<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>nthread= 1:  1.23s   RMSE=14.71 min
-nthread= 4:  0.49s   RMSE=14.71 min
-nthread= 8:  0.56s   RMSE=14.71 min
+<pre><code>nthread= 1:  1.39s   RMSE=14.71 min
+nthread= 4:  0.61s   RMSE=14.71 min
+nthread= 8:  0.77s   RMSE=14.71 min
 
-Speedup (1 → 4 cores):    2.53x
-Speedup (1 → all cores):  2.20x</code></pre>
+Speedup (1 → 4 cores):    2.27x
+Speedup (1 → all cores):  1.81x</code></pre>
 </div>
 </div>
 </section>
 <section id="xgboost-parallel-hyperparameter-search" class="slide level2">
 <h2>XGBoost: Parallel Hyperparameter Search</h2>
 <p>The standard way to parallelize hyperparameter search is <strong><code>GridSearchCV(n_jobs=...)</code></strong> from scikit-learn, which uses joblib internally and avoids all notebook multiprocessing pitfalls.</p>
-<div id="41206f7a" class="cell" data-execution_count="19">
+<div id="e2e0e5b8" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a>param_grid <span class="op">=</span> {</span>
 <span id="cb39-2"><a></a>    <span class="st">"max_depth"</span>:        [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>],</span>
 <span id="cb39-3"><a></a>    <span class="st">"learning_rate"</span>:    [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>],</span>
@@ -1078,7 +1078,7 @@ Speedup (1 → all cores):  2.20x</code></pre>
 </section>
 <section id="xgboost-parallel-hyperparameter-search-contd" class="slide level2">
 <h2>XGBoost: Parallel Hyperparameter Search (cont’d)</h2>
-<div id="17809c1c" class="cell" data-execution_count="20">
+<div id="9dd355bb" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a></a>t0 <span class="op">=</span> time.perf_counter()</span>
 <span id="cb41-2"><a></a>gs_serial <span class="op">=</span> GridSearchCV(base_model, param_grid, cv<span class="op">=</span><span class="dv">3</span>, n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb41-3"><a></a>                         scoring<span class="op">=</span><span class="st">"neg_root_mean_squared_error"</span>)</span>
@@ -1096,8 +1096,8 @@ Speedup (1 → all cores):  2.20x</code></pre>
 <span id="cb41-15"><a></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Best params: </span><span class="sc">{</span>gs_parallel<span class="sc">.</span>best_params_<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb41-16"><a></a><span class="bu">print</span>(<span class="ss">f"Best CV RMSE: </span><span class="sc">{</span><span class="op">-</span>gs_parallel<span class="sc">.</span>best_score_<span class="sc">:.2f}</span><span class="ss"> min"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Serial   (n_jobs=1): 113.73s
-Parallel (n_jobs=4): 43.74s  (speedup: 2.60x)
+<pre><code>Serial   (n_jobs=1): 132.81s
+Parallel (n_jobs=4): 55.54s  (speedup: 2.39x)
 
 Best params: {'learning_rate': 0.05, 'max_depth': 5, 'min_child_weight': 10, 'subsample': 0.7}
 Best CV RMSE: 14.53 min</code></pre>
@@ -1107,7 +1107,7 @@ Best CV RMSE: 14.53 min</code></pre>
 <section id="xgboost-does-tuning-help" class="slide level2">
 <h2>XGBoost: Does Tuning Help?</h2>
 <p>Retrain the best configuration with more estimators and compare to the default on the held-out test set:</p>
-<div id="105c70e9" class="cell" data-execution_count="21">
+<div id="1c484606" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a><span class="co"># Default model</span></span>
 <span id="cb43-2"><a></a>default_model <span class="op">=</span> xgb.XGBRegressor(</span>
 <span id="cb43-3"><a></a>    n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>

@@ -1,6 +1,6 @@
 ---
 title: "JSC 370: Data Science II" 
-subtitle: "High Performance Computing"
+subtitle: "Week 10: High Performance Computing"
 format:
   revealjs:
     transition: slide
@@ -40,7 +40,7 @@ Today we will focus on **parallel computing**.
 
 ## Serial computation
 
-![Here we are using a single core. The function is applied one element at a time, leaving the other 3 cores without usage.](fig/pll-computing-explained-serial.svg){fig-align="center" width="30%"}
+![Here we are using a single core. The function is applied one element at a time, leaving the other 3 cores without usage.](img/pll-computing-explained-serial.svg){fig-align="center" width="30%"}
 
 ---
 
