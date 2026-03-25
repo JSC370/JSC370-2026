@@ -164,6 +164,18 @@ top20_food = pd.DataFrame(food_counts.most_common(20), columns=["word", "count"]
 - Which top word is associated with the most calories?
 
 ```{python}
+# Find top 10 words and tag each item
+top10_words = [w for w, _ in word_counts.most_common(10)]
+
+def find_top_word(item_name):
+    for w in top10_words:
+        if w in item_name.lower():
+            return w
+    return None
+
+sb_nutr["top_word"] = sb_nutr["Item"].apply(find_top_word)
+sb_top = sb_nutr.dropna(subset=["top_word"]).copy()
+
 # YOUR CODE HERE
 
 ```
