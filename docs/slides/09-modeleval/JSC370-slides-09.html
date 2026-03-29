@@ -231,7 +231,7 @@
 </section>
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
-<div id="305a2e78" class="cell" data-execution_count="1">
+<div id="5b3cd815" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -251,7 +251,7 @@
 <section id="data-toronto-bike-share-open-data" class="slide level2">
 <h2>Data: Toronto Bike Share (Open Data)</h2>
 <p>We use the <a href="https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/">Toronto Open Data Bike Share Ridership</a> dataset — individual trip records for 2023.</p>
-<div id="b96fb340" class="cell" data-execution_count="2">
+<div id="ef354500" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Discover resources via the Toronto Open Data CKAN API</span></span>
 <span id="cb2-2"><a></a>base_url <span class="op">=</span> <span class="st">"https://ckan0.cf.opendata.inter.prod-toronto.ca"</span></span>
 <span id="cb2-3"><a></a>package <span class="op">=</span> requests.get(</span>
@@ -263,7 +263,7 @@
 <section id="loading-the-2023-ridership-data" class="slide level2">
 <h2>Loading the 2023 Ridership Data</h2>
 <p>This is a very large dataset! We will look at May–July 2023 to capture the peak cycling season.</p>
-<div id="fdf5ef41" class="cell" data-execution_count="3">
+<div id="1b63b79c" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="cf">for</span> r <span class="kw">in</span> package[<span class="st">"result"</span>][<span class="st">"resources"</span>]:</span>
 <span id="cb3-2"><a></a>    <span class="cf">if</span> <span class="st">"2023"</span> <span class="kw">in</span> r[<span class="st">"name"</span>]:</span>
 <span id="cb3-3"><a></a>        url_2023 <span class="op">=</span> r[<span class="st">"url"</span>]</span>
@@ -373,7 +373,7 @@
 <section id="data-preparation" class="slide level2">
 <h2>Data preparation</h2>
 <p>We see there are several time variables and strings representing locations. Let’s start doing some data prep and cleaning for feature engineering.</p>
-<div id="7372b66f" class="cell" data-execution_count="4">
+<div id="eb3b1093" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>bike.columns <span class="op">=</span> (bike.columns</span>
 <span id="cb5-2"><a></a>                    .<span class="bu">str</span>.strip()</span>
 <span id="cb5-3"><a></a>                    .<span class="bu">str</span>.replace(<span class="vs">r'</span><span class="dv">\s</span><span class="op">+</span><span class="vs">'</span>, <span class="st">'_'</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
@@ -403,7 +403,7 @@ Unique start stations: 675</code></pre>
 <section id="joining-station-geospatial-data" class="slide level2">
 <h2>Joining Station Geospatial Data</h2>
 <p>We also see bike station information. Station locations are published via the public <strong>GBFS</strong> feed, which is separate from the ridership data</p>
-<div id="997c15f4" class="cell" data-execution_count="5">
+<div id="434e486d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># Fetch station info (lat, lon, capacity) from the GBFS station feed</span></span>
 <span id="cb7-2"><a></a>stations <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb7-3"><a></a>    requests.get(</span>
@@ -417,14 +417,14 @@ Unique start stations: 675</code></pre>
 <span id="cb7-11"><a></a>bike <span class="op">=</span> bike.merge(stations, left_on<span class="op">=</span><span class="st">'start_station_id'</span>, right_on<span class="op">=</span><span class="st">'station_id'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
 <span id="cb7-12"><a></a><span class="bu">print</span>(<span class="ss">f"Stations matched: </span><span class="sc">{</span>bike[<span class="st">'lat'</span>]<span class="sc">.</span>notna()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(bike)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Stations matched: 1,167,565 / 1,241,838</code></pre>
+<pre><code>Stations matched: 1,165,103 / 1,241,838</code></pre>
 </div>
 </div>
 </section>
 <section id="distance-from-downtown-as-a-feature" class="slide level2">
 <h2>Distance from Downtown as a Feature</h2>
 <p>Raw lat/lon are correlated — <strong>distance from a reference point</strong> is often more informative</p>
-<div id="afd8ce57" class="cell" data-execution_count="6">
+<div id="be4a2558" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="kw">def</span> haversine_km(lat1, lon1, lat2, lon2):</span>
 <span id="cb9-2"><a></a>    <span class="co">"""Great-circle distance in km between two points."""</span></span>
 <span id="cb9-3"><a></a>    R <span class="op">=</span> <span class="dv">6371</span></span>
@@ -540,7 +540,7 @@ Unique start stations: 675</code></pre>
 </section>
 <section id="station-map-duration-and-member-rate" class="slide level2">
 <h2>Station Map: Duration and Member Rate</h2>
-<div id="56b7b462" class="cell" data-execution_count="7">
+<div id="aed8c18a" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -556,7 +556,7 @@ Unique start stations: 675</code></pre>
 </section>
 <section id="ridership-patterns" class="slide level2">
 <h2>Ridership Patterns</h2>
-<div id="21baeaef" class="cell" data-execution_count="8">
+<div id="dbd3ef19" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -635,7 +635,7 @@ Unique start stations: 675</code></pre>
 <li>Model would fail completely in deployment</li>
 </ul>
 </div></div>
-<div id="065a1b61" class="cell" data-execution_count="9">
+<div id="c5e3bd88" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># Drop leakage columns before modelling</span></span>
 <span id="cb11-2"><a></a>drop_cols <span class="op">=</span> [<span class="st">'trip_id'</span>, <span class="st">'trip_duration'</span>, <span class="st">'start_time'</span>,</span>
 <span id="cb11-3"><a></a>             <span class="st">'start_station_name'</span>, <span class="st">'end_station_id'</span>,</span>
@@ -671,7 +671,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 <li>This maps each value onto a <strong>circle</strong> — hour 23 and hour 0 are now close together</li>
 <li>Two columns preserve both <strong>ordering</strong> and <strong>wrap-around</strong></li>
 </ul>
-<div id="966c1ee4" class="cell" data-execution_count="10">
+<div id="c9a6b040" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>bike[<span class="st">'hour_sin'</span>]  <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> bike[<span class="st">'hour'</span>] <span class="op">/</span> <span class="dv">24</span>)</span>
 <span id="cb13-2"><a></a>bike[<span class="st">'hour_cos'</span>]  <span class="op">=</span> np.cos(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> bike[<span class="st">'hour'</span>] <span class="op">/</span> <span class="dv">24</span>)</span>
 <span id="cb13-3"><a></a>bike[<span class="st">'dow_sin'</span>]   <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> bike[<span class="st">'day_of_week'</span>] <span class="op">/</span> <span class="dv">7</span>)</span>
@@ -692,7 +692,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 </section>
 <section id="visualizing-cyclical-encoding-of-hour" class="slide level2">
 <h2>Visualizing Cyclical Encoding of Hour</h2>
-<div id="034d411f" class="cell" data-execution_count="11">
+<div id="88735138" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -712,7 +712,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 <div class="fragment">
 <p>Add <span class="math inline">\(K\)</span> harmonics for period <span class="math inline">\(T\)</span>:</p>
 <p><span class="math display">\[\sin\!\left(\frac{2\pi k \cdot x}{T}\right), \; \cos\!\left(\frac{2\pi k \cdot x}{T}\right), \quad k = 1, 2, \dots, K\]</span></p>
-<div id="a1623dcd" class="cell" data-execution_count="12">
+<div id="ce6d2a4e" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="kw">def</span> fourier_features(series, period, n_harmonics, name):</span>
 <span id="cb15-2"><a></a>    cols <span class="op">=</span> {}</span>
 <span id="cb15-3"><a></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_harmonics <span class="op">+</span> <span class="dv">1</span>):</span>
@@ -734,7 +734,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 </section>
 <section id="fourier-harmonics-for-the-daily-cycle" class="slide level2">
 <h2>Fourier Harmonics for the Daily Cycle</h2>
-<div id="2a30f84b" class="cell" data-execution_count="13">
+<div id="25551439" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -757,7 +757,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 </ul>
 <div class="fragment">
 <p>We saw this earlier in the semester. <strong>Splines</strong> fit a piecewise polynomial, smooth at <strong>knot</strong> locations — flexible non-linear features</p>
-<div id="512a3fa9" class="cell" data-execution_count="14">
+<div id="99ffafa4" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="co"># Example: spline basis for a continuous predictor</span></span>
 <span id="cb17-2"><a></a>x_vals <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">300</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb17-3"><a></a>spline <span class="op">=</span> SplineTransformer(n_knots<span class="op">=</span><span class="dv">5</span>, degree<span class="op">=</span><span class="dv">3</span>, include_bias<span class="op">=</span><span class="va">False</span>)</span>
@@ -778,7 +778,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 </section>
 <section id="visualizing-spline-basis-functions" class="slide level2">
 <h2>Visualizing Spline Basis Functions</h2>
-<div id="64321178" class="cell" data-execution_count="15">
+<div id="3c29fd90" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -843,7 +843,7 @@ Value: 0   1   2  ...  22  23  0   1  ...  ← model sees a big jump at midnight
 </section>
 <section id="assembling-the-full-feature-set" class="slide level2">
 <h2>Assembling the Full Feature Set</h2>
-<div id="e8625c84" class="cell" data-execution_count="16">
+<div id="672892b4" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a><span class="kw">def</span> build_features(df):</span>
 <span id="cb19-2"><a></a>    out <span class="op">=</span> pd.DataFrame(index<span class="op">=</span>df.index)</span>
 <span id="cb19-3"><a></a>    <span class="co"># Binary flags (no transformation needed)</span></span>
@@ -919,7 +919,7 @@ Classification features: 17</code></pre>
 </section>
 <section id="fitting-models-for-both-tasks" class="slide level2">
 <h2>Fitting Models for Both Tasks</h2>
-<div id="2f2e3a95" class="cell" data-execution_count="17">
+<div id="a9f2f843" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>X_train,   X_test,   y_train,   y_test   <span class="op">=</span> train_test_split(</span>
 <span id="cb22-2"><a></a>    X,     y_reg, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">65</span>)</span>
 <span id="cb22-3"><a></a>X_train_c, X_test_c, y_train_c, y_test_c <span class="op">=</span> train_test_split(</span>
@@ -953,17 +953,17 @@ Classification features: 17</code></pre>
 <span id="cb22-31"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 3 (regression):"</span>, imp_reg.nlargest(<span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_dict())</span>
 <span id="cb22-32"><a></a><span class="bu">print</span>(<span class="st">"Top 3 (classification):"</span>, imp_cls.nlargest(<span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_dict())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Regression     — RMSE: 13.50 min  | R²: 0.1348
+<pre><code>Regression     — RMSE: 13.49 min  | R²: 0.1354
 Classification — Accuracy: 0.8946  | F1: 0.0000
 
-Top 3 (regression): {'is_weekend': 0.3919999897480011, 'is_member': 0.18199999630451202, 'dist_downtown_km': 0.12399999797344208}
-Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.06499999761581421, 'dist_downtown_km': 0.03200000151991844}</code></pre>
+Top 3 (regression): {'is_weekend': 0.3720000088214874, 'is_member': 0.17399999499320984, 'dist_downtown_km': 0.13899999856948853}
+Top 3 (classification): {'month_sin_k1': 0.7540000081062317, 'is_weekend': 0.057999998331069946, 'hour_sin_k1': 0.029999999329447746}</code></pre>
 </div>
 </div>
 </section>
 <section id="feature-importance-regression-vs-classification" class="slide level2">
 <h2>Feature Importance: Regression vs Classification</h2>
-<div id="d849db29" class="cell" data-execution_count="18">
+<div id="3d2ade22" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1110,7 +1110,7 @@ Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.064
 <section id="bias-variance-boosting-rounds-vs-rmse" class="slide level2">
 <h2>Bias-Variance: Boosting Rounds vs RMSE</h2>
 <p>Unlike a single tree, XGBoost adds trees <strong>sequentially</strong> — more rounds can overfit</p>
-<div id="822750e3" class="cell" data-execution_count="19">
+<div id="efd80d14" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>xgb_bv <span class="op">=</span> XGBRegressor(n_estimators<span class="op">=</span><span class="dv">600</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
 <span id="cb24-2"><a></a>                       random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb24-3"><a></a>xgb_bv.fit(X_train, y_train)</span>
@@ -1123,7 +1123,7 @@ Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.064
 <span id="cb24-10"><a></a>    train_err.append(np.sqrt(mean_squared_error(y_train, tr)))</span>
 <span id="cb24-11"><a></a>    test_err.append(np.sqrt(mean_squared_error(y_test,  te)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="d5522b30" class="cell" data-execution_count="20">
+<div id="7f851e19" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1141,7 +1141,7 @@ Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.064
 <section id="hyperparameter-tuning-with-cross-validation" class="slide level2">
 <h2>Hyperparameter Tuning with Cross-Validation</h2>
 <p>XGBoost has no OOB score — use <strong>5-fold CV</strong> with <strong>random search</strong> when the grid is large</p>
-<div id="abdb5990" class="cell" data-execution_count="21">
+<div id="ff9b62d7" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
 <span id="cb25-2"><a></a></span>
 <span id="cb25-3"><a></a>param_dist <span class="op">=</span> {</span>
@@ -1167,7 +1167,7 @@ Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.064
 </section>
 <section id="fit-the-best-model" class="slide level2">
 <h2>Fit the Best Model</h2>
-<div id="09f1cf0c" class="cell" data-execution_count="22">
+<div id="468d334f" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="co">#best_params = rand_search.best_params_</span></span>
 <span id="cb26-2"><a></a><span class="co">#print("Best params:", best_params)</span></span>
 <span id="cb26-3"><a></a></span>
@@ -1183,7 +1183,7 @@ Top 3 (classification): {'month_sin_k1': 0.7369999885559082, 'is_weekend': 0.064
 <span id="cb26-13"><a></a><span class="bu">print</span>(<span class="ss">f"Test R²:   </span><span class="sc">{</span>r2_score(y_test, y_pred)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Test RMSE: 13.41 minutes
-Test R²:   0.1457</code></pre>
+Test R²:   0.1466</code></pre>
 </div>
 </div>
 </section>
@@ -1268,6 +1268,21 @@ Test R²:   0.1457</code></pre>
 <h1>Part 3: Model Evaluation</h1>
 
 </section>
+<section id="what-are-we-predicting" class="slide level2">
+<h2>What Are We Predicting?</h2>
+<p>We use the Toronto Bike Share 2023 dataset throughout this lecture.</p>
+<p><strong>Regression task</strong> (this section):</p>
+<ul>
+<li><strong>Target</strong>: <code>trip_duration_min</code> — trip duration in minutes, filtered to 1–120 min</li>
+<li><strong>Features</strong>: temporal (hour, day of week, month via Fourier encoding), spatial (distance from downtown, station capacity), membership status (<code>is_member</code>)</li>
+<li><strong>Question</strong>: <em>How long will a trip take, given when and where it starts?</em></li>
+</ul>
+<p><strong>Classification task</strong> (later in this section):</p>
+<ul>
+<li><strong>Target</strong>: <code>is_member</code> — annual member (1) vs.&nbsp;casual rider (0)</li>
+<li><strong>Question</strong>: <em>Can we identify member rides from trip characteristics alone?</em></li>
+</ul>
+</section>
 <section id="the-three-roles-of-data" class="slide level2">
 <h2>The Three Roles of Data</h2>
 <table class="caption-top">
@@ -1311,25 +1326,51 @@ Test R²:   0.1457</code></pre>
 <section id="train-validation-test-split" class="slide level2">
 <h2>Train / Validation / Test Split</h2>
 <pre><code>All data
-├── Training set (60%)   → fit model
+├── Training set (60%)   → fit model parameters
 ├── Validation set (20%) → tune hyperparameters, select model
-└── Test set (20%)       → final evaluation (untouched until the end)</code></pre>
+└── Test set (20%)       → final, unbiased evaluation (untouched until the end)</code></pre>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="co"># First split off the test set</span></span>
+<div id="83e91822" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="co"># First, hold out the test set</span></span>
 <span id="cb30-2"><a></a>X_trainval, X_test, y_trainval, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb30-3"><a></a>    X, y_reg, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">65</span></span>
 <span id="cb30-4"><a></a>)</span>
 <span id="cb30-5"><a></a><span class="co"># Then split training from validation</span></span>
 <span id="cb30-6"><a></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(</span>
 <span id="cb30-7"><a></a>    X_trainval, y_trainval, test_size<span class="op">=</span><span class="fl">0.25</span>, random_state<span class="op">=</span><span class="dv">65</span></span>
-<span id="cb30-8"><a></a>    <span class="co"># 0.25 × 0.8 = 0.2 of original → 60/20/20 split</span></span>
-<span id="cb30-9"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb30-8"><a></a>    <span class="co"># 0.25 × 0.8 = 0.2 of original → 60 / 20 / 20 split</span></span>
+<span id="cb30-9"><a></a>)</span>
+<span id="cb30-10"><a></a><span class="bu">print</span>(<span class="ss">f"Train: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss">  |  Val: </span><span class="sc">{</span>X_val<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss">  |  Test: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train: 745,102  |  Val: 248,368  |  Test: 248,368</code></pre>
 </div>
-<div class="fragment">
-<ul>
-<li>Downside: reduces training data available</li>
-<li>Alternative: use <strong>cross-validation</strong> on training data instead of a fixed validation set</li>
-</ul>
+</div>
+</div>
+</section>
+<section id="fitting-and-evaluating-on-the-split" class="slide level2">
+<h2>Fitting and Evaluating on the Split</h2>
+<p>Train on <code>X_train</code>, use <code>X_val</code> to confirm the model generalises, then retrain on <code>X_trainval</code> (train + val) before evaluating once on <code>X_test</code>:</p>
+<div id="bfb6a124" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="co"># 1. Fit on training set</span></span>
+<span id="cb32-2"><a></a>model_val <span class="op">=</span> XGBRegressor(n_estimators<span class="op">=</span><span class="dv">250</span>, reg_lambda<span class="op">=</span><span class="dv">10</span>, reg_alpha<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb32-3"><a></a>                         max_depth<span class="op">=</span><span class="dv">7</span>, learning_rate<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb32-4"><a></a>                         random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb32-5"><a></a>model_val.fit(X_train, y_train)</span>
+<span id="cb32-6"><a></a>val_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_val, model_val.predict(X_val)))</span>
+<span id="cb32-7"><a></a><span class="bu">print</span>(<span class="ss">f"Validation RMSE: </span><span class="sc">{</span>val_rmse<span class="sc">:.2f}</span><span class="ss"> min"</span>)</span>
+<span id="cb32-8"><a></a></span>
+<span id="cb32-9"><a></a><span class="co"># 2. Retrain on train + val, then evaluate on test (open the lockbox once)</span></span>
+<span id="cb32-10"><a></a>model_final <span class="op">=</span> XGBRegressor(n_estimators<span class="op">=</span><span class="dv">250</span>, reg_lambda<span class="op">=</span><span class="dv">10</span>, reg_alpha<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb32-11"><a></a>                            max_depth<span class="op">=</span><span class="dv">7</span>, learning_rate<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb32-12"><a></a>                            random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb32-13"><a></a>model_final.fit(X_trainval, y_trainval)</span>
+<span id="cb32-14"><a></a>y_pred <span class="op">=</span> model_final.predict(X_test)</span>
+<span id="cb32-15"><a></a>test_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
+<span id="cb32-16"><a></a><span class="bu">print</span>(<span class="ss">f"Test RMSE:       </span><span class="sc">{</span>test_rmse<span class="sc">:.2f}</span><span class="ss"> min"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Validation RMSE: 13.40 min
+Test RMSE:       13.38 min</code></pre>
+</div>
 </div>
 </section>
 <section id="regression-metrics" class="slide level2">
@@ -1366,28 +1407,28 @@ Test R²:   0.1457</code></pre>
 </tbody>
 </table>
 <div class="fragment">
-<div id="652cbdf7" class="cell" data-execution_count="23">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
-<span id="cb31-2"><a></a>mae  <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(y_test <span class="op">-</span> y_pred))</span>
-<span id="cb31-3"><a></a>r2   <span class="op">=</span> r2_score(y_test, y_pred)</span>
-<span id="cb31-4"><a></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.1f}</span><span class="ss"> minutes"</span>)</span>
-<span id="cb31-5"><a></a><span class="bu">print</span>(<span class="ss">f"MAE:  </span><span class="sc">{</span>mae<span class="sc">:.1f}</span><span class="ss"> minutes"</span>)</span>
-<span id="cb31-6"><a></a><span class="bu">print</span>(<span class="ss">f"R²:   </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6ceb39d5" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
+<span id="cb34-2"><a></a>mae  <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(y_test <span class="op">-</span> y_pred))</span>
+<span id="cb34-3"><a></a>r2   <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb34-4"><a></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.1f}</span><span class="ss"> minutes"</span>)</span>
+<span id="cb34-5"><a></a><span class="bu">print</span>(<span class="ss">f"MAE:  </span><span class="sc">{</span>mae<span class="sc">:.1f}</span><span class="ss"> minutes"</span>)</span>
+<span id="cb34-6"><a></a><span class="bu">print</span>(<span class="ss">f"R²:   </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>RMSE: 13.4 minutes
 MAE:  8.8 minutes
-R²:   0.1457</code></pre>
+R²:   0.1479</code></pre>
 </div>
 </div>
 </div>
 </section>
 <section id="residual-plot" class="slide level2">
 <h2>Residual Plot</h2>
-<div id="1d6118c7" class="cell" data-execution_count="24">
+<div id="cb17a2f1" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="JSC370-slides-09_files/figure-revealjs/cell-25-output-1.png" width="1142" height="374"></p>
+<p><img data-src="JSC370-slides-09_files/figure-revealjs/cell-27-output-1.png" width="1142" height="374"></p>
 </figure>
 </div>
 </div>
@@ -1396,39 +1437,39 @@ R²:   0.1457</code></pre>
 <section id="classification-predicting-annual-member-vs-casual" class="slide level2">
 <h2>Classification: Predicting Annual Member vs Casual</h2>
 <p>We can also predict <strong>user type</strong> — whether a rider is an annual member or a casual user</p>
-<div id="a2ad4b5d" class="cell" data-execution_count="25">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a>X_train_c, X_test_c, y_train_c, y_test_c <span class="op">=</span> train_test_split(</span>
-<span id="cb33-2"><a></a>    X_cls, y_cls, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">65</span>)  <span class="co"># X_cls excludes is_member</span></span>
-<span id="cb33-3"><a></a></span>
-<span id="cb33-4"><a></a><span class="co"># Class imbalance: members are the majority class</span></span>
-<span id="cb33-5"><a></a>n_casual  <span class="op">=</span> (y_train_c <span class="op">==</span> <span class="dv">0</span>).<span class="bu">sum</span>()</span>
-<span id="cb33-6"><a></a>n_member  <span class="op">=</span> (y_train_c <span class="op">==</span> <span class="dv">1</span>).<span class="bu">sum</span>()</span>
-<span id="cb33-7"><a></a>spw <span class="op">=</span> n_casual <span class="op">/</span> n_member</span>
-<span id="cb33-8"><a></a><span class="bu">print</span>(<span class="ss">f"Casual: </span><span class="sc">{</span>n_casual<span class="sc">:,}</span><span class="ss">  |  Member: </span><span class="sc">{</span>n_member<span class="sc">:,}</span><span class="ss">  |  scale_pos_weight: </span><span class="sc">{</span>spw<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1926c8b2" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a>X_train_c, X_test_c, y_train_c, y_test_c <span class="op">=</span> train_test_split(</span>
+<span id="cb36-2"><a></a>    X_cls, y_cls, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">65</span>)  <span class="co"># X_cls excludes is_member</span></span>
+<span id="cb36-3"><a></a></span>
+<span id="cb36-4"><a></a><span class="co"># Class imbalance: members are the majority class</span></span>
+<span id="cb36-5"><a></a>n_casual  <span class="op">=</span> (y_train_c <span class="op">==</span> <span class="dv">0</span>).<span class="bu">sum</span>()</span>
+<span id="cb36-6"><a></a>n_member  <span class="op">=</span> (y_train_c <span class="op">==</span> <span class="dv">1</span>).<span class="bu">sum</span>()</span>
+<span id="cb36-7"><a></a>spw <span class="op">=</span> n_casual <span class="op">/</span> n_member</span>
+<span id="cb36-8"><a></a><span class="bu">print</span>(<span class="ss">f"Casual: </span><span class="sc">{</span>n_casual<span class="sc">:,}</span><span class="ss">  |  Member: </span><span class="sc">{</span>n_member<span class="sc">:,}</span><span class="ss">  |  scale_pos_weight: </span><span class="sc">{</span>spw<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Casual: 777,807  |  Member: 91,479  |  scale_pos_weight: 8.50</code></pre>
 </div>
 </div>
 <div class="fragment">
 <p>If the data has ~65% members, a naive model can achieve 65% accuracy by predicting “member” every time — <strong>accuracy alone is misleading</strong>. <code>scale_pos_weight</code> re-weights the loss so each class contributes equally:</p>
-<p><span class="math display">\[\texttt{scale\_pos\_weight} = \frac{n_{\text{casual}}}{n_{\text{member}}}\]</span></p>
-<div id="e9ad6313" class="cell" data-execution_count="26">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a>clf <span class="op">=</span> XGBClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb35-2"><a></a>                    scale_pos_weight<span class="op">=</span>spw,</span>
-<span id="cb35-3"><a></a>                    random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb35-4"><a></a>clf.fit(X_train_c, y_train_c)</span>
-<span id="cb35-5"><a></a>y_pred_cls <span class="op">=</span> clf.predict(X_test_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="math display">\[\texttt{scale_pos_weight} = \frac{n_{\text{casual}}}{n_{\text{member}}}\]</span></p>
+<div id="dbe64899" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a>clf <span class="op">=</span> XGBClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb38-2"><a></a>                    scale_pos_weight<span class="op">=</span>spw,</span>
+<span id="cb38-3"><a></a>                    random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb38-4"><a></a>clf.fit(X_train_c, y_train_c)</span>
+<span id="cb38-5"><a></a>y_pred_cls <span class="op">=</span> clf.predict(X_test_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f78adc94" class="cell" data-execution_count="27">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="bu">print</span>(<span class="ss">f"Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb36-2"><a></a><span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>precision_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb36-3"><a></a><span class="bu">print</span>(<span class="ss">f"Recall:    </span><span class="sc">{</span>recall_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb36-4"><a></a><span class="bu">print</span>(<span class="ss">f"F1:        </span><span class="sc">{</span>f1_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="61e54f2f" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="bu">print</span>(<span class="ss">f"Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb39-2"><a></a><span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>precision_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb39-3"><a></a><span class="bu">print</span>(<span class="ss">f"Recall:    </span><span class="sc">{</span>recall_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb39-4"><a></a><span class="bu">print</span>(<span class="ss">f"F1:        </span><span class="sc">{</span>f1_score(y_test_c, y_pred_cls)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy:  0.5992
-Precision: 0.1514
-Recall:    0.6087
-F1:        0.2425</code></pre>
+<pre><code>Accuracy:  0.5973
+Precision: 0.1513
+Recall:    0.6120
+F1:        0.2427</code></pre>
 </div>
 </div>
 </div>
@@ -1469,11 +1510,11 @@ F1:        0.2425</code></pre>
 </section>
 <section id="confusion-matrix" class="slide level2">
 <h2>Confusion Matrix</h2>
-<div id="c80f5508" class="cell" data-execution_count="28">
+<div id="ea349c10" class="cell" data-execution_count="30">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="JSC370-slides-09_files/figure-revealjs/cell-29-output-1.png" width="543" height="470"></p>
+<p><img data-src="JSC370-slides-09_files/figure-revealjs/cell-31-output-1.png" width="543" height="470"></p>
 </figure>
 </div>
 </div>
@@ -1565,26 +1606,26 @@ CV score = mean(score₁, …, score₅)</code></pre>
 </section>
 <section id="cross-validation-in-python" class="slide level2">
 <h2>Cross-Validation in Python</h2>
-<div id="a0510860" class="cell" data-execution_count="29">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a>xgb_cv <span class="op">=</span> XGBRegressor(n_estimators<span class="op">=</span><span class="dv">250</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb40-2"><a></a>                       random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb40-3"><a></a>cv_scores <span class="op">=</span> cross_val_score(xgb_cv, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb40-4"><a></a>                             scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>)</span>
-<span id="cb40-5"><a></a><span class="bu">print</span>(<span class="ss">f"5-fold CV RMSE: </span><span class="sc">{</span><span class="op">-</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> ± </span><span class="sc">{</span>cv_scores<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span>
-<span id="cb40-6"><a></a><span class="bu">print</span>(<span class="ss">f"Individual folds: </span><span class="sc">{</span>(<span class="op">-</span>cv_scores)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="08adb6a6" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a>xgb_cv <span class="op">=</span> XGBRegressor(n_estimators<span class="op">=</span><span class="dv">250</span>, max_depth<span class="op">=</span><span class="dv">5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb43-2"><a></a>                       random_state<span class="op">=</span><span class="dv">65</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb43-3"><a></a>cv_scores <span class="op">=</span> cross_val_score(xgb_cv, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb43-4"><a></a>                             scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>)</span>
+<span id="cb43-5"><a></a><span class="bu">print</span>(<span class="ss">f"5-fold CV RMSE: </span><span class="sc">{</span><span class="op">-</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> ± </span><span class="sc">{</span>cv_scores<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span>
+<span id="cb43-6"><a></a><span class="bu">print</span>(<span class="ss">f"Individual folds: </span><span class="sc">{</span>(<span class="op">-</span>cv_scores)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>5-fold CV RMSE: 13.50 ± 0.05 minutes
-Individual folds: [13.49 13.48 13.59 13.53 13.43]</code></pre>
+<pre><code>5-fold CV RMSE: 13.52 ± 0.04 minutes
+Individual folds: [13.5  13.5  13.47 13.51 13.6 ]</code></pre>
 </div>
 </div>
 <div class="fragment">
-<div id="f9673be9" class="cell" data-execution_count="30">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="co"># Final test evaluation</span></span>
-<span id="cb42-2"><a></a>xgb_cv.fit(X_train, y_train)</span>
-<span id="cb42-3"><a></a>test_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, xgb_cv.predict(X_test)))</span>
-<span id="cb42-4"><a></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>test_rmse<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3bed33f5" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a><span class="co"># Final test evaluation</span></span>
+<span id="cb45-2"><a></a>xgb_cv.fit(X_train, y_train)</span>
+<span id="cb45-3"><a></a>test_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, xgb_cv.predict(X_test)))</span>
+<span id="cb45-4"><a></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>test_rmse<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test RMSE: 13.49 minutes</code></pre>
+<pre><code>Test RMSE: 13.47 minutes</code></pre>
 </div>
 </div>
 </div>
@@ -1639,50 +1680,52 @@ Individual folds: [13.49 13.48 13.59 13.53 13.43]</code></pre>
 <h2>Data Leakage and the Feature Engineering Pipeline</h2>
 <p>A correct workflow applies all transformations <strong>inside</strong> the train/test split:</p>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a></a><span class="co"># Wrong: fit scaler on full data (leaks test info into training)</span></span>
-<span id="cb44-2"><a></a>scaler.fit(X)           <span class="co"># test statistics contaminate training</span></span>
-<span id="cb44-3"><a></a></span>
-<span id="cb44-4"><a></a><span class="co"># Right: fit only on training data</span></span>
-<span id="cb44-5"><a></a>scaler.fit(X_train)</span>
-<span id="cb44-6"><a></a>X_train_scaled <span class="op">=</span> scaler.transform(X_train)</span>
-<span id="cb44-7"><a></a>X_test_scaled  <span class="op">=</span> scaler.transform(X_test)  <span class="co"># ✓ apply fitted scaler to test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a></a><span class="co"># Wrong: fit scaler on full data (leaks test info into training)</span></span>
+<span id="cb47-2"><a></a>scaler.fit(X)   <span class="co"># test statistics contaminate training</span></span>
+<span id="cb47-3"><a></a></span>
+<span id="cb47-4"><a></a><span class="co"># Right: fit only on training data</span></span>
+<span id="cb47-5"><a></a>scaler.fit(X_train)</span>
+<span id="cb47-6"><a></a>X_train_scaled <span class="op">=</span> scaler.transform(X_train)</span>
+<span id="cb47-7"><a></a>X_test_scaled  <span class="op">=</span> scaler.transform(X_test)  <span class="co"># apply fitted scaler to test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p><strong>scikit-learn Pipelines</strong> bundle preprocessing + model so that CV applies them correctly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb45-2"><a></a>pipe <span class="op">=</span> Pipeline([</span>
-<span id="cb45-3"><a></a>    (<span class="st">'spline'</span>, SplineTransformer(n_knots<span class="op">=</span><span class="dv">5</span>, degree<span class="op">=</span><span class="dv">3</span>)),</span>
-<span id="cb45-4"><a></a>    (<span class="st">'model'</span>,  XGBRegressor(n_estimators<span class="op">=</span><span class="dv">200</span>, max_depth<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">65</span>))</span>
-<span id="cb45-5"><a></a>])</span>
-<span id="cb45-6"><a></a><span class="co"># Spline is fit only on training fold — no leakage</span></span>
-<span id="cb45-7"><a></a>cv_pipe <span class="op">=</span> cross_val_score(pipe, X_train[[<span class="st">'hour'</span>]], y_train, cv<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb45-8"><a></a>                           scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>)</span>
-<span id="cb45-9"><a></a><span class="bu">print</span>(<span class="ss">f"CV RMSE with spline: </span><span class="sc">{</span><span class="op">-</span>cv_pipe<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb48-2"><a></a>pipe <span class="op">=</span> Pipeline([</span>
+<span id="cb48-3"><a></a>    (<span class="st">'spline'</span>, SplineTransformer(n_knots<span class="op">=</span><span class="dv">5</span>, degree<span class="op">=</span><span class="dv">3</span>)),</span>
+<span id="cb48-4"><a></a>    (<span class="st">'model'</span>,  XGBRegressor(n_estimators<span class="op">=</span><span class="dv">200</span>, max_depth<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">65</span>))</span>
+<span id="cb48-5"><a></a>])</span>
+<span id="cb48-6"><a></a><span class="co"># Spline is fit only on training fold — no leakage</span></span>
+<span id="cb48-7"><a></a>cv_pipe <span class="op">=</span> cross_val_score(pipe, X_train[[<span class="st">'hour'</span>]], y_train, cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb48-8"><a></a>                           scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>)</span>
+<span id="cb48-9"><a></a><span class="bu">print</span>(<span class="ss">f"CV RMSE with spline: </span><span class="sc">{</span><span class="op">-</span>cv_pipe<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> minutes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="the-full-ml-workflow" class="slide level2">
+<section id="the-full-ml-workflow" class="slide level2 scrollable">
 <h2>The Full ML Workflow</h2>
-<pre><code>1. Understand the data — identify leakage variables (end_time, end_station_id)
-
-2. Split data → train (70%) / test (30%)
-
-3. Feature engineering (on training data only)
-   - Fourier features for hour, day_of_week, month
-   - Binary flags for is_weekend, is_member
-   - Spatial features: dist_downtown_km, capacity (from GBFS station join)
-   - (Optional: splines for dist_downtown_km; weather if joined from Environment Canada)
-
-4. Hyperparameter tuning (5-fold CV on training data only)
-   - Grid search over max_depth in [3, 5, 7] and learning_rate in [0.05, 0.1, 0.3]
-   - Early stopping to find optimal n_estimators
-
-5. Refit final model on full training set with best hyperparameters
-
-6. Evaluate on test set (once)
-   - Regression (trip duration): RMSE, MAE, R²
-   - Classification (member type): accuracy, F1, confusion matrix
-
-7. Interpret results — feature importance, residual plots</code></pre>
+<ol type="1">
+<li><p>Understand the data — identify leakage variables (end_time, end_station_id)</p></li>
+<li><p>Split data → train (70%) / test (30%)</p></li>
+<li><p>Feature engineering (on training data only)</p>
+<ul>
+<li>Fourier features for hour, day_of_week, month</li>
+<li>Binary flags for is_weekend, is_member</li>
+<li>Spatial features: dist_downtown_km, capacity (from GBFS station join)</li>
+<li>(Optional: splines for dist_downtown_km; weather if joined from Environment Canada)</li>
+</ul></li>
+<li><p>Hyperparameter tuning (5-fold CV on training data only)</p>
+<ul>
+<li>Grid search over max_depth in [3, 5, 7] and learning_rate in [0.05, 0.1, 0.3]</li>
+<li>Early stopping to find optimal n_estimators</li>
+</ul></li>
+<li><p>Refit final model on full training set with best hyperparameters</p></li>
+<li><p>Evaluate on test set (once)</p>
+<ul>
+<li>Regression (trip duration): RMSE, MAE, R²</li>
+<li>Classification (member type): accuracy, F1, confusion matrix</li>
+</ul></li>
+<li><p>Interpret results — feature importance, residual plots</p></li>
+</ol>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
